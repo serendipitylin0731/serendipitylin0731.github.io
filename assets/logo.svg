@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="logo-title">
+  <title id="logo-title">Hanfeng Lin · HL</title>
+  <defs>
+    <linearGradient id="frame" x1="2" y1="2" x2="62" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5de4c7"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="#11182c" stroke="url(#frame)" stroke-width="2"/>
+  <path d="M16 18v28M29 18v28M16 32h13" fill="none" stroke="#5de4c7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M41 18v28h9" fill="none" stroke="#a78bfa" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="50" cy="46" r="3" fill="#5de4c7"/>
+</svg>

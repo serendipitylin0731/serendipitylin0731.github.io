@@ -1,0 +1,67 @@
+<!-- Light mode banner -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-label="林函锋的 GitHub 主页横幅：开发工具、插件与铁路路线">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6fafc"/>
+      <stop offset="0.55" stop-color="#edf3fa"/>
+      <stop offset="1" stop-color="#f4effb"/>
+    </linearGradient>
+    <linearGradient id="rail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5de4c7"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#42627a" stroke-opacity=".08"/>
+    </pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="1200" height="360" rx="24" fill="url(#grid)"/>
+  <path d="M24 0H1176" stroke="url(#rail)" stroke-width="5"/>
+  <circle cx="1035" cy="65" r="125" fill="#a78bfa" opacity=".12" filter="url(#glow)"/>
+  <circle cx="876" cy="297" r="130" fill="#5de4c7" opacity=".12" filter="url(#glow)"/>
+
+  <g font-family="Noto Sans CJK SC, PingFang SC, Microsoft YaHei, Inter, sans-serif">
+    <text x="66" y="72" fill="#0b8275" font-size="17" font-weight="700" letter-spacing="4">Less is More</text>
+    <text x="60" y="175" fill="#1c2942" font-size="64" font-weight="800">Hanfeng Lin</text>
+    <text x="67" y="218" fill="#475b72" font-size="23" font-weight="500">serendipity_lin</text>
+    <text x="67" y="264" fill="#344963" font-size="19">插件与软件开发爱好者 · 上海交通大学</text>
+  </g>
+
+  <g font-family="Noto Sans CJK SC, PingFang SC, Microsoft YaHei, Inter, sans-serif" font-size="13" font-weight="700" letter-spacing="1">
+    <rect x="66" y="290" width="85" height="29" rx="14.5" fill="#d8f4ed" stroke="#78bfae" stroke-opacity=".7"/>
+    <text x="108.5" y="310" fill="#166a61" text-anchor="middle">SJTU</text>
+    <rect x="161" y="290" width="86" height="29" rx="14.5" fill="#eee7fb" stroke="#b5a4df" stroke-opacity=".7"/>
+    <text x="204" y="310" fill="#654ca3" text-anchor="middle">TOOLS</text>
+    <rect x="257" y="290" width="82" height="29" rx="14.5" fill="#fff0d8" stroke="#dfb77d" stroke-opacity=".7"/>
+    <text x="298" y="310" fill="#875a21" text-anchor="middle">CODE</text>
+  </g>
+
+  <g transform="translate(705 49)">
+    <rect width="425" height="262" rx="22" fill="#ffffff" stroke="#bac9d9" stroke-opacity=".55"/>
+    <path d="M0 57H425" stroke="#bac9d9" stroke-opacity=".4"/>
+    <circle cx="25" cy="28" r="6" fill="#f19a9a"/>
+    <circle cx="46" cy="28" r="6" fill="#f0c477"/>
+    <circle cx="67" cy="28" r="6" fill="#70d9bf"/>
+    <text x="310" y="34" fill="#657a91" font-family="monospace" font-size="13">route.dev</text>
+
+    <path d="M44 181C111 181 119 105 184 105S263 221 335 153S373 108 393 108" fill="none" stroke="#d4e1ed" stroke-width="24" stroke-linecap="round" opacity=".5"/>
+    <path d="M44 181C111 181 119 105 184 105S263 221 335 153S373 108 393 108" fill="none" stroke="url(#rail)" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="44" cy="181" r="10" fill="#5de4c7" stroke="#ffffff" stroke-width="5"/>
+    <circle cx="184" cy="105" r="10" fill="#91d7dd" stroke="#ffffff" stroke-width="5"/>
+    <circle cx="335" cy="153" r="10" fill="#a78bfa" stroke="#ffffff" stroke-width="5"/>
+    <circle cx="393" cy="108" r="10" fill="#dcb2f5" stroke="#ffffff" stroke-width="5"/>
+
+    <g fill="#526984" font-family="monospace" font-size="12">
+      <text x="37" y="213">IDEA</text>
+      <text x="157" y="86">BUILD</text>
+      <text x="303" y="185">TEST</text>
+      <text x="357" y="89">SHARE</text>
+    </g>
+    <path d="M22 235H403" stroke="#9eafc1" stroke-opacity=".6" stroke-dasharray="6 7"/>
+    <text x="25" y="251" fill="#637892" font-family="monospace" font-size="11">SJTU  /  DEVELOPER TOOLS  /  2026</text>
+  </g>
+</svg>

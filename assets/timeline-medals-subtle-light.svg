@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 565" role="img">
+  <title>学习经历与竞赛获奖时间轴</title>
+  <desc>学校以连续线段表示在校时间：2013.09 至 2019.06 温岭市城东小学；2019.09 至 2022.06 台州椒江北书学校；2022.09 至 2025.06 台州市书生中学；2025.09 至今上海交通大学致远学院。获奖以节点表示：2023.09 全国中学生奥林匹克数学竞赛三等奖🥉；2024.03 台州市数学、物理、信息学竞赛一等奖🥇与化学竞赛二等奖🥈；2024.09 全国中学生物理竞赛三等奖🥉；2025.11 全国大学生数学竞赛三等奖🥉。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6f9fc"/><stop offset="1" stop-color="#eef0fa"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#536480" stroke-opacity=".045"/></pattern>
+  </defs>
+  <rect x="1" y="1" width="1698" height="563" rx="24" fill="url(#bg)" stroke="#d1dce9"/>
+  <rect x="1" y="1" width="1698" height="563" rx="24" fill="url(#grid)"/>
+  <g font-family="Noto Sans CJK SC, PingFang SC, Microsoft YaHei, Inter, sans-serif">
+    <text x="44" y="52" fill="#188a7a" font-size="24" font-weight="700" letter-spacing="2">学习经历</text>
+    <text x="44" y="391" fill="#745ac7" font-size="24" font-weight="700" letter-spacing="2">竞赛获奖</text>
+    <path d="M66 250H1665" stroke="#a6b4cb" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+    <text x="220" y="172" text-anchor="middle" fill="#1d2b43" font-size="24" font-weight="700">温岭市城东小学</text>
+    <text x="220" y="208" text-anchor="middle" fill="#50617b" font-size="18" font-weight="600">2013.09 — 2019.06</text>
+    <path d="M95 250H345" stroke="#188a7a" stroke-width="11" stroke-linecap="round"/>
+    <text x="500" y="172" text-anchor="middle" fill="#1d2b43" font-size="24" font-weight="700">台州椒江北书学校</text>
+    <text x="500" y="208" text-anchor="middle" fill="#50617b" font-size="18" font-weight="600">2019.09 — 2022.06</text>
+    <path d="M380 250H620" stroke="#188a7a" stroke-width="11" stroke-linecap="round"/>
+    <text x="1015" y="172" text-anchor="middle" fill="#1d2b43" font-size="24" font-weight="700">台州市书生中学</text>
+    <text x="1015" y="208" text-anchor="middle" fill="#50617b" font-size="18" font-weight="600">2022.09 — 2025.06</text>
+    <path d="M660 250H1370" stroke="#188a7a" stroke-width="11" stroke-linecap="round"/>
+    <text x="1550" y="151" text-anchor="middle" fill="#1d2b43" font-size="23" font-weight="700">上海交通大学</text>
+    <text x="1550" y="180" text-anchor="middle" fill="#1d2b43" font-size="23" font-weight="700">致远学院</text>
+    <text x="1550" y="208" text-anchor="middle" fill="#50617b" font-size="18" font-weight="600">2025.09 — 至今</text>
+    <path d="M1440 250H1660" stroke="#188a7a" stroke-width="11" stroke-linecap="round"/>
+    <circle cx="790" cy="250" r="13" fill="#f6f9fc" stroke="#745ac7" stroke-width="3"/>
+    <circle cx="790" cy="250" r="5" fill="#745ac7"/>
+    <path d="M790 265V349" stroke="#745ac7" stroke-width="2" opacity=".8"/>
+    <rect x="687.5" y="349" width="205" height="180" rx="18" fill="#eeeafa" stroke="#745ac7" stroke-opacity=".48"/>
+    <text x="790" y="381" text-anchor="middle" fill="#745ac7" font-size="19" font-weight="700">2023.09</text>
+    <text x="790" y="418" text-anchor="middle" fill="#1d2b43" font-size="20" font-weight="600">全国中学生</text>
+    <text x="790" y="450" text-anchor="middle" fill="#1d2b43" font-size="20" font-weight="600">奥林匹克数学竞赛</text>
+    <text x="750" y="482" fill="#1d2b43" font-size="20" font-weight="600">三等奖</text>
+    <g transform="translate(823 475)" aria-label="🥉 铜牌">
+      <path d="M-6 -13L-1 -13L2 -6L-4 -5Z" fill="#6d8baa" opacity=".8"/>
+      <path d="M1 -13L6 -13L4 -5L-2 -6Z" fill="#a97b89" opacity=".8"/>
+      <circle r="8" fill="#a47759" stroke="#cfaa91" stroke-width="1.4"/>
+      <text x="0" y="3" text-anchor="middle" fill="#4a3426" font-size="8.5" font-weight="700">3</text>
+    </g>
+    <circle cx="1010" cy="250" r="13" fill="#f6f9fc" stroke="#745ac7" stroke-width="3"/>
+    <circle cx="1010" cy="250" r="5" fill="#745ac7"/>
+    <path d="M1010 265V349" stroke="#745ac7" stroke-width="2" opacity=".8"/>
+    <rect x="907.5" y="349" width="205" height="180" rx="18" fill="#eeeafa" stroke="#745ac7" stroke-opacity=".48"/>
+    <text x="1010" y="381" text-anchor="middle" fill="#745ac7" font-size="19" font-weight="700">2024.03</text>
+    <text x="1010" y="418" text-anchor="middle" fill="#1d2b43" font-size="20" font-weight="600">台州市数学、物理、</text>
+    <text x="928" y="450" fill="#1d2b43" font-size="18" font-weight="600">信息学竞赛一等奖</text>
+    <g transform="translate(1086 443)" aria-label="🥇 金牌">
+      <path d="M-6 -13L-1 -13L2 -6L-4 -5Z" fill="#6d8baa" opacity=".8"/>
+      <path d="M1 -13L6 -13L4 -5L-2 -6Z" fill="#a97b89" opacity=".8"/>
+      <circle r="8" fill="#bc954f" stroke="#ecd496" stroke-width="1.4"/>
+      <text x="0" y="3" text-anchor="middle" fill="#5d4319" font-size="8.5" font-weight="700">1</text>
+    </g>
+    <text x="936" y="482" fill="#1d2b43" font-size="18" font-weight="600">化学竞赛二等奖</text>
+    <g transform="translate(1076 475)" aria-label="🥈 银牌">
+      <path d="M-6 -13L-1 -13L2 -6L-4 -5Z" fill="#6d8baa" opacity=".8"/>
+      <path d="M1 -13L6 -13L4 -5L-2 -6Z" fill="#a97b89" opacity=".8"/>
+      <circle r="8" fill="#9aa8b5" stroke="#d6dfe6" stroke-width="1.4"/>
+      <text x="0" y="3" text-anchor="middle" fill="#405063" font-size="8.5" font-weight="700">2</text>
+    </g>
+    <circle cx="1230" cy="250" r="13" fill="#f6f9fc" stroke="#745ac7" stroke-width="3"/>
+    <circle cx="1230" cy="250" r="5" fill="#745ac7"/>
+    <path d="M1230 265V349" stroke="#745ac7" stroke-width="2" opacity=".8"/>
+    <rect x="1127.5" y="349" width="205" height="180" rx="18" fill="#eeeafa" stroke="#745ac7" stroke-opacity=".48"/>
+    <text x="1230" y="381" text-anchor="middle" fill="#745ac7" font-size="19" font-weight="700">2024.09</text>
+    <text x="1230" y="418" text-anchor="middle" fill="#1d2b43" font-size="20" font-weight="600">全国中学生</text>
+    <text x="1230" y="450" text-anchor="middle" fill="#1d2b43" font-size="20" font-weight="600">物理竞赛</text>
+    <text x="1190" y="482" fill="#1d2b43" font-size="20" font-weight="600">三等奖</text>
+    <g transform="translate(1263 475)" aria-label="🥉 铜牌">
+      <path d="M-6 -13L-1 -13L2 -6L-4 -5Z" fill="#6d8baa" opacity=".8"/>
+      <path d="M1 -13L6 -13L4 -5L-2 -6Z" fill="#a97b89" opacity=".8"/>
+      <circle r="8" fill="#a47759" stroke="#cfaa91" stroke-width="1.4"/>
+      <text x="0" y="3" text-anchor="middle" fill="#4a3426" font-size="8.5" font-weight="700">3</text>
+    </g>
+    <circle cx="1560" cy="250" r="13" fill="#f6f9fc" stroke="#745ac7" stroke-width="3"/>
+    <circle cx="1560" cy="250" r="5" fill="#745ac7"/>
+    <path d="M1560 265V349" stroke="#745ac7" stroke-width="2" opacity=".8"/>
+    <rect x="1452.5" y="349" width="215" height="180" rx="18" fill="#eeeafa" stroke="#745ac7" stroke-opacity=".48"/>
+    <text x="1560" y="381" text-anchor="middle" fill="#745ac7" font-size="19" font-weight="700">2025.11</text>
+    <text x="1560" y="418" text-anchor="middle" fill="#1d2b43" font-size="20" font-weight="600">全国大学生</text>
+    <text x="1560" y="450" text-anchor="middle" fill="#1d2b43" font-size="20" font-weight="600">数学竞赛</text>
+    <text x="1520" y="482" fill="#1d2b43" font-size="20" font-weight="600">三等奖</text>
+    <g transform="translate(1593 475)" aria-label="🥉 铜牌">
+      <path d="M-6 -13L-1 -13L2 -6L-4 -5Z" fill="#6d8baa" opacity=".8"/>
+      <path d="M1 -13L6 -13L4 -5L-2 -6Z" fill="#a97b89" opacity=".8"/>
+      <circle r="8" fill="#a47759" stroke="#cfaa91" stroke-width="1.4"/>
+      <text x="0" y="3" text-anchor="middle" fill="#4a3426" font-size="8.5" font-weight="700">3</text>
+    </g>
+  </g>
+</svg>
