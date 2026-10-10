@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 565" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 565">
   <title>学习经历与竞赛获奖时间轴</title>
   <desc>学校以连续线段表示在校时间：2013.09 至 2019.06 温岭市城东小学；2019.09 至 2022.06 台州椒江北书学校；2022.09 至 2025.06 台州市书生中学；2025.09 至今上海交通大学致远学院。获奖以节点表示：2023.09 全国中学生奥林匹克数学竞赛三等奖🥉；2024.03 台州市数学、物理、信息学竞赛一等奖🥇与化学竞赛二等奖🥈；2024.09 全国中学生物理竞赛三等奖🥉；2025.11 全国大学生数学竞赛三等奖🥉。</desc>
   <defs>
@@ -11,17 +11,27 @@
     <text x="44" y="52" fill="#5de4c7" font-size="24" font-weight="700" letter-spacing="2">学习经历</text>
     <text x="44" y="391" fill="#a78bfa" font-size="24" font-weight="700" letter-spacing="2">竞赛获奖</text>
     <path d="M66 250H1665" stroke="#4a5874" stroke-width="5" stroke-linecap="round" opacity=".6"/>
-    <text x="220" y="172" text-anchor="middle" fill="#f3f6ff" font-size="24" font-weight="700">温岭市城东小学</text>
+    <a href="https://www.baike.com/wikiid/2820791733395514682" target="_blank" rel="noopener noreferrer" style="cursor:pointer">
+      <text x="220" y="172" text-anchor="middle" fill="#5de4c7" font-size="24" font-weight="700" text-decoration="underline">温岭市城东小学</text>
+    </a>
     <text x="220" y="208" text-anchor="middle" fill="#b6c2d9" font-size="18" font-weight="600">2013.09 — 2019.06</text>
     <path d="M95 250H345" stroke="#5de4c7" stroke-width="11" stroke-linecap="round"/>
-    <text x="500" y="172" text-anchor="middle" fill="#f3f6ff" font-size="24" font-weight="700">台州椒江北书学校</text>
+    <a href="https://www.beishu.xin/" target="_blank" rel="noopener noreferrer" style="cursor:pointer">
+      <text x="500" y="172" text-anchor="middle" fill="#5de4c7" font-size="24" font-weight="700" text-decoration="underline">台州椒江北书学校</text>
+    </a>
     <text x="500" y="208" text-anchor="middle" fill="#b6c2d9" font-size="18" font-weight="600">2019.09 — 2022.06</text>
     <path d="M380 250H620" stroke="#5de4c7" stroke-width="11" stroke-linecap="round"/>
-    <text x="1015" y="172" text-anchor="middle" fill="#f3f6ff" font-size="24" font-weight="700">台州市书生中学</text>
+    <a href="https://baike.baidu.com/item/%E5%8F%B0%E5%B7%9E%E5%B8%82%E4%B9%A6%E7%94%9F%E4%B8%AD%E5%AD%A6/5269059" target="_blank" rel="noopener noreferrer" style="cursor:pointer">
+      <text x="1015" y="172" text-anchor="middle" fill="#5de4c7" font-size="24" font-weight="700" text-decoration="underline">台州市书生中学</text>
+    </a>
     <text x="1015" y="208" text-anchor="middle" fill="#b6c2d9" font-size="18" font-weight="600">2022.09 — 2025.06</text>
     <path d="M660 250H1370" stroke="#5de4c7" stroke-width="11" stroke-linecap="round"/>
-    <text x="1550" y="151" text-anchor="middle" fill="#f3f6ff" font-size="23" font-weight="700">上海交通大学</text>
-    <text x="1550" y="180" text-anchor="middle" fill="#f3f6ff" font-size="23" font-weight="700">致远学院</text>
+    <a href="https://www.sjtu.edu.cn/" target="_blank" rel="noopener noreferrer" style="cursor:pointer">
+      <text x="1550" y="151" text-anchor="middle" fill="#5de4c7" font-size="23" font-weight="700" text-decoration="underline">上海交通大学</text>
+    </a>
+    <a href="https://zhiyuan.sjtu.edu.cn/" target="_blank" rel="noopener noreferrer" style="cursor:pointer">
+      <text x="1550" y="180" text-anchor="middle" fill="#5de4c7" font-size="23" font-weight="700" text-decoration="underline">致远学院</text>
+    </a>
     <text x="1550" y="208" text-anchor="middle" fill="#b6c2d9" font-size="18" font-weight="600">2025.09 — 至今</text>
     <path d="M1440 250H1660" stroke="#5de4c7" stroke-width="11" stroke-linecap="round"/>
     <circle cx="790" cy="250" r="13" fill="#101728" stroke="#a78bfa" stroke-width="3"/>

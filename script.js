@@ -26,7 +26,11 @@
     return `assets/projects/${key}-visual-${currentTheme()}.svg`;
   }
   function updateAssets() {
-    document.querySelectorAll('[data-asset]').forEach(img => { img.src = assetPath(img.dataset.asset); });
+    document.querySelectorAll('[data-asset]').forEach(el => {
+      const path = assetPath(el.dataset.asset);
+      if (el.tagName === 'OBJECT') el.data = path;
+      else el.src = path;
+    });
   }
   function updateMeta() {
     const en = currentLang() === 'en';
@@ -42,20 +46,25 @@
     updateAssets();
     const alts = en ? {
       hero: "Hanfeng Lin's profile banner: Less is More, developer tools and routes",
-      timeline: 'Education from Wenling Chengdong Primary School to SJTU Zhiyuan College, with mathematics and physics competition awards from 2023 to 2025',
+      timeline: 'Education from Wenling Chengdong Primary School to SJTU Zhiyuan College, with mathematics and physics competition awards from 2023 to 2025. School names are links.',
       rail: 'Trajectory: illustrated Android railway route planner',
       'cp-tester': 'CP Tester: code editor and three passing test results',
       guides: 'Beginner computing guides for Markdown, Git, WSL, and more',
       skills: 'Icons for the programming languages and development tools listed below'
     } : {
       hero: '林函锋的个人主页横幅：Less is More，开发工具、软件与铁路路线',
-      timeline: '从温岭市城东小学到上海交通大学致远学院的学习经历，以及 2023 至 2025 年的数学和物理竞赛获奖时间轴',
+      timeline: '从温岭市城东小学到上海交通大学致远学院的学习经历，以及 2023 至 2025 年的数学和物理竞赛获奖时间轴。学校名称可点击。',
       rail: '轨迹：Android 铁路出行规划路线示意',
       'cp-tester': 'CP Tester：代码编辑器与三个通过的测试结果',
       guides: '计算机入门讲义：Markdown、Git 和 WSL',
       skills: '下方所列编程语言和开发工具的图标'
     };
-    document.querySelectorAll('[data-asset]').forEach(img => { if (alts[img.dataset.asset]) img.alt = alts[img.dataset.asset]; });
+    document.querySelectorAll('[data-asset]').forEach(el => {
+      const label = alts[el.dataset.asset];
+      if (!label) return;
+      if (el.tagName === 'OBJECT') el.setAttribute('aria-label', label);
+      else el.alt = label;
+    });
   }
   function typeNext() {
     const lines = copy;
