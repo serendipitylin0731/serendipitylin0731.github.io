@@ -42,6 +42,10 @@
     langButton.setAttribute('aria-label', en ? '切换到简体中文' : 'Switch to English');
     themeButton.querySelector('.theme-icon').textContent = currentTheme() === 'dark' ? '☀' : '☾';
     themeButton.setAttribute('aria-label', currentTheme() === 'dark' ? (en ? 'Switch to light theme' : '切换到浅色主题') : (en ? 'Switch to dark theme' : '切换到深色主题'));
+    document.getElementById('project-carousel').setAttribute('aria-label', en ? 'Completed projects carousel' : '已结项项目轮播');
+    document.getElementById('project-viewport').setAttribute('aria-label', en ? 'Completed projects list' : '已结项项目列表');
+    document.getElementById('project-prev').setAttribute('aria-label', en ? 'Previous project' : '上一个项目');
+    document.getElementById('project-next').setAttribute('aria-label', en ? 'Next project' : '下一个项目');
     document.querySelector('meta[name="theme-color"]').content = currentTheme() === 'dark' ? '#0b1020' : '#f6f9fc';
     updateAssets();
     const alts = en ? {
@@ -87,6 +91,117 @@
     lineIndex = 0; charIndex = 0; deleting = false; typed.textContent = '';
     typeNext();
   }
+  function setupProjectCarousel() {
+    const carousel = document.getElementById('project-carousel');
+    const viewport = document.getElementById('project-viewport');
+    const track = document.getElementById('project-track');
+    const position = document.getElementById('carousel-position');
+    const total = track.children.length;
+    if (total < 2) return;
+    let moving = false;
+    let direction = 0;
+    let touchStartX = null;
+    let keyboardFocus = false;
+    let lastInputWasKeyboard = false;
+    let lastManualMove = 0;
+
+    function visibleCount() {
+      return Number.parseInt(getComputedStyle(carousel).getPropertyValue('--visible-cards'), 10) || 3;
+    }
+    function stepWidth() {
+      return track.firstElementChild.getBoundingClientRect().width +
+        Number.parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap);
+    }
+    function updateVisible() {
+      const visible = visibleCount();
+      [...track.children].forEach((card, index) => {
+        card.inert = index >= visible;
+        card.setAttribute('aria-hidden', index >= visible ? 'true' : 'false');
+      });
+      position.textContent = `${String(track.firstElementChild.dataset.projectIndex).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    }
+    function finishMove() {
+      if (direction > 0) track.append(track.firstElementChild);
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(0)';
+      void track.offsetWidth;
+      track.style.transition = '';
+      moving = false;
+      direction = 0;
+      updateVisible();
+    }
+    track.addEventListener('transitionend', event => {
+      if (event.target === track && event.propertyName === 'transform' && moving) finishMove();
+    });
+    function move(next) {
+      if (moving) return;
+      if (reducedMotion) {
+        if (next) track.append(track.firstElementChild);
+        else track.prepend(track.lastElementChild);
+        updateVisible();
+        return;
+      }
+      moving = true;
+      direction = next ? 1 : -1;
+      const distance = stepWidth();
+      if (next) {
+        track.style.transition = 'transform .55s ease';
+        track.style.transform = `translateX(-${distance}px)`;
+      } else {
+        track.prepend(track.lastElementChild);
+        track.style.transition = 'none';
+        track.style.transform = `translateX(-${distance}px)`;
+        void track.offsetWidth;
+        track.style.transition = 'transform .55s ease';
+        track.style.transform = 'translateX(0)';
+      }
+    }
+    function manualMove(next) {
+      lastManualMove = Date.now();
+      move(next);
+    }
+    document.getElementById('project-prev').addEventListener('click', () => manualMove(false));
+    document.getElementById('project-next').addEventListener('click', () => manualMove(true));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Tab') lastInputWasKeyboard = true;
+    });
+    document.addEventListener('pointerdown', () => { lastInputWasKeyboard = false; keyboardFocus = false; });
+    carousel.addEventListener('focusin', () => { keyboardFocus = lastInputWasKeyboard; });
+    carousel.addEventListener('focusout', event => {
+      if (!carousel.contains(event.relatedTarget)) keyboardFocus = false;
+    });
+    carousel.addEventListener('keydown', () => { keyboardFocus = true; });
+    viewport.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        manualMove(event.key === 'ArrowRight');
+      }
+    });
+    viewport.addEventListener('touchstart', event => {
+      touchStartX = event.changedTouches[0].clientX;
+    }, { passive: true });
+    viewport.addEventListener('touchend', event => {
+      if (touchStartX === null) return;
+      const distance = touchStartX - event.changedTouches[0].clientX;
+      touchStartX = null;
+      if (Math.abs(distance) < 45) return;
+      if (event.cancelable) event.preventDefault();
+      manualMove(distance > 0);
+    }, { passive: false });
+    viewport.addEventListener('wheel', event => {
+      if (Math.abs(event.deltaX) < 25 || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+      event.preventDefault();
+      if (!moving && Date.now() - lastManualMove > 650) manualMove(event.deltaX > 0);
+    }, { passive: false });
+    carousel.classList.add('carousel-ready');
+    updateVisible();
+    window.addEventListener('resize', updateVisible);
+    if (!reducedMotion) {
+      setInterval(() => {
+        if (!moving && !document.hidden && !carousel.matches(':hover') && !keyboardFocus && Date.now() - lastManualMove >= 4200) move(true);
+      }, 4200);
+    }
+  }
   langButton.addEventListener('click', () => {
     root.lang = currentLang() === 'en' ? 'zh-CN' : 'en';
     try { localStorage.setItem('lang', currentLang()); } catch (e) {}
@@ -101,5 +216,5 @@
     updateMeta();
   });
   document.getElementById('year').textContent = new Date().getFullYear();
-  updateMeta(); restartTyping();
+  updateMeta(); restartTyping(); setupProjectCarousel();
 })();
