@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="棋盘、鼓槌与拼豆组成的抽象画面">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#2c274b"/><stop offset="1" stop-color="#493351"/></linearGradient>
+    <linearGradient id="piece" x2="1" y2="1"><stop stop-color="#f2d8c0"/><stop offset="1" stop-color="#bb9ed1"/></linearGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.5" fill="#eac8ef" opacity=".18"/></pattern>
+  </defs>
+  <path fill="url(#bg)" d="M0 0h640v360H0z"/><path fill="url(#dots)" d="M0 0h640v360H0z"/>
+  <circle cx="520" cy="62" r="118" fill="#e9b8c0" opacity=".06"/>
+  <g transform="translate(78 51) rotate(-9 150 145)"><rect width="300" height="300" rx="20" fill="#1b1937" stroke="#d7b7d6" stroke-opacity=".55" stroke-width="2"/><path fill="#9a719f" fill-opacity=".42" d="M18 18h66v66H18zm132 0h66v66h-66zM84 84h66v66H84zm132 0h66v66h-66zM18 150h66v66H18zm132 0h66v66h-66zM84 216h66v66H84zm132 0h66v66h-66z"/><path fill="none" stroke="#e1c2dc" stroke-opacity=".3" d="M84 18v264m66-264v264m66-264v264M18 84h264M18 150h264M18 216h264"/><circle cx="152" cy="151" r="70" fill="#281f42" stroke="#e7c9db" stroke-width="4"/><text x="152" y="188" text-anchor="middle" font-family="serif" font-size="108" fill="url(#piece)">♞</text></g>
+  <g transform="translate(458 84) rotate(26)"><path d="M0 0v175" stroke="#f2d3ad" stroke-width="10" stroke-linecap="round"/><path d="M0 0v26" stroke="#b48b66" stroke-width="16" stroke-linecap="round"/></g>
+  <g transform="translate(556 65) rotate(-20)"><path d="M0 0v178" stroke="#f2d3ad" stroke-width="10" stroke-linecap="round"/><path d="M0 0v26" stroke="#b48b66" stroke-width="16" stroke-linecap="round"/></g>
+  <g fill="#e9accb"><circle cx="471" cy="272" r="13"/><circle cx="506" cy="282" r="13"/><circle cx="541" cy="272" r="13"/></g><g fill="#ad9df2"><circle cx="489" cy="310" r="13"/><circle cx="524" cy="318" r="13"/><circle cx="559" cy="310" r="13"/></g>
+</svg>

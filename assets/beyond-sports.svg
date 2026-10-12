@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="球场、球门与运动轨迹的抽象画面">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#103b40"/><stop offset="1" stop-color="#18334a"/></linearGradient>
+    <radialGradient id="light"><stop stop-color="#5de4c7" stop-opacity=".28"/><stop offset="1" stop-color="#5de4c7" stop-opacity="0"/></radialGradient>
+    <pattern id="mesh" width="23" height="23" patternUnits="userSpaceOnUse"><path d="M23 0H0V23" fill="none" stroke="#b2f8e7" stroke-opacity=".11"/></pattern>
+  </defs>
+  <path fill="url(#bg)" d="M0 0h640v360H0z"/><ellipse cx="365" cy="252" rx="330" ry="240" fill="url(#light)"/>
+  <path d="M-42 306 212 96l493 199-226 106Z" fill="#163f48" stroke="#83ead2" stroke-opacity=".6" stroke-width="3"/>
+  <path d="m67 289 167-139 342 138-135 64Zm229-114-71 154m101-141-58 146" fill="none" stroke="#a3eede" stroke-opacity=".55" stroke-width="2"/>
+  <ellipse cx="318" cy="248" rx="76" ry="37" transform="rotate(20 318 248)" fill="none" stroke="#a3eede" stroke-opacity=".48" stroke-width="2"/>
+  <path d="M153 214v-105l111-42v103m-111-61 111 42m-111-20 111 42m-89-72v106m25-117v107m26-118v110m25-119v109" fill="none" stroke="#c1faf1" stroke-opacity=".62" stroke-width="2"/>
+  <path d="M472 91c-34 33-33 66-24 95" fill="none" stroke="#b8a2f7" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 13"/>
+  <g transform="translate(446 195)"><circle r="47" fill="#e6f8f2"/><path d="m-10-15 18-7 15 14-4 20-20 8-15-14z" fill="#255d5d"/><path d="m-10-15-26-12m44 5 14-24m1 38 22 5M19 12l14 23M-1 20l-18 24" fill="none" stroke="#255d5d" stroke-width="5"/></g>
+  <path d="M0 34h183M0 51h123" stroke="#83ead2" stroke-opacity=".3" stroke-width="3" stroke-linecap="round"/>
+</svg>

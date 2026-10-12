@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="抽象赛道与速度线">
+  <defs>
+    <linearGradient id="sky" x2="1" y2="1"><stop stop-color="#112a42"/><stop offset=".55" stop-color="#17294b"/><stop offset="1" stop-color="#362653"/></linearGradient>
+    <linearGradient id="road" x2=".7" y2="1"><stop stop-color="#143f59"/><stop offset="1" stop-color="#0a172c"/></linearGradient>
+    <linearGradient id="glow" x2="1"><stop stop-color="#5ee5ca"/><stop offset="1" stop-color="#ad8afa"/></linearGradient>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#9cd4e3" stroke-opacity=".08"/></pattern>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h640v360H0z"/><path fill="url(#grid)" d="M0 0h640v360H0z"/>
+  <circle cx="490" cy="96" r="98" fill="#a682f7" opacity=".09"/><circle cx="490" cy="96" r="57" fill="none" stroke="#a682f7" opacity=".27"/>
+  <path d="M-28 357C135 310 217 242 299 223c97-22 172 35 365-33v170H-28Z" fill="url(#road)"/>
+  <path d="M-10 327c149-45 232-104 311-121 110-23 176 41 345-38" fill="none" stroke="url(#glow)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M-10 352c149-45 232-104 311-121 110-23 176 41 345-38" fill="none" stroke="#b596ff" stroke-opacity=".4" stroke-width="2"/>
+  <path d="M73 319c101-41 181-88 229-98m43-7c67-2 124 26 185 7" fill="none" stroke="#d9eef4" stroke-opacity=".43" stroke-width="2" stroke-dasharray="20 19"/>
+  <g transform="translate(350 92)" fill="none" stroke="#dfedff" stroke-linecap="round" stroke-linejoin="round"><path d="M25 53c-11 0-20 7-23 18L-6 99c-3 11 7 19 16 13l28-18h69l28 18c9 6 19-2 16-13l-8-28c-3-11-12-18-23-18Z" fill="#172d4a" stroke-width="4"/><path d="M27 73v20m-10-10h20" stroke="#5ee5ca" stroke-width="5"/><circle cx="112" cy="73" r="5" fill="#a78bfa" stroke="none"/><circle cx="126" cy="87" r="5" fill="#5ee5ca" stroke="none"/></g>
+  <path d="M44 100h114m-94 19h74m-42 19h42" stroke="#5ee5ca" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="170" cy="252" r="4" fill="#5ee5ca"/><circle cx="564" cy="176" r="3" fill="#b69afa"/>
+</svg>
