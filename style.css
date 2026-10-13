@@ -66,8 +66,9 @@ html[data-theme="dark"] .skill-logo-labview img,html[data-theme="dark"] .skill-l
 @media(max-width:850px){.beyond-card-games .beyond-list{grid-template-columns:1fr}}
 @media(max-width:680px){.beyond-intro{margin:-8px 0 20px}.beyond-grid{grid-template-columns:1fr;gap:18px}.beyond-card-games{grid-column:auto}.beyond-card-games .beyond-visual{aspect-ratio:16/8;min-height:0;max-height:none}.beyond-visual{aspect-ratio:16/8}.beyond-content,.beyond-card-games .beyond-content{padding:19px 21px 23px}.beyond-card-games .beyond-list{grid-template-columns:1fr}}
 
-.documents-section{margin-top:36px}
+.documents-section{margin-top:24px;padding:29px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
 .documents-section h3{margin:0 0 12px;font-size:1.3rem}
 .documents-section p:not(.eyebrow){margin:0;color:var(--muted);font-size:.9rem;line-height:1.8}
 .documents-section a{color:var(--mint);font-weight:700;text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:3px}
 .documents-section a:hover{color:var(--violet)}
+@media(max-width:680px){.documents-section{padding:22px}}
