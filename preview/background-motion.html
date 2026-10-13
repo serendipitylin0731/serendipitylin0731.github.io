@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>主页背景动效预览</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1020;--surface:#151d33;--line:#34415e;--text:#f5f7ff;--muted:#abb7cf;--mint:#5de4c7;--violet:#a78bfa;--particle-a:93,228,199;--particle-b:167,139,250}
+    html[data-theme="light"]{color-scheme:light;--bg:#f6f9fc;--surface:#fff;--line:#cbd8e4;--text:#17233b;--muted:#50617a;--mint:#167c74;--violet:#7658b9;--particle-a:22,124,116;--particle-b:118,88,185}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif}canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}.preview{position:relative;z-index:1;max-width:1100px;margin:auto;padding:20px 24px 90px}header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:5px 0 22px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px;font-weight:750}.brand img{width:38px;height:38px}.actions{display:flex;gap:8px}button{border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text);padding:7px 12px;cursor:pointer}button:hover{border-color:var(--mint)}.eyebrow{color:var(--mint);font-size:.72rem;font-weight:800;letter-spacing:.15em;margin:0 0 8px}h1{font-size:clamp(2.1rem,5vw,4rem);line-height:1.2;margin:0 0 15px}h2{font-size:1.5rem;margin:0 0 16px}p{color:var(--muted)}.hero{padding:110px 0 100px;max-width:700px}.hero p{font-size:1.08rem;max-width:600px}.accent{color:var(--mint)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{min-height:195px;padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.card h3{margin:8px 0;font-size:1.1rem}.card p{font-size:.9rem}.note{margin-top:30px;padding:15px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:.88rem}.note p{margin:0}@media(max-width:680px){.grid{grid-template-columns:1fr}.hero{padding:75px 0 65px}}
+  </style>
+</head>
+<body>
+  <canvas id="ambient" aria-hidden="true"></canvas>
+  <div class="preview">
+    <header><div class="brand"><img src="../assets/logo.svg" alt="">林函锋 · 个人主页</div><div class="actions"><button id="theme" type="button">切换浅色模式</button><button id="reseed" type="button">重新随机</button></div></header>
+    <main>
+      <div class="hero"><p class="eyebrow">BACKGROUND MOTION PREVIEW</p><h1>Less is <span class="accent">More.</span></h1><p>这是主页背景动效的独立预览。薄荷绿和紫色光点伴随柔和光晕缓慢漂浮，位置与速度随机生成，内容卡片始终清晰可读。</p></div>
+      <section><p class="eyebrow">03 / SELECTED WORK</p><h2>🧩 我的项目</h2><div class="grid"><article class="card"><span class="accent">01 / ANDROID</span><h3>轨迹</h3><p>铁路出行规划与路径探索。</p></article><article class="card"><span class="accent">02 / VS CODE</span><h3>CP Tester</h3><p>本地测试与输出比对工具。</p></article><article class="card"><span class="accent">03 / EDUCATION</span><h3>计算机入门讲义</h3><p>Markdown、Git、WSL 等工具指南。</p></article></div></section>
+      <div class="note"><p>预览说明：光点只在页面背景移动；浏览器开启“减少动态效果”后会显示静态背景。此文件没有修改正式主页的背景。</p></div>
+    </main>
+  </div>
+  <script>
+    const canvas = document.getElementById('ambient');
+    const context = canvas.getContext('2d');
+    const themeButton = document.getElementById('theme');
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    let dots = [];
+    let width = 0;
+    let height = 0;
+    let frame = 0;
+    function resize(){const ratio=Math.min(devicePixelRatio||1,2);width=innerWidth;height=innerHeight;canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);context.setTransform(ratio,0,0,ratio,0,0);seed()}
+    function seed(){dots=Array.from({length:Math.min(52,Math.max(26,Math.round(width*height/27000)))},(_,i)=>({x:Math.random()*width,y:Math.random()*height,r:1.8+Math.random()*2.6,vx:(Math.random()-.5)*.34,vy:(Math.random()-.5)*.28,phase:Math.random()*6.28,kind:i%2}));draw()}
+    function draw(){
+      context.clearRect(0,0,width,height);
+      const light=document.documentElement.dataset.theme==='light';
+      for(let i=0;i<dots.length;i++){
+        const dot=dots[i];
+        const rgb=dot.kind?'118,88,185':(light?'22,124,116':'93,228,199');
+        if(i<6){
+          const glow=context.createRadialGradient(dot.x,dot.y,0,dot.x,dot.y,90);
+          glow.addColorStop(0,`rgba(${rgb},${light?.09:.13})`);
+          glow.addColorStop(1,`rgba(${rgb},0)`);
+          context.fillStyle=glow;
+          context.beginPath();context.arc(dot.x,dot.y,90,0,Math.PI*2);context.fill();
+        }
+        const alpha=(light?.45:.65)*(0.78+0.22*Math.sin(dot.phase));
+        context.beginPath();context.fillStyle=`rgba(${rgb},${alpha})`;
+        context.arc(dot.x,dot.y,dot.r,0,Math.PI*2);context.fill();
+      }
+    }
+    function animate(){if(motion.matches||document.hidden){frame=0;return}for(const dot of dots){dot.x=(dot.x+dot.vx+width)%width;dot.y=(dot.y+dot.vy+height)%height;dot.phase+=.012}draw();frame=requestAnimationFrame(animate)}
+    function restart(){if(frame)cancelAnimationFrame(frame);resize();animate()}
+    themeButton.addEventListener('click',()=>{const light=document.documentElement.dataset.theme!=='light';document.documentElement.dataset.theme=light?'light':'dark';themeButton.textContent=light?'切换深色模式':'切换浅色模式';draw()});
+    document.getElementById('reseed').addEventListener('click',seed);
+    addEventListener('resize',restart);
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!frame)animate()});
+    motion.addEventListener('change',restart);
+    restart();
+  </script>
+</body>
+</html>

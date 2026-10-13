@@ -58,8 +58,10 @@ html[data-theme="dark"] .skill-logo-labview img,html[data-theme="dark"] .skill-l
 .beyond-card a:hover{color:var(--violet)}
 .beyond-list{list-style:none;display:grid;gap:12px;padding:0;margin:0}
 .beyond-card-games .beyond-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+.beyond-card-sports .beyond-list{grid-template-columns:repeat(2,minmax(0,1fr))}
 .beyond-list li{min-width:0;padding:15px 17px;border:1px solid var(--line-soft);border-radius:11px;background:var(--bg-2)}
-.beyond-list li>strong{display:block;color:var(--beyond-accent);font-size:.88rem;margin-bottom:5px}
+.beyond-list li>strong{display:flex;align-items:center;gap:8px;color:var(--beyond-accent);font-size:.88rem;margin-bottom:5px}
+.beyond-item-icon{display:inline-grid;place-items:center;flex:none;width:25px;height:25px;border-radius:7px;background:color-mix(in srgb,var(--beyond-accent) 15%,var(--surface));font-size:.93rem;line-height:1}
 .beyond-list p{line-height:1.75;overflow-wrap:anywhere}
 .beyond-list .beyond-note{margin-top:10px;padding-top:10px;border-top:1px solid var(--line-soft);font-size:.79rem}
 .beyond-note b{color:var(--text);font-weight:700;margin-right:5px}
@@ -72,3 +74,17 @@ html[data-theme="dark"] .skill-logo-labview img,html[data-theme="dark"] .skill-l
 .documents-section a{color:var(--mint);font-weight:700;text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:3px}
 .documents-section a:hover{color:var(--violet)}
 @media(max-width:680px){.documents-section{padding:22px}}
+
+.ambient-background{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+
+.contact-panel{display:block}
+.contact-panel p.contact-intro{margin:0 0 24px}
+.contact-methods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;list-style:none;padding:0;margin:0 0 22px}
+.contact-methods li{min-width:0;padding:17px 18px;border:1px solid var(--line-soft);border-radius:12px;background:var(--bg-2)}
+.contact-method-label{display:block;margin-bottom:7px;color:var(--muted);font-size:.76rem;font-weight:700}
+.contact-method-value{display:block;color:var(--text);font-size:.87rem;font-weight:700;overflow-wrap:anywhere}
+a.contact-method-value{color:var(--mint)}
+a.contact-method-value:hover{color:var(--violet)}
+.contact-method-note{display:block;margin-top:7px;color:var(--muted);font-size:.75rem;line-height:1.6}
+@media(max-width:850px){.contact-methods{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.contact-methods{grid-template-columns:1fr}}

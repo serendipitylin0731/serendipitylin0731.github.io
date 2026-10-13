@@ -91,6 +91,81 @@
     lineIndex = 0; charIndex = 0; deleting = false; typed.textContent = '';
     typeNext();
   }
+  function setupAmbientBackground() {
+    const canvas = document.getElementById('ambient-background');
+    const context = canvas.getContext('2d');
+    if (!context) return () => {};
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    let dots = [];
+    let width = 0;
+    let height = 0;
+    let frame = 0;
+
+    function draw() {
+      context.clearRect(0, 0, width, height);
+      const light = currentTheme() === 'light';
+      for (let i = 0; i < dots.length; i++) {
+        const dot = dots[i];
+        const rgb = dot.kind ? '118,88,185' : (light ? '22,124,116' : '93,228,199');
+        if (i < 6) {
+          const glow = context.createRadialGradient(dot.x, dot.y, 0, dot.x, dot.y, 90);
+          glow.addColorStop(0, `rgba(${rgb},${light ? .09 : .13})`);
+          glow.addColorStop(1, `rgba(${rgb},0)`);
+          context.fillStyle = glow;
+          context.beginPath();
+          context.arc(dot.x, dot.y, 90, 0, Math.PI * 2);
+          context.fill();
+        }
+        const alpha = (light ? .45 : .65) * (.78 + .22 * Math.sin(dot.phase));
+        context.fillStyle = `rgba(${rgb},${alpha})`;
+        context.beginPath();
+        context.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+        context.fill();
+      }
+    }
+    function resize() {
+      const ratio = Math.min(devicePixelRatio || 1, 2);
+      width = innerWidth;
+      height = innerHeight;
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      dots = Array.from({ length: Math.min(52, Math.max(26, Math.round(width * height / 27000))) }, (_, i) => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: 1.8 + Math.random() * 2.6,
+        vx: (Math.random() - .5) * .34,
+        vy: (Math.random() - .5) * .28,
+        phase: Math.random() * Math.PI * 2,
+        kind: i % 2
+      }));
+      draw();
+    }
+    function animate() {
+      if (motion.matches || document.hidden) { frame = 0; return; }
+      for (const dot of dots) {
+        dot.x = (dot.x + dot.vx + width) % width;
+        dot.y = (dot.y + dot.vy + height) % height;
+        dot.phase += .012;
+      }
+      draw();
+      frame = requestAnimationFrame(animate);
+    }
+    function restart() {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      resize();
+      animate();
+    }
+    addEventListener('resize', restart);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && frame) { cancelAnimationFrame(frame); frame = 0; }
+      else if (!document.hidden && !frame) animate();
+    });
+    motion.addEventListener('change', restart);
+    restart();
+    return draw;
+  }
   function setupProjectCarousel() {
     const carousel = document.getElementById('project-carousel');
     const viewport = document.getElementById('project-viewport');
@@ -213,8 +288,9 @@
   themeButton.addEventListener('click', () => {
     root.dataset.theme = currentTheme() === 'dark' ? 'light' : 'dark';
     try { localStorage.setItem('theme', currentTheme()); } catch (e) {}
-    updateMeta();
+    updateMeta(); redrawAmbient();
   });
   document.getElementById('year').textContent = new Date().getFullYear();
+  const redrawAmbient = setupAmbientBackground();
   updateMeta(); restartTyping(); setupProjectCarousel();
 })();
