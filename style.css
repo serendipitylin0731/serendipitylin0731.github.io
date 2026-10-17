@@ -88,3 +88,7 @@ a.contact-method-value:hover{color:var(--violet)}
 .contact-method-note{display:block;margin-top:7px;color:var(--muted);font-size:.75rem;line-height:1.6}
 @media(max-width:850px){.contact-methods{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px){.contact-methods{grid-template-columns:1fr}}
+.project-art-salary{align-items:center;color:#f6f8f4;background:radial-gradient(circle at 75% 25%,#297d76,transparent 48%),linear-gradient(135deg,#112b3c,#254363)}
+.art-salary{text-align:center;display:flex;flex-direction:column;gap:6px}
+.art-salary span,.art-salary small{font-size:.6rem;letter-spacing:.18em;color:#b9d9d3}
+.art-salary strong{font-size:clamp(2rem,4vw,3rem);line-height:1.2;color:#82ebd4}
