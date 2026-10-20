@@ -42,10 +42,13 @@
     langButton.setAttribute('aria-label', en ? '切换到简体中文' : 'Switch to English');
     themeButton.querySelector('.theme-icon').textContent = currentTheme() === 'dark' ? '☀' : '☾';
     themeButton.setAttribute('aria-label', currentTheme() === 'dark' ? (en ? 'Switch to light theme' : '切换到浅色主题') : (en ? 'Switch to dark theme' : '切换到深色主题'));
-    document.getElementById('project-carousel').setAttribute('aria-label', en ? 'Completed projects carousel' : '已结项项目轮播');
-    document.getElementById('project-viewport').setAttribute('aria-label', en ? 'Completed projects list' : '已结项项目列表');
-    document.getElementById('project-prev').setAttribute('aria-label', en ? 'Previous project' : '上一个项目');
-    document.getElementById('project-next').setAttribute('aria-label', en ? 'Next project' : '下一个项目');
+    document.querySelectorAll('.project-carousel').forEach(carousel => {
+      const category = en ? carousel.dataset.labelEn : carousel.dataset.labelZh;
+      carousel.setAttribute('aria-label', category);
+      carousel.querySelector('.project-viewport').setAttribute('aria-label', en ? `${category.replace(' carousel', '')} list` : `${category.replace('轮播', '')}列表`);
+      carousel.querySelector('.project-prev').setAttribute('aria-label', en ? 'Previous project' : '上一个项目');
+      carousel.querySelector('.project-next').setAttribute('aria-label', en ? 'Next project' : '下一个项目');
+    });
     document.querySelector('meta[name="theme-color"]').content = currentTheme() === 'dark' ? '#0b1020' : '#f6f9fc';
     updateAssets();
     const alts = en ? {
@@ -166,11 +169,10 @@
     restart();
     return draw;
   }
-  function setupProjectCarousel() {
-    const carousel = document.getElementById('project-carousel');
-    const viewport = document.getElementById('project-viewport');
-    const track = document.getElementById('project-track');
-    const position = document.getElementById('carousel-position');
+  function setupProjectCarousel(carousel) {
+    const viewport = carousel.querySelector('.project-viewport');
+    const track = carousel.querySelector('.project-track');
+    const position = carousel.querySelector('.carousel-position');
     const total = track.children.length;
     if (total < 2) return;
     let moving = false;
@@ -189,6 +191,7 @@
     }
     function updateVisible() {
       const visible = visibleCount();
+      carousel.classList.toggle('carousel-ready', total > visible);
       [...track.children].forEach((card, index) => {
         card.inert = index >= visible;
         card.setAttribute('aria-hidden', index >= visible ? 'true' : 'false');
@@ -209,7 +212,7 @@
       if (event.target === track && event.propertyName === 'transform' && moving) finishMove();
     });
     function move(next) {
-      if (moving) return;
+      if (moving || total <= visibleCount()) return;
       if (reducedMotion) {
         if (next) track.append(track.firstElementChild);
         else track.prepend(track.lastElementChild);
@@ -235,8 +238,8 @@
       lastManualMove = Date.now();
       move(next);
     }
-    document.getElementById('project-prev').addEventListener('click', () => manualMove(false));
-    document.getElementById('project-next').addEventListener('click', () => manualMove(true));
+    carousel.querySelector('.project-prev').addEventListener('click', () => manualMove(false));
+    carousel.querySelector('.project-next').addEventListener('click', () => manualMove(true));
     document.addEventListener('keydown', event => {
       if (event.key === 'Tab') lastInputWasKeyboard = true;
     });
@@ -268,7 +271,6 @@
       event.preventDefault();
       if (!moving && Date.now() - lastManualMove > 650) manualMove(event.deltaX > 0);
     }, { passive: false });
-    carousel.classList.add('carousel-ready');
     updateVisible();
     window.addEventListener('resize', updateVisible);
     if (!reducedMotion) {
@@ -292,5 +294,5 @@
   });
   document.getElementById('year').textContent = new Date().getFullYear();
   const redrawAmbient = setupAmbientBackground();
-  updateMeta(); restartTyping(); setupProjectCarousel();
+  updateMeta(); restartTyping(); document.querySelectorAll('.project-carousel').forEach(setupProjectCarousel);
 })();
