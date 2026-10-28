@@ -15,6 +15,6 @@ python3 -m http.server 8000
 
 然后打开 `http://localhost:8000/`。
 
-`assets/` 中的主页横幅、分隔线和时间轴 SVG 来自原 GitHub 个人简介引用的素材；轨迹、CP Tester 与计算机入门讲义的插图为适配网页卡片重新绘制，其余项目使用 CSS 图形；原有技术图标已从简介使用的 skillicons.dev 保存为本地 SVG，避免页面加载时依赖第三方服务。新增图标也保存在本地：WSL（Windows 图标）、GCC、Jupyter、LabVIEW 来自 [Devicon](https://github.com/devicons/devicon)；Mermaid 来自 [Simple Icons](https://github.com/simple-icons/simple-icons)；Origin 使用官网 favicon；GeoGebra 使用其[官方 SVG](https://github.com/geogebra/images/blob/main/geogebra-logo.svg)。各名称与标志归其权利人所有；GeoGebra 图标按其[许可说明](https://www.geogebra.org/license)使用。
+`assets/` 中的主页横幅、分隔线和时间轴 SVG 来自原 GitHub 个人简介引用的素材；全部已结项项目及计算机入门讲义的卡片插图采用统一的 600×360 SVG 界面风格，提供深浅色版本。新增项目插图可运行 `python3 tools/generate-project-visuals.py` 重新生成。原有技术图标已从简介使用的 skillicons.dev 保存为本地 SVG，避免页面加载时依赖第三方服务。新增图标也保存在本地：WSL（Windows 图标）、GCC、Jupyter、LabVIEW 来自 [Devicon](https://github.com/devicons/devicon)；Mermaid 来自 [Simple Icons](https://github.com/simple-icons/simple-icons)；Origin 使用官网 favicon；GeoGebra 使用其[官方 SVG](https://github.com/geogebra/images/blob/main/geogebra-logo.svg)。各名称与标志归其权利人所有；GeoGebra 图标按其[许可说明](https://www.geogebra.org/license)使用。
 
 横幅和学习时间轴使用 SVG 文档嵌入，以保留学校名称上的可点击链接。

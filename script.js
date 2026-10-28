@@ -54,15 +54,27 @@
     const alts = en ? {
       hero: "Hanfeng Lin's profile banner: Less is More, developer tools and routes",
       timeline: 'Education from Wenling Chengdong Primary School to SJTU Zhiyuan College, with mathematics and physics competition awards from 2023 to 2025. School names are links.',
-      rail: 'Trajectory: illustrated Android railway route planner',
+      rail: 'Trajectory: illustrated Web and Android railway route planner',
       'cp-tester': 'CP Tester: code editor and three passing test results',
+      codex: 'Codex Quota Rings: five-hour and seven-day quota rings and status cards',
+      markdown: 'Markdown Preview and Compiler: source editor, preview, and PDF export',
+      'shit-code': 'Shit Code Detector: 0–9 code style score and traceable issues',
+      '3820': '3820 strategic analysis: indicators and sourced answers',
+      ta: 'Zhiye TA Agent: textbook library and answers with page references',
+      salary: 'Teacher attendance and salary tool: validated records and payroll export',
       guides: 'Beginner computing guides for Markdown, Git, WSL, and more',
       skills: 'Icons for the programming languages and development tools listed below'
     } : {
       hero: '林函锋的个人主页横幅：Less is More，开发工具、软件与铁路路线',
       timeline: '从温岭市城东小学到上海交通大学致远学院的学习经历，以及 2023 至 2025 年的数学和物理竞赛获奖时间轴。学校名称可点击。',
-      rail: '轨迹：Android 铁路出行规划路线示意',
+      rail: '轨迹：Web 与 Android 铁路出行规划路线示意',
       'cp-tester': 'CP Tester：代码编辑器与三个通过的测试结果',
+      codex: 'Codex Quota Rings：5 小时与 7 天额度圆环和状态卡片',
+      markdown: 'Markdown Preview & Compiler：源码编辑、预览与 PDF 导出界面',
+      'shit-code': 'Shit Code Detector：0–9 分的代码风格评分与问题列表',
+      '3820': '“3820”知识助手：战略指标图表与有来源的问答',
+      ta: '知页 TA Agent：教材书库与带页码来源的问答',
+      salary: '教师出勤与工资统计程序：考勤校验表与工资导出卡片',
       guides: '计算机入门讲义：Markdown、Git 和 WSL',
       skills: '下方所列编程语言和开发工具的图标'
     };

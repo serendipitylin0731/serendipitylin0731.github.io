@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-labelledby="title desc">
+  <title id="title">Markdown Preview and Compiler</title>
+  <desc id="desc">A source editor beside rendered Markdown and a PDF export badge.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0c1425"/><stop offset="1" stop-color="#20213b"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#59d4e7"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#a78bfa" stop-opacity=".17"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".06"/></pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#0c1425" flood-opacity=".36"/></filter>
+  </defs>
+  <rect width="600" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="600" height="360" rx="24" fill="url(#grid)"/>
+  <circle cx="494" cy="75" r="196" fill="url(#glow)"/>
+  <path d="M25 0H575" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+  <g filter="url(#shadow)"><rect x="43" y="44" width="514" height="272" rx="21" fill="#152238" stroke="#4b607c"/></g>
+  <path d="M43 96L557 96" fill="none" stroke="#4b607c" stroke-width="1" stroke-linecap="round" opacity=".6"/>
+  <rect x="67" y="59" width="24" height="22" rx="6" fill="#213550"/>
+  <text x="79" y="75" fill="#a78bfa" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">◈</text>
+  <text x="104" y="75" fill="#eff5ff" font-family="monospace" font-size="12" font-weight="800" letter-spacing="1">MARKDOWN / PDF</text>
+  <path d="M474 72L527 72" fill="none" stroke="#4b607c" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="535" cy="72" r="4" fill="#a78bfa"/>
+  <text x="73" y="120" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">EDIT</text>
+<text x="319" y="120" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">PREVIEW</text>
+<path d="M299 112L299 283" fill="none" stroke="#4b607c" stroke-width="1" stroke-linecap="round" opacity=".65"/>
+<rect x="75" y="137" width="202" height="137" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<text x="93" y="162" fill="#a78bfa" font-family="monospace" font-size="13" font-weight="800"># Project notes</text>
+<text x="93" y="188" fill="#9caec8" font-family="monospace" font-size="12" font-weight="500">- write</text>
+<text x="93" y="210" fill="#9caec8" font-family="monospace" font-size="12" font-weight="500">- preview</text>
+<text x="93" y="232" fill="#9caec8" font-family="monospace" font-size="12" font-weight="500">- export PDF</text>
+<rect x="318" y="137" width="207" height="137" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<text x="335" y="167" fill="#eff5ff" font-family="monospace" font-size="16" font-weight="800">Project notes</text>
+<path d="M335 177L501 177" fill="none" stroke="#4b607c" stroke-width="1" stroke-linecap="round"/>
+<rect x="336" y="194" width="7" height="7" rx="2" fill="#59d4e7"/>
+<text x="352" y="202" fill="#9caec8" font-family="monospace" font-size="11" font-weight="500">write</text>
+<rect x="336" y="215" width="7" height="7" rx="2" fill="#59d4e7"/>
+<text x="352" y="223" fill="#9caec8" font-family="monospace" font-size="11" font-weight="500">preview</text>
+<rect x="336" y="236" width="7" height="7" rx="2" fill="#59d4e7"/>
+<text x="352" y="244" fill="#9caec8" font-family="monospace" font-size="11" font-weight="500">export PDF</text>
+<rect x="432" y="279" width="93" height="22" rx="11" fill="#a78bfa" opacity=".15"/>
+<text x="478" y="294" fill="#a78bfa" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle">PDF READY</text>
+</svg>

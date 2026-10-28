@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-labelledby="title desc">
+  <title id="title">Codex Quota Rings</title>
+  <desc id="desc">Quota rings and status cards for five-hour and seven-day windows.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#eaf5f6"/><stop offset="1" stop-color="#eae9f8"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#167c74"/><stop offset="1" stop-color="#7555b9"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#167c74" stop-opacity=".12"/><stop offset="1" stop-color="#167c74" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#2e627c" stroke-opacity=".06"/></pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#eaf5f6" flood-opacity=".10"/></filter>
+  </defs>
+  <rect width="600" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="600" height="360" rx="24" fill="url(#grid)"/>
+  <circle cx="494" cy="75" r="196" fill="url(#glow)"/>
+  <path d="M25 0H575" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+  <g filter="url(#shadow)"><rect x="43" y="44" width="514" height="272" rx="21" fill="#ffffff" stroke="#b7ccd9"/></g>
+  <path d="M43 96L557 96" fill="none" stroke="#b7ccd9" stroke-width="1" stroke-linecap="round" opacity=".6"/>
+  <rect x="67" y="59" width="24" height="22" rx="6" fill="#e6f1f5"/>
+  <text x="79" y="75" fill="#167c74" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">◈</text>
+  <text x="104" y="75" fill="#1e344d" font-family="monospace" font-size="12" font-weight="800" letter-spacing="1">CODEX QUOTA RINGS</text>
+  <path d="M474 72L527 72" fill="none" stroke="#b7ccd9" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="535" cy="72" r="4" fill="#167c74"/>
+  <text x="73" y="120" fill="#60798f" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">TWO WINDOWS / LIVE</text>
+<circle cx="164" cy="201" r="64" fill="none" stroke="#e6f1f5" stroke-width="15"/>
+<circle cx="164" cy="201" r="64" fill="none" stroke="#167c74" stroke-width="15" stroke-dasharray="290 402" transform="rotate(-90 164 201)"/>
+<circle cx="164" cy="201" r="43" fill="none" stroke="#e6f1f5" stroke-width="11"/>
+<circle cx="164" cy="201" r="43" fill="none" stroke="#7555b9" stroke-width="11" stroke-dasharray="146 270" transform="rotate(-90 164 201)"/>
+<text x="164" y="199" fill="#1e344d" font-family="monospace" font-size="26" font-weight="800" text-anchor="middle">5h</text>
+<text x="164" y="218" fill="#60798f" font-family="monospace" font-size="11" font-weight="700" text-anchor="middle">7d</text>
+<rect x="285" y="130" width="245" height="64" rx="8" fill="#f2f7fb" stroke="#b7ccd9"/>
+<text x="303" y="151" fill="#60798f" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">FIVE HOURS</text>
+<text x="512" y="151" fill="#167c74" font-family="monospace" font-size="11" font-weight="700" text-anchor="end">72% LEFT</text>
+<rect x="303" y="166" width="209" height="8" rx="4" fill="#e6f1f5"/>
+<rect x="303" y="166" width="158" height="8" rx="4" fill="#167c74"/>
+<rect x="285" y="204" width="245" height="64" rx="8" fill="#f2f7fb" stroke="#b7ccd9"/>
+<text x="303" y="225" fill="#60798f" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">SEVEN DAYS</text>
+<text x="512" y="225" fill="#7555b9" font-family="monospace" font-size="11" font-weight="700" text-anchor="end">54% LEFT</text>
+<rect x="303" y="240" width="209" height="8" rx="4" fill="#e6f1f5"/>
+<rect x="303" y="240" width="118" height="8" rx="4" fill="#7555b9"/>
+<text x="74" y="293" fill="#60798f" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">STATUS BAR  /  EXPLORER</text>
+</svg>

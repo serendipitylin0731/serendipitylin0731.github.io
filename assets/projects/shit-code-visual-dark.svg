@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-labelledby="title desc">
+  <title id="title">Shit Code Detector</title>
+  <desc id="desc">A 0–9 code style score beside traceable issue categories.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0c1425"/><stop offset="1" stop-color="#20213b"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2bc65"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#f2bc65" stop-opacity=".17"/><stop offset="1" stop-color="#f2bc65" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".06"/></pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#0c1425" flood-opacity=".36"/></filter>
+  </defs>
+  <rect width="600" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="600" height="360" rx="24" fill="url(#grid)"/>
+  <circle cx="494" cy="75" r="196" fill="url(#glow)"/>
+  <path d="M25 0H575" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+  <g filter="url(#shadow)"><rect x="43" y="44" width="514" height="272" rx="21" fill="#152238" stroke="#4b607c"/></g>
+  <path d="M43 96L557 96" fill="none" stroke="#4b607c" stroke-width="1" stroke-linecap="round" opacity=".6"/>
+  <rect x="67" y="59" width="24" height="22" rx="6" fill="#213550"/>
+  <text x="79" y="75" fill="#f2bc65" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">◈</text>
+  <text x="104" y="75" fill="#eff5ff" font-family="monospace" font-size="12" font-weight="800" letter-spacing="1">SHIT CODE DETECTOR</text>
+  <path d="M474 72L527 72" fill="none" stroke="#4b607c" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="535" cy="72" r="4" fill="#f2bc65"/>
+  <text x="74" y="123" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">STYLE SCORE / 0–9</text>
+<circle cx="167" cy="201" r="67" fill="none" stroke="#213550" stroke-width="15"/>
+<circle cx="167" cy="201" r="67" fill="none" stroke="#f2bc65" stroke-width="15" stroke-dasharray="150 421" transform="rotate(-90 167 201)"/>
+<text x="167" y="208" fill="#eff5ff" font-family="monospace" font-size="42" font-weight="800" text-anchor="middle">3.2</text>
+<text x="167" y="231" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">TRACEABLE</text>
+<text x="285" y="123" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">ISSUES / REVIEW</text>
+<rect x="285" y="135" width="242" height="38" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<rect x="297" y="147" width="12" height="12" rx="4" fill="#f2bc65" opacity=".7"/>
+<text x="321" y="159" fill="#eff5ff" font-family="monospace" font-size="10" font-weight="700">COMPLEXITY</text>
+<rect x="446" y="151" width="70" height="6" rx="3" fill="#213550"/>
+<rect x="446" y="151" width="45.0" height="6" rx="3" fill="#f2bc65"/>
+<rect x="285" y="182" width="242" height="38" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<rect x="297" y="194" width="12" height="12" rx="4" fill="#a78bfa" opacity=".7"/>
+<text x="321" y="206" fill="#eff5ff" font-family="monospace" font-size="10" font-weight="700">REPETITION</text>
+<rect x="446" y="198" width="70" height="6" rx="3" fill="#213550"/>
+<rect x="446" y="198" width="33.300000000000004" height="6" rx="3" fill="#a78bfa"/>
+<rect x="285" y="229" width="242" height="38" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<rect x="297" y="241" width="12" height="12" rx="4" fill="#f2bc65" opacity=".7"/>
+<text x="321" y="253" fill="#eff5ff" font-family="monospace" font-size="10" font-weight="700">STYLE</text>
+<rect x="446" y="245" width="70" height="6" rx="3" fill="#213550"/>
+<rect x="446" y="245" width="60.75" height="6" rx="3" fill="#f2bc65"/>
+<text x="74" y="292" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">WORKSPACE  ·  FILE  ·  GIT</text>
+<text x="524" y="292" fill="#a78bfa" font-family="monospace" font-size="10" font-weight="700" text-anchor="end">AI / OPTIONAL</text>
+</svg>

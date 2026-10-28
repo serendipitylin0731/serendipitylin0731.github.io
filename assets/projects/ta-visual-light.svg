@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-labelledby="title desc">
+  <title id="title">Zhiye TA Agent</title>
+  <desc id="desc">A textbook library beside answers with page references.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#eaf5f6"/><stop offset="1" stop-color="#eae9f8"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7555b9"/><stop offset="1" stop-color="#167c74"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#7555b9" stop-opacity=".12"/><stop offset="1" stop-color="#7555b9" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#2e627c" stroke-opacity=".06"/></pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#eaf5f6" flood-opacity=".10"/></filter>
+  </defs>
+  <rect width="600" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="600" height="360" rx="24" fill="url(#grid)"/>
+  <circle cx="494" cy="75" r="196" fill="url(#glow)"/>
+  <path d="M25 0H575" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+  <g filter="url(#shadow)"><rect x="43" y="44" width="514" height="272" rx="21" fill="#ffffff" stroke="#b7ccd9"/></g>
+  <path d="M43 96L557 96" fill="none" stroke="#b7ccd9" stroke-width="1" stroke-linecap="round" opacity=".6"/>
+  <rect x="67" y="59" width="24" height="22" rx="6" fill="#e6f1f5"/>
+  <text x="79" y="75" fill="#7555b9" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">◈</text>
+  <text x="104" y="75" fill="#1e344d" font-family="monospace" font-size="12" font-weight="800" letter-spacing="1">ZHIYE TA AGENT</text>
+  <path d="M474 72L527 72" fill="none" stroke="#b7ccd9" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="535" cy="72" r="4" fill="#7555b9"/>
+  <text x="75" y="122" fill="#60798f" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">TEXTBOOK LIBRARY</text>
+<rect x="75" y="145" width="45" height="116" rx="7" fill="#f2f7fb" stroke="#b7ccd9"/>
+<rect x="79" y="149" width="4" height="108" rx="2" fill="#7555b9"/>
+<text x="97" y="189" fill="#7555b9" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">01</text>
+<path d="M90 211L108 211" fill="none" stroke="#b7ccd9" stroke-width="2" stroke-linecap="round"/>
+<rect x="129" y="145" width="45" height="116" rx="7" fill="#f2f7fb" stroke="#b7ccd9"/>
+<rect x="133" y="149" width="4" height="108" rx="2" fill="#167c74"/>
+<text x="151" y="189" fill="#167c74" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">02</text>
+<path d="M144 211L162 211" fill="none" stroke="#b7ccd9" stroke-width="2" stroke-linecap="round"/>
+<rect x="183" y="145" width="45" height="116" rx="7" fill="#f2f7fb" stroke="#b7ccd9"/>
+<rect x="187" y="149" width="4" height="108" rx="2" fill="#7555b9"/>
+<text x="205" y="189" fill="#7555b9" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">03</text>
+<path d="M198 211L216 211" fill="none" stroke="#b7ccd9" stroke-width="2" stroke-linecap="round"/>
+<text x="75" y="289" fill="#60798f" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">113 BOOKS / SEARCH</text>
+<rect x="269" y="125" width="256" height="151" rx="8" fill="#f2f7fb" stroke="#b7ccd9"/>
+<text x="286" y="149" fill="#167c74" font-family="monospace" font-size="10" font-weight="800">QUESTION → ANSWER</text>
+<rect x="286" y="166" width="198" height="6" rx="3" fill="#b7ccd9"/>
+<rect x="286" y="184" width="174" height="6" rx="3" fill="#b7ccd9"/>
+<rect x="286" y="202" width="188" height="6" rx="3" fill="#b7ccd9"/>
+<rect x="286" y="226" width="92" height="23" rx="11" fill="#7555b9" opacity=".18"/>
+<text x="332" y="242" fill="#7555b9" font-family="monospace" font-size="9" font-weight="700" text-anchor="middle">BOOK / P.42</text>
+<rect x="389" y="226" width="116" height="23" rx="11" fill="#167c74" opacity=".16"/>
+<text x="447" y="242" fill="#167c74" font-family="monospace" font-size="9" font-weight="700" text-anchor="middle">PDF / P.45</text>
+</svg>
