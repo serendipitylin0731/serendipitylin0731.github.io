@@ -63,6 +63,7 @@
       ta: 'Zhiye TA Agent: textbook library and answers with page references',
       salary: 'Teacher attendance and salary tool: validated records and payroll export',
       guides: 'Beginner computing guides for Markdown, Git, WSL, and more',
+      documents: 'Documents: illustrated archive of presentations, posters, and research notes',
       skills: 'Icons for the programming languages and development tools listed below'
     } : {
       hero: '林函锋的个人主页横幅：Less is More，开发工具、软件与铁路路线',
@@ -76,6 +77,7 @@
       ta: '知页 TA Agent：教材书库与带页码来源的问答',
       salary: '教师出勤与工资统计程序：考勤校验表与工资导出卡片',
       guides: '计算机入门讲义：Markdown、Git 和 WSL',
+      documents: 'Documents：演示文档、海报和研究资料的档案界面',
       skills: '下方所列编程语言和开发工具的图标'
     };
     document.querySelectorAll('[data-asset]').forEach(el => {

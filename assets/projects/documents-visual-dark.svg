@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-labelledby="title desc">
+  <title id="title">Open materials archive</title>
+  <desc id="desc">Presentation slides, posters, and research notes beside a document preview.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0c1425"/><stop offset="1" stop-color="#20213b"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#59d4e7"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#a78bfa" stop-opacity=".17"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".06"/></pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#0c1425" flood-opacity=".36"/></filter>
+  </defs>
+  <rect width="600" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="600" height="360" rx="24" fill="url(#grid)"/>
+  <circle cx="494" cy="75" r="196" fill="url(#glow)"/>
+  <path d="M25 0H575" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+  <g filter="url(#shadow)"><rect x="43" y="44" width="514" height="272" rx="21" fill="#152238" stroke="#4b607c"/></g>
+  <path d="M43 96L557 96" fill="none" stroke="#4b607c" stroke-width="1" stroke-linecap="round" opacity=".6"/>
+  <rect x="67" y="59" width="24" height="22" rx="6" fill="#213550"/>
+  <text x="79" y="75" fill="#a78bfa" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">◈</text>
+  <text x="104" y="75" fill="#eff5ff" font-family="monospace" font-size="12" font-weight="800" letter-spacing="1">DOCUMENTS / ARCHIVE</text>
+  <path d="M474 72L527 72" fill="none" stroke="#4b607c" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="535" cy="72" r="4" fill="#a78bfa"/>
+  <text x="75" y="121" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">OPEN ARCHIVE / MATERIALS</text>
+<rect x="74" y="137" width="208" height="139" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<rect x="89" y="147" width="178" height="31" rx="7" fill="#213550"/>
+<rect x="99" y="155" width="9" height="14" rx="2" fill="#a78bfa"/>
+<text x="120" y="166" fill="#eff5ff" font-family="monospace" font-size="10" font-weight="700">PRESENTATIONS</text>
+<rect x="89" y="184" width="178" height="31" rx="7" fill="#213550"/>
+<rect x="99" y="192" width="9" height="14" rx="2" fill="#59d4e7"/>
+<text x="120" y="203" fill="#eff5ff" font-family="monospace" font-size="10" font-weight="700">POSTERS</text>
+<rect x="89" y="221" width="178" height="31" rx="7" fill="#213550"/>
+<rect x="99" y="229" width="9" height="14" rx="2" fill="#a78bfa"/>
+<text x="120" y="240" fill="#eff5ff" font-family="monospace" font-size="10" font-weight="700">RESEARCH NOTES</text>
+<rect x="299" y="127" width="226" height="156" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<rect x="319" y="144" width="186" height="121" rx="8" fill="#152238" stroke="#4b607c"/>
+<rect x="335" y="161" width="55" height="6" rx="3" fill="#a78bfa"/>
+<text x="335" y="189" fill="#eff5ff" font-family="monospace" font-size="14" font-weight="800">REFERENCE FILE</text>
+<rect x="335" y="204" width="151" height="5" rx="3" fill="#4b607c"/>
+<rect x="335" y="221" width="139" height="5" rx="3" fill="#4b607c"/>
+<rect x="335" y="238" width="122" height="5" rx="3" fill="#4b607c"/>
+<rect x="421" y="246" width="68" height="15" rx="7" fill="#59d4e7" opacity=".17"/>
+<text x="455" y="257" fill="#59d4e7" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">PDF / DOC</text>
+<text x="75" y="296" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">SLIDES  /  POSTERS  /  NOTES</text>
+</svg>

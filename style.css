@@ -103,15 +103,12 @@ a.contact-method-value:hover{color:var(--violet)}
 .resource-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .resource-card{min-width:0;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--bg-2);transition:border-color .25s,transform .25s}
 .resource-card:hover{border-color:var(--mint);transform:translateY(-3px)}
-.resource-media{height:178px;overflow:hidden;background:var(--surface);border-bottom:1px solid var(--line-soft)}
+.resource-media{aspect-ratio:5/3;flex:none;overflow:hidden;background:var(--surface);border-bottom:1px solid var(--line-soft)}
 .resource-media img{width:100%;height:100%;object-fit:cover}
-.resource-symbol{position:relative;display:flex;align-items:center;padding:22px 28px;background:radial-gradient(circle at 80% 70%,#5c5a9f,transparent 42%),linear-gradient(125deg,#183648,#254965);color:#d8f7ec}
-.resource-symbol span{font-family:"Fira Code",Consolas,monospace;font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:800;letter-spacing:.09em;line-height:1.15}
-.resource-symbol i{position:absolute;right:25px;top:17px;font-style:normal;font-size:2rem;color:#83efd8}
 .resource-content{display:flex;flex:1;flex-direction:column;padding:22px 23px 24px}
 .resource-tag{color:var(--violet);font-family:"Fira Code",Consolas,monospace;font-size:.68rem;font-weight:800;letter-spacing:.13em}
 .resource-content h4{margin:8px 0;font-size:1.1rem}
 .documents-section .resource-content p{margin:0 0 18px;color:var(--muted);font-size:.85rem;line-height:1.75}
 .documents-section .resource-content a{margin-top:auto;font-size:.83rem;text-decoration:none}
 .documents-section .resource-content a:hover{text-decoration:underline}
-@media(max-width:680px){.project-category{padding:17px}.resource-grid{grid-template-columns:1fr}.resource-media{height:155px}.project-category-count{font-size:.59rem}}
+@media(max-width:680px){.project-category{padding:17px}.resource-grid{grid-template-columns:1fr}.project-category-count{font-size:.59rem}}

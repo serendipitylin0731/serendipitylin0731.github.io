@@ -1,4 +1,4 @@
-"""Generate the six project illustrations that share the site's 600×360 visual frame."""
+"""Generate project and resource illustrations in the site's 600×360 visual frame."""
 
 from html import escape
 from pathlib import Path
@@ -26,6 +26,8 @@ ACCENTS = {
     "3820": (("#5de4c7", "#59d4e7"), ("#167c74", "#147e96")),
     "ta": (("#a78bfa", "#5de4c7"), ("#7555b9", "#167c74")),
     "salary": (("#5de4c7", "#f2bc65"), ("#167c74", "#a45e19")),
+    "guides": (("#f2bc65", "#5de4c7"), ("#a45e19", "#167c74")),
+    "documents": (("#a78bfa", "#59d4e7"), ("#7555b9", "#147e96")),
 }
 
 
@@ -173,6 +175,48 @@ def scene_salary(p, a, b):
     return "\n".join(parts)
 
 
+def scene_guides(p, a, b):
+    parts = [text(74, 120, "START HERE / TOOLKIT", p["muted"], 10, 700, spacing=1)]
+    for x, label, name, color in [(70, "01 / WRITE", "Markdown", a),
+                                  (226, "02 / VERSION", "Git", b),
+                                  (382, "03 / BUILD", "WSL", a)]:
+        parts += [rect(x, 135, 148, 141, p["sub"], stroke=p["stroke"]),
+                  rect(x + 1, 135, 146, 3, color, rx=1),
+                  text(x + 12, 159, label, p["muted"], 9, 700),
+                  text(x + 12, 257, name, p["text"], 13, 800)]
+    parts += [text(144, 226, "#", a, 55, 800, anchor="middle"),
+              rect(246, 173, 106, 60, p["soft"], rx=9),
+              '<path d="M276 185v31c0 7 6 11 13 11h28M276 201c0 7 6 11 13 11h28" fill="none" stroke="' + b + '" stroke-width="3" stroke-linecap="round"/>',
+              '<circle cx="276" cy="185" r="5" fill="' + p["sub"] + '" stroke="' + b + '" stroke-width="3"/>',
+              '<circle cx="317" cy="212" r="5" fill="' + p["sub"] + '" stroke="' + b + '" stroke-width="3"/>',
+              '<circle cx="317" cy="227" r="5" fill="' + p["sub"] + '" stroke="' + b + '" stroke-width="3"/>',
+              rect(402, 173, 106, 60, p["soft"], rx=9),
+              text(455, 214, ">_", b, 30, 800, anchor="middle"),
+              text(74, 295, "READ  /  PRACTICE  /  REFERENCE", p["muted"], 10, 700, spacing=1)]
+    return "\n".join(parts)
+
+
+def scene_documents(p, a, b):
+    parts = [
+        text(75, 121, "OPEN ARCHIVE / MATERIALS", p["muted"], 10, 700, spacing=1),
+        rect(74, 137, 208, 139, p["sub"], stroke=p["stroke"]),
+    ]
+    for y, label, color in [(163, "PRESENTATIONS", a), (200, "POSTERS", b),
+                            (237, "RESEARCH NOTES", a)]:
+        parts += [rect(89, y - 16, 178, 31, p["soft"], rx=7),
+                  rect(99, y - 8, 9, 14, color, rx=2),
+                  text(120, y + 3, label, p["text"], 10, 700)]
+    parts += [rect(299, 127, 226, 156, p["sub"], stroke=p["stroke"]),
+              rect(319, 144, 186, 121, p["panel"], rx=8, stroke=p["stroke"]),
+              rect(335, 161, 55, 6, a, rx=3),
+              text(335, 189, "REFERENCE FILE", p["text"], 14, 800),
+              bars(335, 204, [151, 139, 122], p["stroke"], gap=17, height=5),
+              rect(421, 246, 68, 15, b, rx=7, opacity=".17"),
+              text(455, 257, "PDF / DOC", b, 8, 700, anchor="middle"),
+              text(75, 296, "SLIDES  /  POSTERS  /  NOTES", p["muted"], 10, 700, spacing=1)]
+    return "\n".join(parts)
+
+
 SCENES = {
     "codex": ("Codex Quota Rings", "Quota rings and status cards for five-hour and seven-day windows.", "CODEX QUOTA RINGS", scene_codex),
     "markdown": ("Markdown Preview and Compiler", "A source editor beside rendered Markdown and a PDF export badge.", "MARKDOWN / PDF", scene_markdown),
@@ -180,6 +224,8 @@ SCENES = {
     "3820": ("3820 strategic analysis", "A strategic timeline with sourced question answering and data.", "3820 / STRATEGY", scene_3820),
     "ta": ("Zhiye TA Agent", "A textbook library beside answers with page references.", "ZHIYE TA AGENT", scene_ta),
     "salary": ("Teacher attendance and payroll", "Validated attendance rows beside a payroll export card.", "ATTENDANCE / PAYROLL", scene_salary),
+    "guides": ("Beginner computing guides", "Illustrated cards for Markdown, Git, and WSL beginner guides.", "BEGINNER GUIDES", scene_guides),
+    "documents": ("Open materials archive", "Presentation slides, posters, and research notes beside a document preview.", "DOCUMENTS / ARCHIVE", scene_documents),
 }
 
 
