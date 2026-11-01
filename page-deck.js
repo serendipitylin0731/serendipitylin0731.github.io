@@ -48,6 +48,17 @@
         panel.append(projectHeader);
       }
     }
+    if (group.id === 'beyond') {
+      const heading = group.sections[0].querySelector(':scope > .section-heading');
+      const intro = group.sections[0].querySelector(':scope > .beyond-intro');
+      const tabs = group.sections[0].querySelector(':scope > .beyond-tabs');
+      if (heading && intro && tabs) {
+        projectHeader = document.createElement('div');
+        projectHeader.className = 'page-beyond-header';
+        projectHeader.append(heading, intro, tabs);
+        panel.append(projectHeader);
+      }
+    }
     return { id: group.id, sections: group.sections, panel, scroller, projectHeader, readIndex: 0, readCount: 1, readTarget: null, readTimer: 0 };
   });
 

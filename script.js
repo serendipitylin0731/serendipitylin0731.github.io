@@ -246,10 +246,10 @@
     if (categories.length !== 2 || !summary || !current || !resources) return;
 
     const views = [
-      { id: 'extensions', zh: 'VS Code 插件', en: 'Extensions', panel: categories[0], bar: categories[0].querySelector('.carousel-bar'), count: categories[0].querySelectorAll('.project-card').length },
-      { id: 'software', zh: '软件', en: 'Software', panel: categories[1], bar: categories[1].querySelector('.carousel-bar'), count: categories[1].querySelectorAll('.project-card').length },
-      { id: 'current', zh: '近期项目', en: 'Current', panel: current, count: current.querySelectorAll('.current-item').length },
-      { id: 'resources', zh: '资料分享', en: 'Resources', panel: resources, count: resources.querySelectorAll('.resource-card').length }
+      { id: 'extensions', zh: 'VS Code 插件', en: 'Extensions', panel: categories[0], bar: categories[0].querySelector('.carousel-bar') },
+      { id: 'software', zh: '软件', en: 'Software', panel: categories[1], bar: categories[1].querySelector('.carousel-bar') },
+      { id: 'current', zh: '近期项目', en: 'Current', panel: current },
+      { id: 'resources', zh: '资料分享', en: 'Resources', panel: resources }
     ];
     const tabs = document.createElement('div');
     tabs.className = 'project-tabs';
@@ -265,7 +265,7 @@
       button.id = `project-tab-${view.id}`;
       button.setAttribute('role', 'tab');
       button.setAttribute('aria-controls', `project-view-${view.id}`);
-      button.innerHTML = `<span class="project-tab-number" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span><span class="project-tab-label"><span data-lang="zh">${view.zh}</span><span data-lang="en">${view.en}</span></span><span class="project-tab-count" aria-hidden="true">${String(view.count).padStart(2, '0')}</span>`;
+      button.innerHTML = `<span class="project-tab-number" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span><span class="project-tab-label"><span data-lang="zh">${view.zh}</span><span data-lang="en">${view.en}</span></span>`;
       view.panel.id = `project-view-${view.id}`;
       view.panel.classList.add('project-view');
       view.panel.setAttribute('role', 'tabpanel');
@@ -303,6 +303,57 @@
     labelTabs();
     activate(0);
   }
+  function setupBeyondViews() {
+    const section = document.getElementById('beyond');
+    const cards = [...section.querySelectorAll('.beyond-card')];
+    const labels = [['游戏', 'Games'], ['文艺', 'Arts'], ['运动', 'Sports']];
+    if (cards.length !== labels.length) return;
+    const tabs = document.createElement('div');
+    tabs.className = 'beyond-tabs';
+    tabs.setAttribute('role', 'tablist');
+    section.querySelector(':scope > .beyond-intro').after(tabs);
+    let selected = 0;
+    const buttons = cards.map((card, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'beyond-tab';
+      button.id = `beyond-tab-${index}`;
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-controls', `beyond-view-${index}`);
+      button.innerHTML = `<span data-lang="zh">${labels[index][0]}</span><span data-lang="en">${labels[index][1]}</span>`;
+      card.id = `beyond-view-${index}`;
+      card.setAttribute('role', 'tabpanel');
+      card.setAttribute('aria-labelledby', button.id);
+      tabs.append(button);
+      return button;
+    });
+    function activate(index, focus = false) {
+      const changed = selected !== index;
+      selected = index;
+      cards.forEach((card, i) => {
+        card.hidden = i !== selected;
+        buttons[i].setAttribute('aria-selected', String(i === selected));
+        buttons[i].tabIndex = i === selected ? 0 : -1;
+      });
+      if (changed) document.dispatchEvent(new CustomEvent('deck:layoutchange', { detail: { reset: true } }));
+      if (focus) buttons[selected].focus({ preventScroll: true });
+    }
+    buttons.forEach((button, index) => button.addEventListener('click', () => activate(index)));
+    tabs.addEventListener('keydown', event => {
+      let index = selected;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') index = (selected + 1) % cards.length;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') index = (selected + cards.length - 1) % cards.length;
+      else if (event.key === 'Home') index = 0;
+      else if (event.key === 'End') index = cards.length - 1;
+      else return;
+      event.preventDefault();
+      activate(index, true);
+    });
+    const labelTabs = () => tabs.setAttribute('aria-label', currentLang() === 'en' ? 'Interests' : '兴趣分类');
+    new MutationObserver(labelTabs).observe(root, { attributes: true, attributeFilter: ['lang'] });
+    labelTabs();
+    activate(0);
+  }
   langButton.addEventListener('click', () => {
     root.lang = currentLang() === 'en' ? 'zh-CN' : 'en';
     try { localStorage.setItem('lang', currentLang()); } catch (e) {}
@@ -318,5 +369,5 @@
   });
   document.getElementById('year').textContent = new Date().getFullYear();
   const redrawAmbient = setupAmbientBackground();
-  updateMeta(); restartTyping(); document.querySelectorAll('.project-carousel').forEach(setupProjectCarousel); setupProjectViews();
+  updateMeta(); restartTyping(); document.querySelectorAll('.project-carousel').forEach(setupProjectCarousel); setupProjectViews(); setupBeyondViews();
 })();

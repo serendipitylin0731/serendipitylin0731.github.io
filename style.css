@@ -186,11 +186,10 @@ html.deck-ready{height:100%;overflow:hidden;scroll-behavior:auto}
 .project-tab{display:flex;align-items:center;gap:10px;min-width:0;min-height:54px;padding:10px 13px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--muted);font:inherit;text-align:left;cursor:pointer;transition:background .22s,border-color .22s,color .22s}
 .project-tab:hover{color:var(--text);background:var(--surface-2)}
 .project-tab[aria-selected="true"]{color:var(--text);border-color:var(--line);background:var(--surface);box-shadow:0 5px 18px rgba(0,0,0,.07)}
-.project-tab-number,.project-tab-count{font-family:"Fira Code","SFMono-Regular",Consolas,monospace;font-size:.65rem;font-weight:800;letter-spacing:.06em}
+.project-tab-number{font-family:"Fira Code","SFMono-Regular",Consolas,monospace;font-size:.65rem;font-weight:800;letter-spacing:.06em}
 .project-tab-number{color:var(--faint)}
 .project-tab[aria-selected="true"] .project-tab-number{color:var(--mint)}
 .project-tab-label{overflow:hidden;font-size:.84rem;font-weight:750;text-overflow:ellipsis;white-space:nowrap}
-.project-tab-count{margin-left:auto;color:var(--faint)}
 .project-view[hidden],.project-section-summary[hidden]{display:none!important}
 .project-view{animation:project-view-in .4s cubic-bezier(.22,1,.36,1) both}
 #projects>.project-view.project-category,#projects>.project-view.current-projects,#projects>.project-view.documents-section{margin-top:0}
@@ -263,7 +262,7 @@ html.deck-ready{height:100%;overflow:hidden;scroll-behavior:auto}
   .page-project-carousels .carousel-bar p{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   .page-project-header .project-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}
   .page-project-header .project-tab{justify-content:center;min-height:38px;padding:5px 2px;gap:0}
-  .page-project-header .project-tab-number,.page-project-header .project-tab-count{display:none}
+  .page-project-header .project-tab-number{display:none}
   .page-project-header .project-tab-label{overflow:visible;font-size:.62rem;line-height:1.2;text-align:center;text-overflow:clip;white-space:normal;overflow-wrap:anywhere}
   .deck-ready #projects{padding-bottom:20px}
   .deck-reader{left:12px;bottom:12px;gap:5px;padding:6px}
@@ -304,4 +303,42 @@ html.deck-ready{height:100%;overflow:hidden;scroll-behavior:auto}
   .page-project-carousels .carousel-controls{gap:3px}
   .page-project-carousels .carousel-position{margin-right:0;white-space:nowrap}
   .page-project-carousels .carousel-controls button{width:28px;height:28px}
+}
+
+/* A fixed interest index keeps each subject readable across full-screen pages. */
+.beyond-tabs{display:flex;gap:6px;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--header);backdrop-filter:blur(20px)}
+.beyond-tab{flex:1;min-height:42px;padding:8px 16px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--muted);font:inherit;font-size:.84rem;font-weight:750;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.beyond-tab:hover{color:var(--text);background:var(--surface-2)}
+.beyond-tab[aria-selected="true"]{color:var(--mint);background:var(--surface);border-color:var(--line)}
+.beyond-card[hidden]{display:none!important}
+.page-beyond-header{position:absolute;z-index:3;top:0;left:0;right:0;width:min(1120px,calc(100% - 112px));margin:auto;padding:clamp(12px,2vh,22px) 0 10px}
+.page-beyond-header .section-heading{margin:0 0 5px}
+.page-beyond-header .beyond-intro{margin:0 0 12px}
+.story-page[data-page="beyond"]>.story-page-scroll{top:var(--project-header-height,150px)}
+.deck-ready #beyond{padding-top:8px;padding-bottom:24px}
+.deck-ready .beyond-card{margin:0;border:0;background:transparent;box-shadow:none}
+.deck-ready .beyond-card:hover{box-shadow:none}
+.deck-ready .beyond-visual,.deck-ready .beyond-card-games .beyond-visual{height:clamp(90px,17vh,150px);border:1px solid var(--line);border-radius:14px}
+.deck-ready .beyond-content,.deck-ready .beyond-card-games .beyond-content{padding:20px 2px 8px}
+.deck-ready .beyond-title-row{margin-bottom:16px;break-after:avoid}
+.deck-ready .beyond-list li{margin:0;padding:14px 0;border:0;border-top:1px solid var(--line-soft);border-radius:0;background:transparent}
+.deck-ready .beyond-list li>strong{margin-bottom:5px;break-after:avoid}
+.deck-ready .beyond-list p{max-width:86ch}
+.deck-ready .beyond-list .beyond-note{margin-top:8px;padding-top:8px}
+@media(max-width:680px){
+ .page-beyond-header{width:min(100% - 32px,1120px);padding:10px 0 8px}
+ .page-beyond-header .section-heading h2{font-size:1.3rem}
+ .page-beyond-header .beyond-intro{font-size:.75rem;margin-bottom:8px}
+ .beyond-tab{min-height:36px;padding:6px 8px;font-size:.76rem}
+ .deck-ready .beyond-visual,.deck-ready .beyond-card-games .beyond-visual{height:min(17vh,105px)}
+ .deck-ready .beyond-content,.deck-ready .beyond-card-games .beyond-content{padding-top:14px}
+ .deck-ready .beyond-list li{padding:10px 0}
+}
+@media(max-height:500px){
+ .page-beyond-header{display:flex;align-items:center;gap:12px;padding:6px 0}
+ .page-beyond-header .section-heading{flex:none;margin:0}
+ .page-beyond-header .section-heading .eyebrow,.page-beyond-header .beyond-intro{display:none}
+ .page-beyond-header .section-heading h2{font-size:1rem}
+ .page-beyond-header .beyond-tabs{flex:1}
+ .beyond-tab{min-height:32px}
 }
