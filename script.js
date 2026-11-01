@@ -291,7 +291,8 @@
     window.addEventListener('resize', updateVisible);
     if (!reducedMotion) {
       setInterval(() => {
-        if (!moving && !document.hidden && !carousel.matches(':hover') && !keyboardFocus && Date.now() - lastManualMove >= 4200) move(true);
+        const page = carousel.closest('.story-page');
+        if (!moving && !document.hidden && (!page || page.classList.contains('is-active')) && !carousel.matches(':hover') && !keyboardFocus && Date.now() - lastManualMove >= 4200) move(true);
       }, 4200);
     }
   }
