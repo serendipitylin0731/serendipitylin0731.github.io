@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-labelledby="title desc">
+  <title id="title">Hello Codex quota launcher</title>
+  <desc id="desc">A five-hour quota status card beside daily schedule and manual send controls.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0c1425"/><stop offset="1" stop-color="#20213b"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#59d4e7"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#59d4e7" stop-opacity=".17"/><stop offset="1" stop-color="#59d4e7" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".06"/></pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#0c1425" flood-opacity=".36"/></filter>
+  </defs>
+  <rect width="600" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="600" height="360" rx="24" fill="url(#grid)"/>
+  <circle cx="494" cy="75" r="196" fill="url(#glow)"/>
+  <path d="M25 0H575" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+  <g filter="url(#shadow)"><rect x="43" y="44" width="514" height="272" rx="21" fill="#152238" stroke="#4b607c"/></g>
+  <path d="M43 96L557 96" fill="none" stroke="#4b607c" stroke-width="1" stroke-linecap="round" opacity=".6"/>
+  <rect x="67" y="59" width="24" height="22" rx="6" fill="#213550"/>
+  <text x="79" y="75" fill="#59d4e7" font-family="monospace" font-size="14" font-weight="800" text-anchor="middle">◈</text>
+  <text x="104" y="75" fill="#eff5ff" font-family="monospace" font-size="12" font-weight="800" letter-spacing="1">HELLO! CODEX</text>
+  <path d="M474 72L527 72" fill="none" stroke="#4b607c" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="535" cy="72" r="4" fill="#59d4e7"/>
+  <text x="75" y="121" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">QUOTA / FIVE-HOUR WINDOW</text>
+<rect x="75" y="136" width="286" height="138" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<text x="93" y="161" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700">CODEX STATUS</text>
+<text x="93" y="207" fill="#eff5ff" font-family="monospace" font-size="38" font-weight="800">5h</text>
+<text x="159" y="207" fill="#59d4e7" font-family="monospace" font-size="14" font-weight="800">WINDOW</text>
+<rect x="93" y="223" width="250" height="9" rx="4" fill="#213550"/>
+<rect x="93" y="223" width="157" height="9" rx="4" fill="#59d4e7"/>
+<text x="93" y="258" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700">RESET / SCHEDULED</text>
+<rect x="378" y="136" width="148" height="138" rx="8" fill="#1b2c45" stroke="#4b607c"/>
+<text x="395" y="160" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700">TODAY</text>
+<rect x="395" y="178" width="114" height="14" rx="7" fill="#213550"/>
+<rect x="395" y="178" width="68" height="14" rx="7" fill="#a78bfa" opacity=".7"/>
+<rect x="474" y="178" width="35" height="14" rx="7" fill="#59d4e7" opacity=".8"/>
+<text x="395" y="212" fill="#9caec8" font-family="monospace" font-size="9" font-weight="700">ACTIVE HOURS</text>
+<rect x="395" y="226" width="114" height="29" rx="8" fill="#59d4e7" opacity=".18"/>
+<text x="452" y="245" fill="#59d4e7" font-family="monospace" font-size="11" font-weight="800" text-anchor="middle">SEND NOW</text>
+<text x="75" y="295" fill="#9caec8" font-family="monospace" font-size="10" font-weight="700" letter-spacing="1">AUTO MONITOR  /  TRAY  /  MANUAL</text>
+</svg>

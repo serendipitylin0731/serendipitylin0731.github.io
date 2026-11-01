@@ -28,6 +28,7 @@ ACCENTS = {
     "salary": (("#5de4c7", "#f2bc65"), ("#167c74", "#a45e19")),
     "guides": (("#f2bc65", "#5de4c7"), ("#a45e19", "#167c74")),
     "documents": (("#a78bfa", "#59d4e7"), ("#7555b9", "#147e96")),
+    "hello-codex": (("#59d4e7", "#a78bfa"), ("#147e96", "#7555b9")),
 }
 
 
@@ -217,6 +218,29 @@ def scene_documents(p, a, b):
     return "\n".join(parts)
 
 
+def scene_hello_codex(p, a, b):
+    parts = [
+        text(75, 121, "QUOTA / FIVE-HOUR WINDOW", p["muted"], 10, 700, spacing=1),
+        rect(75, 136, 286, 138, p["sub"], stroke=p["stroke"]),
+        text(93, 161, "CODEX STATUS", p["muted"], 10, 700),
+        text(93, 207, "5h", p["text"], 38, 800),
+        text(159, 207, "WINDOW", a, 14, 800),
+        rect(93, 223, 250, 9, p["soft"], rx=4),
+        rect(93, 223, 157, 9, a, rx=4),
+        text(93, 258, "RESET / SCHEDULED", p["muted"], 10, 700),
+        rect(378, 136, 148, 138, p["sub"], stroke=p["stroke"]),
+        text(395, 160, "TODAY", p["muted"], 10, 700),
+        rect(395, 178, 114, 14, p["soft"], rx=7),
+        rect(395, 178, 68, 14, b, rx=7, opacity=".7"),
+        rect(474, 178, 35, 14, a, rx=7, opacity=".8"),
+        text(395, 212, "ACTIVE HOURS", p["muted"], 9, 700),
+        rect(395, 226, 114, 29, a, rx=8, opacity=".18"),
+        text(452, 245, "SEND NOW", a, 11, 800, anchor="middle"),
+        text(75, 295, "AUTO MONITOR  /  TRAY  /  MANUAL", p["muted"], 10, 700, spacing=1),
+    ]
+    return "\n".join(parts)
+
+
 SCENES = {
     "codex": ("Codex Quota Rings", "Quota rings and status cards for five-hour and seven-day windows.", "CODEX QUOTA RINGS", scene_codex),
     "markdown": ("Markdown Preview and Compiler", "A source editor beside rendered Markdown and a PDF export badge.", "MARKDOWN / PDF", scene_markdown),
@@ -226,6 +250,7 @@ SCENES = {
     "salary": ("Teacher attendance and payroll", "Validated attendance rows beside a payroll export card.", "ATTENDANCE / PAYROLL", scene_salary),
     "guides": ("Beginner computing guides", "Illustrated cards for Markdown, Git, and WSL beginner guides.", "BEGINNER GUIDES", scene_guides),
     "documents": ("Open materials archive", "Presentation slides, posters, and research notes beside a document preview.", "DOCUMENTS / ARCHIVE", scene_documents),
+    "hello-codex": ("Hello Codex quota launcher", "A five-hour quota status card beside daily schedule and manual send controls.", "HELLO! CODEX", scene_hello_codex),
 }
 
 
