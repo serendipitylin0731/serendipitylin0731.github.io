@@ -46,8 +46,9 @@
       const category = en ? carousel.dataset.labelEn : carousel.dataset.labelZh;
       carousel.setAttribute('aria-label', category);
       carousel.querySelector('.project-viewport').setAttribute('aria-label', en ? `${category.replace(' carousel', '')} list` : `${category.replace('轮播', '')}列表`);
-      carousel.querySelector('.project-prev').setAttribute('aria-label', en ? 'Previous project' : '上一个项目');
-      carousel.querySelector('.project-next').setAttribute('aria-label', en ? 'Next project' : '下一个项目');
+      const controls = carousel.deckControls || { previous: carousel.querySelector('.project-prev'), next: carousel.querySelector('.project-next') };
+      controls.previous.setAttribute('aria-label', en ? 'Previous project' : '上一个项目');
+      controls.next.setAttribute('aria-label', en ? 'Next project' : '下一个项目');
     });
     document.querySelector('meta[name="theme-color"]').content = currentTheme() === 'dark' ? '#0b1020' : '#f6f9fc';
     updateAssets();
@@ -189,113 +190,52 @@
     const viewport = carousel.querySelector('.project-viewport');
     const track = carousel.querySelector('.project-track');
     const position = carousel.querySelector('.carousel-position');
-    const total = track.children.length;
-    if (total < 2) return;
-    let moving = false;
-    let direction = 0;
+    const previous = carousel.querySelector('.project-prev');
+    const next = carousel.querySelector('.project-next');
+    carousel.deckControls = { bar: carousel.querySelector('.carousel-bar'), previous, next };
+    const cards = [...track.children];
+    if (cards.length < 2) return;
+    let current = 0;
     let touchStartX = null;
-    let keyboardFocus = false;
-    let lastInputWasKeyboard = false;
-    let lastManualMove = 0;
+    let lastWheel = 0;
+    carousel.classList.add('carousel-ready', 'carousel-single');
 
-    function visibleCount() {
-      return Number.parseInt(getComputedStyle(carousel).getPropertyValue('--visible-cards'), 10) || 3;
-    }
-    function stepWidth() {
-      return track.firstElementChild.getBoundingClientRect().width +
-        Number.parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap);
-    }
-    function updateVisible() {
-      const visible = visibleCount();
-      carousel.classList.toggle('carousel-ready', total > visible);
-      [...track.children].forEach((card, index) => {
-        card.inert = index >= visible;
-        card.setAttribute('aria-hidden', index >= visible ? 'true' : 'false');
+    function show(index, notify = true) {
+      current = (index + cards.length) % cards.length;
+      cards.forEach((card, i) => {
+        card.hidden = i !== current;
+        card.inert = i !== current;
+        card.setAttribute('aria-hidden', i === current ? 'false' : 'true');
       });
-      position.textContent = `${String(track.firstElementChild.dataset.projectIndex).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+      position.textContent = `${String(current + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+      if (notify) document.dispatchEvent(new CustomEvent('deck:layoutchange', { detail: { reset: true } }));
     }
-    function finishMove() {
-      if (direction > 0) track.append(track.firstElementChild);
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0)';
-      void track.offsetWidth;
-      track.style.transition = '';
-      moving = false;
-      direction = 0;
-      updateVisible();
-    }
-    track.addEventListener('transitionend', event => {
-      if (event.target === track && event.propertyName === 'transform' && moving) finishMove();
-    });
-    carousel.addEventListener('projectviewhide', () => { if (moving) finishMove(); });
-    function move(next) {
-      if (moving || total <= visibleCount()) return;
-      if (reducedMotion) {
-        if (next) track.append(track.firstElementChild);
-        else track.prepend(track.lastElementChild);
-        updateVisible();
-        return;
-      }
-      moving = true;
-      direction = next ? 1 : -1;
-      const distance = stepWidth();
-      if (next) {
-        track.style.transition = 'transform .55s ease';
-        track.style.transform = `translateX(-${distance}px)`;
-      } else {
-        track.prepend(track.lastElementChild);
-        track.style.transition = 'none';
-        track.style.transform = `translateX(-${distance}px)`;
-        void track.offsetWidth;
-        track.style.transition = 'transform .55s ease';
-        track.style.transform = 'translateX(0)';
-      }
-    }
-    function manualMove(next) {
-      lastManualMove = Date.now();
-      move(next);
-    }
-    carousel.querySelector('.project-prev').addEventListener('click', () => manualMove(false));
-    carousel.querySelector('.project-next').addEventListener('click', () => manualMove(true));
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Tab') lastInputWasKeyboard = true;
-    });
-    document.addEventListener('pointerdown', () => { lastInputWasKeyboard = false; keyboardFocus = false; });
-    carousel.addEventListener('focusin', () => { keyboardFocus = lastInputWasKeyboard; });
-    carousel.addEventListener('focusout', event => {
-      if (!carousel.contains(event.relatedTarget)) keyboardFocus = false;
-    });
-    carousel.addEventListener('keydown', () => { keyboardFocus = true; });
+    previous.addEventListener('click', () => show(current - 1));
+    next.addEventListener('click', () => show(current + 1));
     viewport.addEventListener('keydown', event => {
       if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
         event.preventDefault();
-        manualMove(event.key === 'ArrowRight');
+        show(current + (event.key === 'ArrowRight' ? 1 : -1));
       }
     });
-    viewport.addEventListener('touchstart', event => {
-      touchStartX = event.changedTouches[0].clientX;
-    }, { passive: true });
+    viewport.addEventListener('touchstart', event => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
     viewport.addEventListener('touchend', event => {
       if (touchStartX === null) return;
       const distance = touchStartX - event.changedTouches[0].clientX;
       touchStartX = null;
       if (Math.abs(distance) < 45) return;
       if (event.cancelable) event.preventDefault();
-      manualMove(distance > 0);
+      show(current + (distance > 0 ? 1 : -1));
     }, { passive: false });
     viewport.addEventListener('wheel', event => {
       if (Math.abs(event.deltaX) < 25 || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
       event.preventDefault();
-      if (!moving && Date.now() - lastManualMove > 650) manualMove(event.deltaX > 0);
+      if (Date.now() - lastWheel > 650) {
+        lastWheel = Date.now();
+        show(current + (event.deltaX > 0 ? 1 : -1));
+      }
     }, { passive: false });
-    updateVisible();
-    window.addEventListener('resize', updateVisible);
-    if (!reducedMotion) {
-      setInterval(() => {
-        const page = carousel.closest('.story-page');
-        if (!moving && !document.hidden && !carousel.closest('[hidden]') && (!page || page.classList.contains('is-active')) && !carousel.matches(':hover') && !keyboardFocus && Date.now() - lastManualMove >= 4200) move(true);
-      }, 4200);
-    }
+    show(0, false);
   }
   function setupProjectViews() {
     const section = document.getElementById('projects');
@@ -306,8 +246,8 @@
     if (categories.length !== 2 || !summary || !current || !resources) return;
 
     const views = [
-      { id: 'extensions', zh: 'VS Code 插件', en: 'Extensions', panel: categories[0], count: categories[0].querySelectorAll('.project-card').length },
-      { id: 'software', zh: '软件', en: 'Software', panel: categories[1], count: categories[1].querySelectorAll('.project-card').length },
+      { id: 'extensions', zh: 'VS Code 插件', en: 'Extensions', panel: categories[0], bar: categories[0].querySelector('.carousel-bar'), count: categories[0].querySelectorAll('.project-card').length },
+      { id: 'software', zh: '软件', en: 'Software', panel: categories[1], bar: categories[1].querySelector('.carousel-bar'), count: categories[1].querySelectorAll('.project-card').length },
       { id: 'current', zh: '近期项目', en: 'Current', panel: current, count: current.querySelectorAll('.current-item').length },
       { id: 'resources', zh: '资料分享', en: 'Resources', panel: resources, count: resources.querySelectorAll('.resource-card').length }
     ];
@@ -336,16 +276,15 @@
     function activate(index, focus = false) {
       if (index < 0 || index >= views.length) return;
       const changed = index !== selected;
-      if (changed) views[selected].panel.querySelectorAll('.project-carousel').forEach(carousel => carousel.dispatchEvent(new Event('projectviewhide')));
       selected = index;
       views.forEach((view, i) => {
         view.panel.hidden = i !== selected;
+        if (view.bar) view.bar.hidden = i !== selected;
         buttons[i].setAttribute('aria-selected', i === selected ? 'true' : 'false');
         buttons[i].tabIndex = i === selected ? 0 : -1;
       });
       summary.hidden = selected > 1;
-      const scroller = section.closest('.story-page-scroll');
-      if (changed && scroller && scroller.scrollTop > 0) scroller.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+      if (changed) document.dispatchEvent(new CustomEvent('deck:layoutchange', { detail: { reset: true } }));
       if (focus) buttons[selected].focus({ preventScroll: true });
     }
     buttons.forEach((button, index) => button.addEventListener('click', () => activate(index)));
