@@ -227,6 +227,7 @@
     track.addEventListener('transitionend', event => {
       if (event.target === track && event.propertyName === 'transform' && moving) finishMove();
     });
+    carousel.addEventListener('projectviewhide', () => { if (moving) finishMove(); });
     function move(next) {
       if (moving || total <= visibleCount()) return;
       if (reducedMotion) {
@@ -292,9 +293,76 @@
     if (!reducedMotion) {
       setInterval(() => {
         const page = carousel.closest('.story-page');
-        if (!moving && !document.hidden && (!page || page.classList.contains('is-active')) && !carousel.matches(':hover') && !keyboardFocus && Date.now() - lastManualMove >= 4200) move(true);
+        if (!moving && !document.hidden && !carousel.closest('[hidden]') && (!page || page.classList.contains('is-active')) && !carousel.matches(':hover') && !keyboardFocus && Date.now() - lastManualMove >= 4200) move(true);
       }, 4200);
     }
+  }
+  function setupProjectViews() {
+    const section = document.getElementById('projects');
+    const categories = [...section.querySelectorAll(':scope > .project-category')];
+    const summary = section.querySelector(':scope > .subheading-row');
+    const current = section.querySelector(':scope > .current-projects');
+    const resources = section.querySelector(':scope > .documents-section');
+    if (categories.length !== 2 || !summary || !current || !resources) return;
+
+    const views = [
+      { id: 'extensions', zh: 'VS Code 插件', en: 'Extensions', panel: categories[0], count: categories[0].querySelectorAll('.project-card').length },
+      { id: 'software', zh: '软件', en: 'Software', panel: categories[1], count: categories[1].querySelectorAll('.project-card').length },
+      { id: 'current', zh: '近期项目', en: 'Current', panel: current, count: current.querySelectorAll('.current-item').length },
+      { id: 'resources', zh: '资料分享', en: 'Resources', panel: resources, count: resources.querySelectorAll('.resource-card').length }
+    ];
+    const tabs = document.createElement('div');
+    tabs.className = 'project-tabs';
+    tabs.setAttribute('role', 'tablist');
+    section.querySelector(':scope > .section-heading').after(tabs);
+    summary.classList.add('project-section-summary');
+
+    let selected = 0;
+    const buttons = views.map((view, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'project-tab';
+      button.id = `project-tab-${view.id}`;
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-controls', `project-view-${view.id}`);
+      button.innerHTML = `<span class="project-tab-number" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span><span class="project-tab-label"><span data-lang="zh">${view.zh}</span><span data-lang="en">${view.en}</span></span><span class="project-tab-count" aria-hidden="true">${String(view.count).padStart(2, '0')}</span>`;
+      view.panel.id = `project-view-${view.id}`;
+      view.panel.classList.add('project-view');
+      view.panel.setAttribute('role', 'tabpanel');
+      view.panel.setAttribute('aria-labelledby', button.id);
+      tabs.append(button);
+      return button;
+    });
+    function activate(index, focus = false) {
+      if (index < 0 || index >= views.length) return;
+      const changed = index !== selected;
+      if (changed) views[selected].panel.querySelectorAll('.project-carousel').forEach(carousel => carousel.dispatchEvent(new Event('projectviewhide')));
+      selected = index;
+      views.forEach((view, i) => {
+        view.panel.hidden = i !== selected;
+        buttons[i].setAttribute('aria-selected', i === selected ? 'true' : 'false');
+        buttons[i].tabIndex = i === selected ? 0 : -1;
+      });
+      summary.hidden = selected > 1;
+      const scroller = section.closest('.story-page-scroll');
+      if (changed && scroller && scroller.scrollTop > 0) scroller.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+      if (focus) buttons[selected].focus({ preventScroll: true });
+    }
+    buttons.forEach((button, index) => button.addEventListener('click', () => activate(index)));
+    tabs.addEventListener('keydown', event => {
+      let index = selected;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') index = (selected + 1) % views.length;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') index = (selected + views.length - 1) % views.length;
+      else if (event.key === 'Home') index = 0;
+      else if (event.key === 'End') index = views.length - 1;
+      else return;
+      event.preventDefault();
+      activate(index, true);
+    });
+    const labelTabs = () => tabs.setAttribute('aria-label', currentLang() === 'en' ? 'Project categories' : '项目分类');
+    new MutationObserver(labelTabs).observe(root, { attributes: true, attributeFilter: ['lang'] });
+    labelTabs();
+    activate(0);
   }
   langButton.addEventListener('click', () => {
     root.lang = currentLang() === 'en' ? 'zh-CN' : 'en';
@@ -311,5 +379,5 @@
   });
   document.getElementById('year').textContent = new Date().getFullYear();
   const redrawAmbient = setupAmbientBackground();
-  updateMeta(); restartTyping(); document.querySelectorAll('.project-carousel').forEach(setupProjectCarousel);
+  updateMeta(); restartTyping(); document.querySelectorAll('.project-carousel').forEach(setupProjectCarousel); setupProjectViews();
 })();

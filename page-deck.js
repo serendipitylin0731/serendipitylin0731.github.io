@@ -5,7 +5,7 @@
   const sections = [...main.querySelectorAll(':scope > section')];
   const labels = {
     top: ['首页', 'Home'],
-    about: ['关于我', 'About'],
+    about: ['关于与经历', 'About & journey'],
     journey: ['学习经历', 'Journey'],
     projects: ['项目', 'Projects'],
     skills: ['技术与工具', 'Tools'],
@@ -15,7 +15,15 @@
   if (sections.length < 2 || sections.some(section => !labels[section.id])) return;
 
   const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
-  const pages = sections.map(section => {
+  const groups = sections.reduce((result, section) => {
+    if (section.id === 'journey' && result.length && result[result.length - 1].id === 'about') {
+      result[result.length - 1].sections.push(section);
+    } else {
+      result.push({ id: section.id, sections: [section] });
+    }
+    return result;
+  }, []);
+  const pages = groups.map(group => {
     const panel = document.createElement('div');
     const scroller = document.createElement('div');
     const content = document.createElement('div');
@@ -23,12 +31,12 @@
     scroller.className = 'story-page-scroll';
     scroller.tabIndex = -1;
     content.className = 'story-page-content';
-    main.insertBefore(panel, section);
+    main.insertBefore(panel, group.sections[0]);
     panel.append(scroller);
     scroller.append(content);
-    content.append(section);
-    if (section.id === 'contact' && footer) content.append(footer);
-    return { id: section.id, panel, scroller };
+    content.append(...group.sections);
+    if (group.id === 'contact' && footer) content.append(footer);
+    return { id: group.id, sections: group.sections, panel, scroller };
   });
 
   const rail = document.createElement('nav');
@@ -61,10 +69,14 @@
 
   const english = () => root.lang === 'en';
   const nameOf = page => labels[page.id][english() ? 1 : 0];
-  const indexFromHash = () => {
+  const hashTarget = () => {
     let hash = location.hash.slice(1);
     try { hash = decodeURIComponent(hash); } catch (error) { /* Ignore malformed fragments. */ }
-    const index = pages.findIndex(page => page.id === hash);
+    return hash;
+  };
+  const indexForTarget = target => pages.findIndex(page => page.sections.some(section => section.id === target));
+  const indexFromHash = () => {
+    const index = indexForTarget(hashTarget());
     return index < 0 ? 0 : index;
   };
   let current = indexFromHash();
@@ -92,8 +104,12 @@
       if (index === current) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     });
+    const page = pages[current];
+    const journey = page.sections.find(section => section.id === 'journey');
+    const activeId = journey && journey.getBoundingClientRect().top <= page.scroller.getBoundingClientRect().top + page.scroller.clientHeight * .45
+      ? 'journey' : page.id;
     document.querySelectorAll('.main-nav a[href^="#"]').forEach(link => {
-      if (link.getAttribute('href') === `#${pages[current].id}`) link.setAttribute('aria-current', 'page');
+      if (link.getAttribute('href') === `#${activeId}`) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     });
     if (announce) announcement.textContent = en
@@ -120,12 +136,25 @@
     else history.replaceState(null, '', url);
   }
 
+  function scrollToSection(page, target, smooth = false) {
+    const section = page.sections.find(item => item.id === target);
+    if (!section || section.id === page.id) {
+      page.scroller.scrollTop = 0;
+      return;
+    }
+    const viewport = page.scroller.getBoundingClientRect();
+    const scale = viewport.height / page.scroller.clientHeight || 1;
+    const top = page.scroller.scrollTop + (section.getBoundingClientRect().top - viewport.top) / scale;
+    page.scroller.scrollTo({ top, behavior: smooth && !motionPreference.matches ? 'smooth' : 'auto' });
+  }
+
   function showPage(index, options = {}) {
     if (index < 0 || index >= pages.length) return;
     const destination = pages[index];
     if (index === current) {
-      if (options.reset) destination.scroller.scrollTop = 0;
-      writeHash(destination.id, options.history || 'none');
+      if (options.target) scrollToSection(destination, options.target, true);
+      else if (options.reset) destination.scroller.scrollTop = 0;
+      writeHash(options.target || destination.id, options.history || 'none');
       if (options.focus) destination.scroller.focus({ preventScroll: true });
       return;
     }
@@ -147,7 +176,8 @@
     destination.panel.classList.add('is-active');
     setAvailable(destination, true);
     current = index;
-    writeHash(destination.id, options.history || 'replace');
+    if (options.target) scrollToSection(destination, options.target);
+    writeHash(options.target || destination.id, options.history || 'replace');
     updateLabels(true);
     if (focusWasInside || options.focus) destination.scroller.focus({ preventScroll: true });
 
@@ -259,7 +289,18 @@
     setAvailable(page, index === current);
   });
   root.classList.add('deck-ready');
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
   updateLabels();
+  const initialTarget = hashTarget();
+  if (initialTarget && initialTarget !== pages[current].id) {
+    requestAnimationFrame(() => scrollToSection(pages[current], initialTarget));
+  }
+  pages.forEach((page, index) => {
+    if (page.sections.length > 1) page.scroller.addEventListener('scroll', () => {
+      if (index === current) updateLabels();
+    }, { passive: true });
+  });
   document.querySelectorAll('object[data-asset]').forEach(object => {
     object.addEventListener('load', () => bindEmbeddedDocument(object));
     bindEmbeddedDocument(object);
@@ -273,15 +314,16 @@
     const link = event.target.closest('a[href^="#"]');
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const id = link.getAttribute('href').slice(1);
-    const index = id === 'main' ? 0 : pages.findIndex(page => page.id === id);
+    const index = id === 'main' ? 0 : indexForTarget(id);
     if (index < 0) return;
     event.preventDefault();
-    showPage(index, { history: 'push', reset: true, focus: id === 'main' });
+    showPage(index, { history: 'push', reset: true, focus: id === 'main', target: id === 'main' ? undefined : id });
   });
   previous.addEventListener('click', () => showPage(current - 1, { history: 'push' }));
   next.addEventListener('click', () => showPage(current + 1, { history: 'push' }));
-  window.addEventListener('popstate', () => showPage(indexFromHash(), { history: 'none', reset: true }));
-  window.addEventListener('hashchange', () => showPage(indexFromHash(), { history: 'none', reset: true }));
+  const restoreHash = () => showPage(indexFromHash(), { history: 'none', reset: true, target: hashTarget() });
+  window.addEventListener('popstate', restoreHash);
+  window.addEventListener('hashchange', restoreHash);
   new MutationObserver(() => updateLabels()).observe(root, { attributes: true, attributeFilter: ['lang'] });
 
   window.addEventListener('keydown', event => {

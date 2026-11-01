@@ -116,6 +116,7 @@ a.contact-method-value:hover{color:var(--violet)}
 /* Each section becomes a self-contained page after the deck is initialized. */
 html.deck-ready{height:100%;overflow:hidden;scroll-behavior:auto}
 .deck-ready body{display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+.deck-ready .page-glow{position:fixed;inset:0;height:auto}
 .deck-ready .site-header{position:relative;flex:none}
 .deck-ready #main{position:relative;isolation:isolate;flex:1;min-height:0;overflow:hidden}
 .deck-ready #main>.section-divider{display:none}
@@ -175,3 +176,30 @@ html.deck-ready{height:100%;overflow:hidden;scroll-behavior:auto}
   .deck-controls button{width:32px;height:32px}
 }
 @media(prefers-reduced-motion:reduce){.story-page,.story-page.is-active,.story-page.is-exiting-up,.story-page.is-exiting-down{transition:none}.deck-sweep:before,.deck-sweep:after{animation:none!important}.story-page-scroll{scroll-behavior:auto}}
+
+/* About and journey share a single page; projects have a compact in-page index. */
+.deck-ready .story-page-content>#about{padding-bottom:34px}
+.deck-ready .story-page-content>#journey{padding-top:0}
+.deck-ready #journey>.section-heading{padding-top:clamp(30px,4vh,46px);border-top:1px solid var(--line-soft)}
+.project-tabs{position:sticky;top:70px;z-index:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 25px;padding:7px;border:1px solid var(--line);border-radius:15px;background:var(--header);box-shadow:0 12px 35px rgba(0,0,0,.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.deck-ready .project-tabs{top:0}
+.project-tab{display:flex;align-items:center;gap:10px;min-width:0;min-height:54px;padding:10px 13px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--muted);font:inherit;text-align:left;cursor:pointer;transition:background .22s,border-color .22s,color .22s}
+.project-tab:hover{color:var(--text);background:var(--surface-2)}
+.project-tab[aria-selected="true"]{color:var(--text);border-color:var(--line);background:var(--surface);box-shadow:0 5px 18px rgba(0,0,0,.07)}
+.project-tab-number,.project-tab-count{font-family:"Fira Code","SFMono-Regular",Consolas,monospace;font-size:.65rem;font-weight:800;letter-spacing:.06em}
+.project-tab-number{color:var(--faint)}
+.project-tab[aria-selected="true"] .project-tab-number{color:var(--mint)}
+.project-tab-label{overflow:hidden;font-size:.84rem;font-weight:750;text-overflow:ellipsis;white-space:nowrap}
+.project-tab-count{margin-left:auto;color:var(--faint)}
+.project-view[hidden],.project-section-summary[hidden]{display:none!important}
+.project-view{animation:project-view-in .4s cubic-bezier(.22,1,.36,1) both}
+#projects>.project-view.project-category,#projects>.project-view.current-projects,#projects>.project-view.documents-section{margin-top:0}
+@keyframes project-view-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:680px){
+  .deck-ready .story-page-content>#about{padding-bottom:25px}
+  .deck-ready #journey>.section-heading{padding-top:30px}
+  .project-tabs{top:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin-bottom:20px;padding:5px;border-radius:13px}
+  .project-tab{min-height:43px;padding:7px 9px;gap:8px}
+  .project-tab-label{font-size:.76rem}
+}
+@media(prefers-reduced-motion:reduce){.project-view{animation:none}}
