@@ -28,8 +28,12 @@
   function updateAssets() {
     document.querySelectorAll('[data-asset]').forEach(el => {
       const path = assetPath(el.dataset.asset);
-      if (el.tagName === 'OBJECT') el.data = path;
-      else el.src = path;
+      const attribute = el.tagName === 'OBJECT' ? 'data' : 'src';
+      if (el.getAttribute(attribute) !== path) el.setAttribute(attribute, path);
+    });
+    // Prepare images in hidden sections as well, so a page or card switch is ready to paint.
+    document.querySelectorAll('img').forEach(image => {
+      if (typeof image.decode === 'function') image.decode().catch(() => {});
     });
   }
   function updateMeta() {
@@ -122,7 +126,7 @@
     let frame = 0;
     let lastFrame = 0;
     const pointer = { active: false, x: 0, y: 0 };
-    const influenceRadius = 235;
+    const influenceRadius = 260;
 
     function movePointer(x, y) {
       pointer.x = x;
@@ -220,8 +224,8 @@
         if (influence > 0) {
           const targetX = pointer.x + Math.cos(dot.angle) * dot.orbit;
           const targetY = pointer.y + Math.sin(dot.angle) * dot.orbit;
-          dot.vx += (targetX - dot.x) * .00026 * influence * step;
-          dot.vy += (targetY - dot.y) * .00026 * influence * step;
+          dot.vx += (targetX - dot.x) * .00042 * influence * step;
+          dot.vy += (targetY - dot.y) * .00042 * influence * step;
         }
         const homeWeight = 1 - influence;
         dot.driftAngle += dot.driftTurn * step;
@@ -231,7 +235,7 @@
         const drag = Math.pow(.976, step);
         dot.vx *= drag;
         dot.vy *= drag;
-        const maxSpeed = .65;
+        const maxSpeed = .65 + influence * .12;
         const speed = Math.hypot(dot.vx, dot.vy);
         if (speed > maxSpeed) {
           dot.vx *= maxSpeed / speed;
@@ -302,6 +306,28 @@
     }
     function show(index, notify = true) {
       const direction = index < current ? 'previous' : 'next';
+      stage.querySelectorAll('.project-card-snapshot').forEach(element => element.remove());
+      const activeCard = cards[current];
+      const scroller = carousel.closest('.story-page-scroll');
+      if (notify && !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+          activeCard.getClientRects().length === 1 && (!scroller || scroller.scrollLeft < 2)) {
+        const rect = activeCard.getBoundingClientRect();
+        const stageRect = stage.getBoundingClientRect();
+        if (rect.width && rect.height) {
+          const snapshot = document.createElement('div');
+          snapshot.className = 'project-track project-card-snapshot';
+          snapshot.dataset.direction = direction;
+          snapshot.setAttribute('aria-hidden', 'true');
+          snapshot.inert = true;
+          snapshot.style.left = `${rect.left - stageRect.left}px`;
+          snapshot.style.top = `${rect.top - stageRect.top}px`;
+          snapshot.style.width = `${rect.width}px`;
+          snapshot.append(activeCard.cloneNode(true));
+          stage.append(snapshot);
+          snapshot.addEventListener('animationend', () => snapshot.remove(), { once: true });
+          window.setTimeout(() => snapshot.remove(), 1200);
+        }
+      }
       current = (index + cards.length) % cards.length;
       cards.forEach((card, i) => {
         card.hidden = i !== current;
@@ -366,7 +392,7 @@
       const focused = document.activeElement;
       const keyboardReading = focused && focused.matches(':focus-visible') &&
         (carousel.contains(focused) || bar.contains(focused));
-      if (keyboardReading || (scroller && scroller.scrollLeft > 2) || Date.now() - lastAdvance < 8000) return;
+      if (keyboardReading || (scroller && scroller.scrollLeft > 2) || Date.now() - lastAdvance < 5000) return;
       lastAdvance = Date.now();
       show(current + 1);
     }, 1000);
