@@ -189,11 +189,15 @@
       dots = Array.from({ length: count }, (_, i) => {
         const homeX = ((i % columns) + .2 + Math.random() * .6) * width / columns;
         const homeY = (Math.floor(i / columns) + .2 + Math.random() * .6) * height / rows;
+        const driftAngle = Math.random() * Math.PI * 2;
+        const driftSpeed = .45 + Math.random() * .2;
         return {
           x: homeX, y: homeY, homeX, homeY,
           r: 1.8 + Math.random() * 2.6,
-          vx: (Math.random() - .5) * .24,
-          vy: (Math.random() - .5) * .24,
+          vx: Math.cos(driftAngle) * driftSpeed,
+          vy: Math.sin(driftAngle) * driftSpeed,
+          driftAngle, driftSpeed,
+          driftTurn: (Math.random() < .5 ? -1 : 1) * (.001 + Math.random() * .0015),
           phase: Math.random() * Math.PI * 2,
           kind: i % 2,
           orbit: 24 + Math.random() * 53,
@@ -220,8 +224,10 @@
           dot.vy += (targetY - dot.y) * .00022 * influence * step;
         }
         const homeWeight = 1 - influence;
-        dot.vx += ((dot.homeX - dot.x) * .000065 * homeWeight + Math.cos(dot.phase) * .001) * step;
-        dot.vy += ((dot.homeY - dot.y) * .000065 * homeWeight + Math.sin(dot.phase * .8) * .001) * step;
+        dot.driftAngle += dot.driftTurn * step;
+        // A gentle current keeps every particle moving even without a pointer.
+        dot.vx += ((Math.cos(dot.driftAngle) * dot.driftSpeed - dot.vx) * .05 + (dot.homeX - dot.x) * .000035) * homeWeight * step;
+        dot.vy += ((Math.sin(dot.driftAngle) * dot.driftSpeed - dot.vy) * .05 + (dot.homeY - dot.y) * .000035) * homeWeight * step;
         const drag = Math.pow(.976, step);
         dot.vx *= drag;
         dot.vy *= drag;
