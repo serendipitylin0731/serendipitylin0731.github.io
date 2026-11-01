@@ -220,8 +220,8 @@
         if (influence > 0) {
           const targetX = pointer.x + Math.cos(dot.angle) * dot.orbit;
           const targetY = pointer.y + Math.sin(dot.angle) * dot.orbit;
-          dot.vx += (targetX - dot.x) * .00022 * influence * step;
-          dot.vy += (targetY - dot.y) * .00022 * influence * step;
+          dot.vx += (targetX - dot.x) * .00026 * influence * step;
+          dot.vy += (targetY - dot.y) * .00026 * influence * step;
         }
         const homeWeight = 1 - influence;
         dot.driftAngle += dot.driftTurn * step;
