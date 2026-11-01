@@ -434,3 +434,48 @@ html[data-theme="light"] .beyond-card-games{--beyond-accent:var(--mint)}
  .project-preview{top:4px}
  .project-preview img{height:10vh}
 }
+
+/* Use taller desktop screens for a more spacious project and biography layout. */
+@media(min-width:1000px) and (min-height:800px){
+ .carousel-cube.carousel-single .project-art{height:clamp(300px,calc(100dvh - 430px),390px)}
+ .project-preview{top:clamp(25px,4vh,45px)}
+ .project-preview img{height:clamp(155px,24vh,240px);aspect-ratio:auto;object-fit:contain}
+ .deck-ready .story-page-content>#about{width:min(1200px,calc(100% - 112px))}
+ .deck-ready #about .intro-copy{font-size:1.07rem;line-height:1.85}
+ .deck-ready #about .intro-copy .lead{font-size:clamp(1.55rem,2.4vw,1.95rem);line-height:1.45;margin-bottom:30px}
+ .deck-ready #about .intro-copy p{margin-bottom:22px}
+ .deck-ready #about .about-aside{min-height:clamp(315px,43vh,400px);display:flex;flex-direction:column}
+ .deck-ready #about .aside-row{flex:1;justify-content:center}
+ .deck-ready .story-page-content>#journey{width:min(1320px,calc(100% - 112px))}
+ .deck-ready #journey .figure-hint,.deck-ready #journey .timeline-details{font-size:.9rem}
+}
+@media(min-width:1000px) and (min-height:800px){
+ .carousel-cube .project-body{display:flex;flex-direction:column}
+ .carousel-cube .project-body p{font-size:.9rem;line-height:1.8}
+}
+@media(min-width:1000px) and (min-height:800px){
+ .carousel-cube .project-viewport,.project-carousel.carousel-ready.carousel-cube .project-viewport{margin-inline:12%}
+ .carousel-cube.carousel-single .project-track .project-card{break-inside:auto}
+}
+@media(min-width:1000px) and (min-height:800px){
+ .deck-ready #projects .project-category-heading .eyebrow{display:none}
+ .deck-ready #projects .project-category-heading{margin-bottom:6px;padding-bottom:6px}
+ .deck-ready #projects .subheading-row{margin-bottom:6px}
+}
+@media(min-width:1000px) and (min-height:720px) and (max-height:860px){
+ .page-project-header{display:flex;align-items:center;gap:14px;padding:10px 0}
+ .page-project-heading{flex:none;margin:0}
+ .page-project-heading>.section-heading .eyebrow{display:none}
+ .page-project-heading>.section-heading h2{font-size:1.3rem}
+ .page-project-carousels .carousel-bar p{display:none}
+ .page-project-header .project-tabs{flex:1}
+ .page-project-header .project-tab{min-height:42px;padding:6px 10px}
+}
+
+@media(min-width:1000px) and (min-height:720px) and (max-height:799px){
+ .carousel-cube.carousel-single .project-art{height:clamp(300px,calc(100dvh - 400px),380px)}
+ .carousel-cube .project-viewport,.project-carousel.carousel-ready.carousel-cube .project-viewport{margin-inline:12%}
+ .deck-ready #projects .project-category-heading .eyebrow{display:none}
+ .deck-ready #projects .project-category-heading{margin-bottom:6px;padding-bottom:6px}
+ .deck-ready #projects .subheading-row{margin-bottom:6px}
+}

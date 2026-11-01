@@ -285,7 +285,6 @@
     const left = makePreview('previous');
     const right = makePreview('next');
     let current = 0;
-    let lastInteraction = 0;
     let lastAdvance = Date.now();
     let wasActive = false;
     let touchStart = null;
@@ -321,8 +320,7 @@
       }
     }
     function change(direction) {
-      lastInteraction = Date.now();
-      lastAdvance = lastInteraction;
+      lastAdvance = Date.now();
       show(current + direction);
     }
     previous.addEventListener('click', () => change(-1));
@@ -365,8 +363,10 @@
         lastAdvance = Date.now();
         return;
       }
-      if (carousel.matches(':hover') || bar.matches(':hover') || carousel.contains(document.activeElement) || bar.contains(document.activeElement) ||
-          (scroller && scroller.scrollLeft > 2) || Date.now() - lastInteraction < 12000 || Date.now() - lastAdvance < 8000) return;
+      const focused = document.activeElement;
+      const keyboardReading = focused && focused.matches(':focus-visible') &&
+        (carousel.contains(focused) || bar.contains(focused));
+      if (keyboardReading || (scroller && scroller.scrollLeft > 2) || Date.now() - lastAdvance < 8000) return;
       lastAdvance = Date.now();
       show(current + 1);
     }, 1000);
