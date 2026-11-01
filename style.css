@@ -342,3 +342,37 @@ html.deck-ready{height:100%;overflow:hidden;scroll-behavior:auto}
  .page-beyond-header .beyond-tabs{flex:1}
  .beyond-tab{min-height:32px}
 }
+
+/* On large screens the games fit together as two vertical reading columns. */
+@media(min-width:1100px) and (min-height:700px){
+ .deck-ready .beyond-card-games .beyond-visual{height:clamp(80px,11vh,105px)}
+ .deck-ready .beyond-card-games .beyond-content{padding-top:14px}
+ .deck-ready .beyond-card-games .beyond-title-row{margin-bottom:10px}
+ .deck-ready .beyond-card-games .beyond-list:not([data-lang="en"]),
+ html[lang="en"].deck-ready .beyond-card-games .beyond-list[data-lang="en"]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:repeat(3,auto);gap:0 38px;break-inside:avoid}
+ .deck-ready .beyond-card-games .beyond-list li:first-child{grid-row:1 / span 3}
+ .deck-ready .beyond-card-games .beyond-list li{padding:10px 0}
+}
+@media(min-width:1100px) and (min-height:700px){
+ .deck-ready .beyond-card-games .beyond-visual{height:clamp(54px,7vh,72px)}
+ .deck-ready .beyond-card-games .beyond-content{padding-top:10px}
+ .deck-ready .beyond-card-games .beyond-title-row{margin-bottom:6px}
+ .deck-ready .beyond-card-games .beyond-list li{padding:7px 0}
+ .deck-ready .beyond-card-games .beyond-list p{font-size:.8rem;line-height:1.55}
+ .deck-ready .beyond-card-games .beyond-list .beyond-note{font-size:.76rem;margin-top:6px;padding-top:6px}
+}
+@media(min-width:1100px) and (min-height:700px) and (max-height:850px){
+ .deck-ready .beyond-card-games .beyond-visual{display:none}
+}
+@media(min-width:1100px) and (min-height:700px) and (max-height:900px){
+ .page-beyond-header{display:flex;align-items:center;gap:24px;padding:12px 0}
+ .page-beyond-header .section-heading{flex:none;margin:0}
+ .page-beyond-header .section-heading .eyebrow{display:none}
+ .page-beyond-header .section-heading h2{font-size:1.35rem}
+ .page-beyond-header .beyond-intro{display:block;flex:1;margin:0;font-size:.75rem;line-height:1.4}
+ .page-beyond-header .beyond-tabs{flex:1.2}
+}
+html[data-theme="light"] .beyond-card-games{--beyond-accent:var(--mint)}
+@media(min-width:1100px) and (min-height:851px){
+ .deck-ready .beyond-card-games .beyond-visual{height:clamp(88px,11vh,105px)}
+}

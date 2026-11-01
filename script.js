@@ -120,6 +120,65 @@
     let width = 0;
     let height = 0;
     let frame = 0;
+    let lastFrame = 0;
+    const pointer = { active: false, x: 0, y: 0, lastMove: 0, lastScatter: 0 };
+
+    function movePointer(x, y) {
+      const now = performance.now();
+      const distance = Math.hypot(x - pointer.x, y - pointer.y);
+      if (pointer.active && distance > 3) {
+        pointer.lastMove = now;
+        if (now - pointer.lastScatter > 120) {
+          for (const dot of dots) {
+            const dx = dot.x - pointer.x;
+            const dy = dot.y - pointer.y;
+            const d = Math.hypot(dx, dy) || 1;
+            const force = Math.max(0, 1 - d / 360) * Math.min(2.3, .8 + distance / 35);
+            dot.vx += dx / d * force;
+            dot.vy += dy / d * force;
+          }
+          pointer.lastScatter = now;
+        }
+      } else if (!pointer.active) {
+        pointer.lastMove = 0;
+      }
+      pointer.x = x;
+      pointer.y = y;
+      pointer.active = true;
+    }
+    function listenPointer(target, offset = () => ({ left: 0, top: 0 })) {
+      target.addEventListener('pointermove', event => {
+        if (event.pointerType === 'touch') return;
+        const rect = offset();
+        movePointer(event.clientX + rect.left, event.clientY + rect.top);
+      }, { passive: true });
+    }
+    function releasePointer() {
+      if (!pointer.active) return;
+      pointer.active = false;
+      for (const dot of dots) {
+        const dx = dot.x - pointer.x;
+        const dy = dot.y - pointer.y;
+        const distance = Math.hypot(dx, dy) || 1;
+        const force = .6 + Math.random() * .8;
+        dot.vx += dx / distance * force;
+        dot.vy += dy / distance * force;
+      }
+    }
+    listenPointer(document);
+    document.addEventListener('pointerout', event => {
+      if (!event.relatedTarget && (event.clientX <= 0 || event.clientY <= 0 || event.clientX >= width || event.clientY >= height)) releasePointer();
+    });
+    addEventListener('blur', releasePointer);
+    document.querySelectorAll('object[data-asset]').forEach(object => {
+      const bind = () => {
+        try {
+          if (object.contentDocument) listenPointer(object.contentDocument, () => object.getBoundingClientRect());
+        } catch (error) { /* Cross-origin objects cannot forward pointer events. */ }
+      };
+      object.addEventListener('load', bind);
+      bind();
+    });
 
     function draw() {
       context.clearRect(0, 0, width, height);
@@ -157,16 +216,45 @@
         vx: (Math.random() - .5) * .34,
         vy: (Math.random() - .5) * .28,
         phase: Math.random() * Math.PI * 2,
-        kind: i % 2
+        kind: i % 2,
+        orbit: 35 + Math.random() * 135,
+        angle: Math.random() * Math.PI * 2,
+        spin: (Math.random() < .5 ? -1 : 1) * (.003 + Math.random() * .004)
       }));
       draw();
     }
-    function animate() {
-      if (motion.matches || document.hidden) { frame = 0; return; }
+    function animate(now = performance.now()) {
+      if (motion.matches || document.hidden) { frame = 0; lastFrame = 0; return; }
+      const step = lastFrame ? Math.min((now - lastFrame) / 16.67, 2) : 1;
+      lastFrame = now;
+      const gathering = pointer.active && now - pointer.lastMove > 480;
       for (const dot of dots) {
-        dot.x = (dot.x + dot.vx + width) % width;
-        dot.y = (dot.y + dot.vy + height) % height;
-        dot.phase += .012;
+        dot.angle += dot.spin * step;
+        if (gathering) {
+          const targetX = Math.max(0, Math.min(width, pointer.x + Math.cos(dot.angle) * dot.orbit));
+          const targetY = Math.max(0, Math.min(height, pointer.y + Math.sin(dot.angle) * dot.orbit));
+          dot.vx += (targetX - dot.x) * .0009 * step;
+          dot.vy += (targetY - dot.y) * .0009 * step;
+          const drag = Math.pow(.968, step);
+          dot.vx *= drag;
+          dot.vy *= drag;
+        } else {
+          const drag = Math.pow(.997, step);
+          dot.vx *= drag;
+          dot.vy *= drag;
+          dot.vx += Math.cos(dot.phase) * .003 * step;
+          dot.vy += Math.sin(dot.phase * .8) * .003 * step;
+        }
+        dot.x += dot.vx * step;
+        dot.y += dot.vy * step;
+        if (gathering) {
+          dot.x = Math.max(0, Math.min(width, dot.x));
+          dot.y = Math.max(0, Math.min(height, dot.y));
+        } else {
+          dot.x = (dot.x + width) % width;
+          dot.y = (dot.y + height) % height;
+        }
+        dot.phase += .012 * step;
       }
       draw();
       frame = requestAnimationFrame(animate);
@@ -174,6 +262,7 @@
     function restart() {
       if (frame) cancelAnimationFrame(frame);
       frame = 0;
+      lastFrame = 0;
       resize();
       animate();
     }
