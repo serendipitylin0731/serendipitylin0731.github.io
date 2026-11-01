@@ -121,26 +121,37 @@
     let height = 0;
     let frame = 0;
     let lastFrame = 0;
-    const pointer = { active: false, x: 0, y: 0, lastMove: 0, lastScatter: 0 };
+    const pointer = { active: false, x: 0, y: 0, dx: 0, dy: 0, lastMove: 0 };
+    const influenceRadius = 235;
 
+    function scatter(dot, x, y, now) {
+      const dx = dot.x - x;
+      const dy = dot.y - y;
+      const distance = Math.hypot(dx, dy) || 1;
+      // A short outward push leaves a soft trail as the cursor moves on.
+      dot.vx += dx / distance * 1.25 - pointer.dx * .16;
+      dot.vy += dy / distance * 1.25 - pointer.dy * .16;
+      dot.engaged = false;
+      dot.releaseUntil = now + 700;
+    }
     function movePointer(x, y) {
       const now = performance.now();
-      const distance = Math.hypot(x - pointer.x, y - pointer.y);
-      if (pointer.active && distance > 3) {
-        pointer.lastMove = now;
-        if (now - pointer.lastScatter > 120) {
-          for (const dot of dots) {
-            const dx = dot.x - pointer.x;
-            const dy = dot.y - pointer.y;
-            const d = Math.hypot(dx, dy) || 1;
-            const force = Math.max(0, 1 - d / 360) * Math.min(2.3, .8 + distance / 35);
-            dot.vx += dx / d * force;
-            dot.vy += dy / d * force;
+      if (pointer.active) {
+        const dx = x - pointer.x;
+        const dy = y - pointer.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance > .5) {
+          pointer.dx = dx / distance;
+          pointer.dy = dy / distance;
+          if (distance > 3 && now - pointer.lastMove > 160) {
+            for (const dot of dots) {
+              if (dot.engaged) scatter(dot, pointer.x, pointer.y, now);
+            }
           }
-          pointer.lastScatter = now;
+          pointer.lastMove = now;
         }
-      } else if (!pointer.active) {
-        pointer.lastMove = 0;
+      } else {
+        pointer.lastMove = now;
       }
       pointer.x = x;
       pointer.y = y;
@@ -155,15 +166,11 @@
     }
     function releasePointer() {
       if (!pointer.active) return;
-      pointer.active = false;
+      const now = performance.now();
       for (const dot of dots) {
-        const dx = dot.x - pointer.x;
-        const dy = dot.y - pointer.y;
-        const distance = Math.hypot(dx, dy) || 1;
-        const force = .6 + Math.random() * .8;
-        dot.vx += dx / distance * force;
-        dot.vy += dy / distance * force;
+        if (dot.engaged) scatter(dot, pointer.x, pointer.y, now);
       }
+      pointer.active = false;
     }
     listenPointer(document);
     document.addEventListener('pointerout', event => {
@@ -209,51 +216,63 @@
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
-      dots = Array.from({ length: Math.min(52, Math.max(26, Math.round(width * height / 27000))) }, (_, i) => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: 1.8 + Math.random() * 2.6,
-        vx: (Math.random() - .5) * .34,
-        vy: (Math.random() - .5) * .28,
-        phase: Math.random() * Math.PI * 2,
-        kind: i % 2,
-        orbit: 35 + Math.random() * 135,
-        angle: Math.random() * Math.PI * 2,
-        spin: (Math.random() < .5 ? -1 : 1) * (.003 + Math.random() * .004)
-      }));
+      const count = Math.min(72, Math.max(30, Math.round(width * height / 23000)));
+      const columns = Math.ceil(Math.sqrt(count * width / height));
+      const rows = Math.ceil(count / columns);
+      dots = Array.from({ length: count }, (_, i) => {
+        const homeX = ((i % columns) + .2 + Math.random() * .6) * width / columns;
+        const homeY = (Math.floor(i / columns) + .2 + Math.random() * .6) * height / rows;
+        return {
+          x: homeX, y: homeY, homeX, homeY,
+          r: 1.8 + Math.random() * 2.6,
+          vx: (Math.random() - .5) * .24,
+          vy: (Math.random() - .5) * .24,
+          phase: Math.random() * Math.PI * 2,
+          kind: i % 2,
+          orbit: 24 + Math.random() * 53,
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() < .5 ? -1 : 1) * (.0015 + Math.random() * .002),
+          engaged: false,
+          releaseUntil: 0
+        };
+      });
       draw();
     }
     function animate(now = performance.now()) {
       if (motion.matches || document.hidden) { frame = 0; lastFrame = 0; return; }
       const step = lastFrame ? Math.min((now - lastFrame) / 16.67, 2) : 1;
       lastFrame = now;
-      const gathering = pointer.active && now - pointer.lastMove > 480;
       for (const dot of dots) {
         dot.angle += dot.spin * step;
+        const distance = pointer.active ? Math.hypot(dot.x - pointer.x, dot.y - pointer.y) : Infinity;
+        const gathering = pointer.active && distance < influenceRadius && now >= dot.releaseUntil;
+        if (!gathering && dot.engaged) scatter(dot, pointer.x, pointer.y, now);
         if (gathering) {
-          const targetX = Math.max(0, Math.min(width, pointer.x + Math.cos(dot.angle) * dot.orbit));
-          const targetY = Math.max(0, Math.min(height, pointer.y + Math.sin(dot.angle) * dot.orbit));
-          dot.vx += (targetX - dot.x) * .0009 * step;
-          dot.vy += (targetY - dot.y) * .0009 * step;
-          const drag = Math.pow(.968, step);
+          dot.engaged = true;
+          const targetX = pointer.x + Math.cos(dot.angle) * dot.orbit;
+          const targetY = pointer.y + Math.sin(dot.angle) * dot.orbit;
+          const falloff = Math.max(.25, 1 - distance / (influenceRadius * 1.3));
+          dot.vx += (targetX - dot.x) * .00016 * falloff * step;
+          dot.vy += (targetY - dot.y) * .00016 * falloff * step;
+          const drag = Math.pow(.977, step);
           dot.vx *= drag;
           dot.vy *= drag;
         } else {
-          const drag = Math.pow(.997, step);
+          // Each particle drifts near its own region, keeping the background populated.
+          dot.vx += ((dot.homeX - dot.x) * .000008 + Math.cos(dot.phase) * .001) * step;
+          dot.vy += ((dot.homeY - dot.y) * .000008 + Math.sin(dot.phase * .8) * .001) * step;
+          const drag = Math.pow(.994, step);
           dot.vx *= drag;
           dot.vy *= drag;
-          dot.vx += Math.cos(dot.phase) * .003 * step;
-          dot.vy += Math.sin(dot.phase * .8) * .003 * step;
         }
-        dot.x += dot.vx * step;
-        dot.y += dot.vy * step;
-        if (gathering) {
-          dot.x = Math.max(0, Math.min(width, dot.x));
-          dot.y = Math.max(0, Math.min(height, dot.y));
-        } else {
-          dot.x = (dot.x + width) % width;
-          dot.y = (dot.y + height) % height;
+        const maxSpeed = gathering ? .85 : (now < dot.releaseUntil ? 1.8 : .55);
+        const speed = Math.hypot(dot.vx, dot.vy);
+        if (speed > maxSpeed) {
+          dot.vx *= maxSpeed / speed;
+          dot.vy *= maxSpeed / speed;
         }
+        dot.x = Math.max(0, Math.min(width, dot.x + dot.vx * step));
+        dot.y = Math.max(0, Math.min(height, dot.y + dot.vy * step));
         dot.phase += .012 * step;
       }
       draw();
