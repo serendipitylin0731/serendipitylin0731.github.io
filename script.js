@@ -262,53 +262,114 @@
   }
   function setupProjectCarousel(carousel) {
     const viewport = carousel.querySelector('.project-viewport');
-    const track = carousel.querySelector('.project-track');
-    const position = carousel.querySelector('.carousel-position');
-    const previous = carousel.querySelector('.project-prev');
-    const next = carousel.querySelector('.project-next');
-    carousel.deckControls = { bar: carousel.querySelector('.carousel-bar'), previous, next };
-    const cards = [...track.children];
+    const cards = [...carousel.querySelector('.project-track').children];
+    const bar = carousel.querySelector('.carousel-bar');
+    const previous = bar.querySelector('.project-prev');
+    const next = bar.querySelector('.project-next');
+    const position = bar.querySelector('.carousel-position');
     if (cards.length < 2) return;
+    carousel.deckControls = { bar, previous, next };
+    carousel.classList.add('carousel-ready', 'carousel-single', 'carousel-cube');
+    const stage = document.createElement('div');
+    stage.className = 'project-stage';
+    viewport.before(stage);
+    stage.append(viewport);
+    const makePreview = direction => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `project-preview project-preview-${direction}`;
+      button.innerHTML = '<img alt="" aria-hidden="true"><span class="project-preview-title"></span>';
+      stage.append(button);
+      return button;
+    };
+    const left = makePreview('previous');
+    const right = makePreview('next');
     let current = 0;
-    let touchStartX = null;
+    let lastInteraction = 0;
+    let lastAdvance = Date.now();
+    let wasActive = false;
+    let touchStart = null;
     let lastWheel = 0;
-    carousel.classList.add('carousel-ready', 'carousel-single');
-
+    function setPreview(button, index, direction) {
+      const card = cards[index];
+      const title = card.querySelector('h4');
+      const visibleTitle = title.querySelector(`[data-lang="${currentLang()}"]`);
+      const name = (visibleTitle || title).textContent.trim();
+      button.querySelector('img').src = card.querySelector('img').src;
+      button.querySelector('.project-preview-title').textContent = name;
+      button.setAttribute('aria-label', currentLang() === 'en'
+        ? `${direction === 'previous' ? 'Previous project' : 'Next project'}: ${name}`
+        : `${direction === 'previous' ? '上一个项目' : '下一个项目'}：${name}`);
+    }
     function show(index, notify = true) {
+      const direction = index < current ? 'previous' : 'next';
       current = (index + cards.length) % cards.length;
       cards.forEach((card, i) => {
         card.hidden = i !== current;
         card.inert = i !== current;
-        card.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+        card.setAttribute('aria-hidden', String(i !== current));
       });
       position.textContent = `${String(current + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
-      if (notify) document.dispatchEvent(new CustomEvent('deck:layoutchange', { detail: { reset: true } }));
-    }
-    previous.addEventListener('click', () => show(current - 1));
-    next.addEventListener('click', () => show(current + 1));
-    viewport.addEventListener('keydown', event => {
-      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-        event.preventDefault();
-        show(current + (event.key === 'ArrowRight' ? 1 : -1));
+      setPreview(left, (current + cards.length - 1) % cards.length, 'previous');
+      setPreview(right, (current + 1) % cards.length, 'next');
+      if (notify) {
+        stage.dataset.direction = direction;
+        stage.classList.remove('is-turning');
+        void stage.offsetWidth;
+        stage.classList.add('is-turning');
+        document.dispatchEvent(new CustomEvent('deck:layoutchange', { detail: { reset: true } }));
       }
+    }
+    function change(direction) {
+      lastInteraction = Date.now();
+      lastAdvance = lastInteraction;
+      show(current + direction);
+    }
+    previous.addEventListener('click', () => change(-1));
+    next.addEventListener('click', () => change(1));
+    left.addEventListener('click', () => change(-1));
+    right.addEventListener('click', () => change(1));
+    viewport.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      change(event.key === 'ArrowRight' ? 1 : -1);
     });
-    viewport.addEventListener('touchstart', event => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+    viewport.addEventListener('touchstart', event => { touchStart = event.changedTouches[0].clientX; }, { passive: true });
     viewport.addEventListener('touchend', event => {
-      if (touchStartX === null) return;
-      const distance = touchStartX - event.changedTouches[0].clientX;
-      touchStartX = null;
+      if (touchStart === null) return;
+      const distance = touchStart - event.changedTouches[0].clientX;
+      touchStart = null;
       if (Math.abs(distance) < 45) return;
       if (event.cancelable) event.preventDefault();
-      show(current + (distance > 0 ? 1 : -1));
+      change(distance > 0 ? 1 : -1);
     }, { passive: false });
     viewport.addEventListener('wheel', event => {
       if (Math.abs(event.deltaX) < 25 || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
       event.preventDefault();
       if (Date.now() - lastWheel > 650) {
         lastWheel = Date.now();
-        show(current + (event.deltaX > 0 ? 1 : -1));
+        change(event.deltaX > 0 ? 1 : -1);
       }
     }, { passive: false });
+    new MutationObserver(() => show(current, false)).observe(root, { attributes: true, attributeFilter: ['lang', 'data-theme'] });
+    window.setInterval(() => {
+      const page = carousel.closest('.story-page');
+      const scroller = page && page.querySelector('.story-page-scroll');
+      const active = !!page && page.classList.contains('is-active') && !carousel.closest('[hidden]');
+      if (!active || document.hidden || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        wasActive = false;
+        return;
+      }
+      if (!wasActive) {
+        wasActive = true;
+        lastAdvance = Date.now();
+        return;
+      }
+      if (carousel.matches(':hover') || bar.matches(':hover') || carousel.contains(document.activeElement) || bar.contains(document.activeElement) ||
+          (scroller && scroller.scrollLeft > 2) || Date.now() - lastInteraction < 12000 || Date.now() - lastAdvance < 8000) return;
+      lastAdvance = Date.now();
+      show(current + 1);
+    }, 1000);
     show(0, false);
   }
   function setupProjectViews() {

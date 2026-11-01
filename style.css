@@ -147,7 +147,7 @@ html.deck-ready{height:100%;overflow:hidden;scroll-behavior:auto}
 .deck-link:hover:before,.deck-link:focus-visible:before{background:var(--mint)}
 .deck-link[aria-current="page"]:before{width:17px;height:3px;border-radius:3px;background:var(--mint);box-shadow:0 0 15px rgba(93,228,199,.45)}
 .deck-link-label{position:absolute;right:33px;top:50%;transform:translate(5px,-50%);padding:4px 9px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.7rem;font-weight:700;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
-.deck-link:hover .deck-link-label,.deck-link:focus-visible .deck-link-label,.deck-link[aria-current="page"] .deck-link-label{opacity:1;transform:translate(0,-50%)}
+.deck-link:hover .deck-link-label,.deck-link:focus-visible .deck-link-label{opacity:1;transform:translate(0,-50%)}
 .deck-controls{display:flex;flex-direction:column;gap:6px}
 .deck-controls button{display:grid;place-items:center;width:30px;height:30px;padding:0;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text);cursor:pointer;line-height:1;transition:border-color .2s,color .2s,opacity .2s}
 .deck-controls button:hover:not(:disabled){border-color:var(--mint);color:var(--mint)}
@@ -375,4 +375,62 @@ html.deck-ready{height:100%;overflow:hidden;scroll-behavior:auto}
 html[data-theme="light"] .beyond-card-games{--beyond-accent:var(--mint)}
 @media(min-width:1100px) and (min-height:851px){
  .deck-ready .beyond-card-games .beyond-visual{height:clamp(88px,11vh,105px)}
+}
+
+
+/* A perspective carousel keeps adjacent projects visible beside the selected one. */
+.project-stage{position:relative;perspective:1100px}
+.carousel-cube .project-viewport,.project-carousel.carousel-ready.carousel-cube .project-viewport{position:relative;z-index:2;margin-inline:17%;overflow:visible}
+.project-preview{position:absolute;top:15px;z-index:1;width:20%;padding:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);overflow:hidden;cursor:pointer;box-shadow:0 12px 28px rgba(0,0,0,.16);transition:transform .3s,opacity .3s,border-color .3s;opacity:.68;text-align:left;backface-visibility:hidden}
+.project-preview:hover,.project-preview:focus-visible{opacity:1;border-color:var(--mint)}
+.project-preview-previous{left:0;transform:rotateY(34deg) scale(.94);transform-origin:right center}
+.project-preview-next{right:0;transform:rotateY(-34deg) scale(.94);transform-origin:left center}
+.project-preview-previous:hover{transform:rotateY(25deg) scale(.97)}
+.project-preview-next:hover{transform:rotateY(-25deg) scale(.97)}
+.project-preview img{display:block;width:100%;aspect-ratio:5/3;object-fit:cover;background:var(--bg-2)}
+.project-preview-title{display:block;padding:10px 12px;color:var(--muted);font-size:.73rem;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+@media(min-width:900px) and (min-height:720px){
+ .carousel-cube.carousel-single .project-art{height:clamp(190px,27vh,245px);min-height:0;aspect-ratio:auto}
+}
+@media(max-width:680px){
+ .carousel-cube .project-viewport,.project-carousel.carousel-ready.carousel-cube .project-viewport{margin-inline:9%}
+ .project-preview{width:12%;top:20px;border-radius:8px}
+ .project-preview-previous{transform:rotateY(27deg)}
+ .project-preview-next{transform:rotateY(-27deg)}
+ .project-preview img{aspect-ratio:2/5;object-fit:cover}
+ .project-preview-title{display:none}
+}
+@media(prefers-reduced-motion:reduce){.project-preview{transition:none}}
+
+.project-stage.is-turning[data-direction="next"] .project-card:not([hidden]){animation:cube-enter-next .55s cubic-bezier(.22,1,.36,1) both}
+.project-stage.is-turning[data-direction="previous"] .project-card:not([hidden]){animation:cube-enter-previous .55s cubic-bezier(.22,1,.36,1) both}
+@keyframes cube-enter-next{from{opacity:.35;transform:translateX(7%) rotateY(-12deg) scale(.97)}to{opacity:1;transform:none}}
+@keyframes cube-enter-previous{from{opacity:.35;transform:translateX(-7%) rotateY(12deg) scale(.97)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.project-stage.is-turning .project-card:not([hidden]){animation:none!important}}
+@media(max-height:650px){
+ .project-preview img{height:min(12vh,70px);aspect-ratio:auto;object-fit:cover}
+ .project-preview-title{display:none}
+}
+.deck-ready #projects .project-category{padding:18px}
+.deck-ready #projects .project-category-heading{margin-bottom:12px;padding-bottom:12px}
+@media(max-height:650px){
+ .deck-ready #projects .project-category{padding:10px}
+ .deck-ready #projects .project-category-heading{margin-bottom:6px;padding-bottom:6px}
+}
+@media(max-height:650px){
+ .carousel-cube.carousel-single .project-art{height:min(14vh,85px)}
+}
+@media(max-height:500px){
+ .deck-ready #projects .project-category-heading .eyebrow{display:none}
+ .deck-ready #projects .project-category-heading{margin-bottom:4px;padding-bottom:4px}
+ .deck-ready #projects .subheading-row{margin-bottom:4px}
+}
+@media(max-width:680px) and (orientation:landscape) and (max-height:500px){
+ .deck-ready #projects .subheading-row{flex-direction:row;align-items:baseline}
+ .deck-ready #projects .project-category{padding:6px}
+ .carousel-cube.carousel-single .project-art{height:10vh}
+}
+@media(max-height:500px){
+ .project-preview{top:4px}
+ .project-preview img{height:10vh}
 }
