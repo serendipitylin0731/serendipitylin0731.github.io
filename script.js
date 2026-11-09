@@ -20,7 +20,7 @@
     const english = currentLang() === 'en' ? '-en' : '';
     const light = currentTheme() === 'light' ? '-light' : '';
     if (key === 'hero') return `assets/hero${english}${light}.svg`;
-    if (key === 'timeline') return `assets/timeline-medals-subtle${english}-${currentTheme()}.svg`;
+    if (key === 'timeline') return `assets/timeline-medals-subtle${english}-${currentTheme()}.svg?v=202611`;
     if (key === 'skills') return `assets/skills-${currentTheme()}.svg`;
     if (key === 'divider' || key === 'endline') return `assets/${key}-${currentTheme()}.svg`;
     return `assets/projects/${key}-visual-${currentTheme()}.svg`;
@@ -58,7 +58,7 @@
     updateAssets();
     const alts = en ? {
       hero: "Hanfeng Lin's profile banner: Less is More, developer tools and routes",
-      timeline: 'Education from Wenling Chengdong Primary School to SJTU Zhiyuan College, with mathematics and physics competition awards from 2023 to 2025. School names are links.',
+      timeline: 'Education from Wenling Chengdong Primary School to SJTU Zhiyuan College, with competition awards from 2023 to 2026, including AI and education competitions. School names are links.',
       rail: 'Trajectory: illustrated Web and Android railway route planner',
       'cp-tester': 'CP Tester: code editor and three passing test results',
       codex: 'Codex Quota Rings: five-hour and seven-day quota rings and status cards',
@@ -73,7 +73,7 @@
       skills: 'Icons for the programming languages and development tools listed below'
     } : {
       hero: '林函锋的个人主页横幅：Less is More，开发工具、软件与铁路路线',
-      timeline: '从温岭市城东小学到上海交通大学致远学院的学习经历，以及 2023 至 2025 年的数学和物理竞赛获奖时间轴。学校名称可点击。',
+      timeline: '从温岭市城东小学到上海交通大学致远学院的学习经历，以及 2023 至 2026 年数学、物理和 AI 相关竞赛获奖时间轴。学校名称可点击。',
       rail: '轨迹：Web 与 Android 铁路出行规划路线示意',
       'cp-tester': 'CP Tester：代码编辑器与三个通过的测试结果',
       codex: 'Codex Quota Rings：5 小时与 7 天额度圆环和状态卡片',
