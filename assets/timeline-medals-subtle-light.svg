@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 565">
+  <style>:root { color-scheme: only light; }</style>
   <title>学习经历与竞赛获奖时间轴</title>
   <desc>学校以连续线段表示在校时间：2013.09 至 2019.06 温岭市城东小学；2019.09 至 2022.06 台州椒江北书学校；2022.09 至 2025.06 台州市书生中学；2025.09 至今上海交通大学致远学院。获奖节点：2023.09 全国中学生奥林匹克数学竞赛三等奖；2024.03 台州市数学、物理、信息学竞赛一等奖及化学竞赛二等奖；2024.09 全国中学生物理竞赛三等奖；2025.11 全国大学生数学竞赛三等奖；2026.10 中国教育技术协会“AI+教育”创新应用技能大赛二等奖；2026.11 中国电信星辰杯高校AI算子开发挑战赛一等奖。</desc>
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6f9fc"/><stop offset="1" stop-color="#eef0fa"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#536480" stroke-opacity=".045"/></pattern></defs>
+  <defs><linearGradient id="award-card"><stop offset="0" stop-color="#eeeafa"/><stop offset="1" stop-color="#eeeafa"/></linearGradient><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6f9fc"/><stop offset="1" stop-color="#eef0fa"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#536480" stroke-opacity=".045"/></pattern></defs>
   <rect x="1" y="1" width="1698" height="563" rx="24" fill="url(#bg)" stroke="#d1dce9"/>
   <rect x="1" y="1" width="1698" height="563" rx="24" fill="url(#grid)"/>
   <g font-family="Noto Sans CJK SC, PingFang SC, Microsoft YaHei, Inter, sans-serif">

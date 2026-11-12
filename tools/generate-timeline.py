@@ -25,12 +25,14 @@ def render(lang, theme):
     light = theme == 'light'
     en = lang == 'en'
     c = dict(bg1='#f6f9fc', bg2='#eef0fa', grid='#536480', border='#d1dce9', green='#188a7a', purple='#745ac7', text='#1d2b43', muted='#50617b', line='#a6b4cb', card='#eeeafa') if light else dict(bg1='#101728', bg2='#1b1b33', grid='#ffffff', border='#465574', green='#5de4c7', purple='#a78bfa', text='#f3f6ff', muted='#b6c2d9', line='#4a5874', card='#22213e')
+    card_fill = c['card'] if light else 'url(#award-card)'
     title = 'Education and competition awards timeline' if en else '学习经历与竞赛获奖时间轴'
     desc = EN_DESC if en else ZH_DESC
     items = [f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 565">
+  <style>:root {{ color-scheme: only {theme}; }}</style>
   <title>{escape(title)}</title>
   <desc>{escape(desc)}</desc>
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{c['bg1']}"/><stop offset="1" stop-color="{c['bg2']}"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="{c['grid']}" stroke-opacity=".045"/></pattern></defs>
+  <defs><linearGradient id="award-card"><stop offset="0" stop-color="{c['card']}"/><stop offset="1" stop-color="{c['card']}"/></linearGradient><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{c['bg1']}"/><stop offset="1" stop-color="{c['bg2']}"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="{c['grid']}" stroke-opacity=".045"/></pattern></defs>
   <rect x="1" y="1" width="1698" height="563" rx="24" fill="url(#bg)" stroke="{c['border']}"/>
   <rect x="1" y="1" width="1698" height="563" rx="24" fill="url(#grid)"/>
   <g font-family="Noto Sans CJK SC, PingFang SC, Microsoft YaHei, Inter, sans-serif">
@@ -68,7 +70,7 @@ def render(lang, theme):
         items.append(f'''    <circle cx="{x}" cy="250" r="13" fill="{c['bg1']}" stroke="{c['purple']}" stroke-width="3"/>
     <circle cx="{x}" cy="250" r="5" fill="{c['purple']}"/>
     <path d="M{x} 265V349" stroke="{c['purple']}" stroke-width="2" opacity=".8"/>
-    <rect x="{x - 95}" y="349" width="190" height="180" rx="18" fill="{c['card']}" stroke="{c['purple']}" stroke-opacity=".48"/>
+    <rect x="{x - 95}" y="349" width="190" height="180" rx="18" fill="{card_fill}" stroke="{c['purple']}" stroke-opacity=".48"/>
     <text x="{x}" y="381" text-anchor="middle" fill="{c['purple']}" font-size="19" font-weight="700">{date}</text>
 {item_text}
     {medal_svg}''')

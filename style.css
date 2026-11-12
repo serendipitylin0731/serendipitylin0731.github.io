@@ -671,3 +671,7 @@ html[data-theme="light"] .beyond-card-games{--beyond-accent:var(--mint)}
  html[lang="en"].deck-ready #about .intro-copy{font-size:.91rem;line-height:1.55}
  html[lang="en"].deck-ready #about .intro-copy .lead{font-size:1.4rem;line-height:1.35;margin-bottom:14px}
 }
+
+/* Explicitly identify the selected palette to browser dark-mode engines. */
+html[data-theme="dark"]{color-scheme:only dark}
+html[data-theme="light"]{color-scheme:only light}

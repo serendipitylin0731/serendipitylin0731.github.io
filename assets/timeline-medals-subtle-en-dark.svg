@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 565">
+  <style>:root { color-scheme: only dark; }</style>
   <title>Education and competition awards timeline</title>
   <desc>Education spans: Wenling Chengdong Primary School, 2013.09–2019.06; Taizhou Jiaojiang Beishu School, 2019.09–2022.06; Taizhou Sunson Middle School, 2022.09–2025.06; Zhiyuan College at Shanghai Jiao Tong University, 2025.09–present. Awards: National High School Math Olympiad third prize, 2023.09; Taizhou mathematics, physics and informatics first prizes and chemistry second prize, 2024.03; National High School Physics Competition third prize, 2024.09; National College Math Competition third prize, 2025.11; China Association for Educational Technology “AI+Education” Innovative Application Skills Competition second prize, 2026.10; China Telecom Xingchen Cup College AI Operator Development Challenge first prize, 2026.11.</desc>
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101728"/><stop offset="1" stop-color="#1b1b33"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".045"/></pattern></defs>
+  <defs><linearGradient id="award-card"><stop offset="0" stop-color="#22213e"/><stop offset="1" stop-color="#22213e"/></linearGradient><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101728"/><stop offset="1" stop-color="#1b1b33"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".045"/></pattern></defs>
   <rect x="1" y="1" width="1698" height="563" rx="24" fill="url(#bg)" stroke="#465574"/>
   <rect x="1" y="1" width="1698" height="563" rx="24" fill="url(#grid)"/>
   <g font-family="Noto Sans CJK SC, PingFang SC, Microsoft YaHei, Inter, sans-serif">
@@ -24,7 +25,7 @@
     <circle cx="560" cy="250" r="13" fill="#101728" stroke="#a78bfa" stroke-width="3"/>
     <circle cx="560" cy="250" r="5" fill="#a78bfa"/>
     <path d="M560 265V349" stroke="#a78bfa" stroke-width="2" opacity=".8"/>
-    <rect x="465" y="349" width="190" height="180" rx="18" fill="#22213e" stroke="#a78bfa" stroke-opacity=".48"/>
+    <rect x="465" y="349" width="190" height="180" rx="18" fill="url(#award-card)" stroke="#a78bfa" stroke-opacity=".48"/>
     <text x="560" y="381" text-anchor="middle" fill="#a78bfa" font-size="19" font-weight="700">2023.09</text>
     <text x="560" y="421" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">National High School</text>
     <text x="560" y="446" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">Math Olympiad</text>
@@ -33,7 +34,7 @@
     <circle cx="770" cy="250" r="13" fill="#101728" stroke="#a78bfa" stroke-width="3"/>
     <circle cx="770" cy="250" r="5" fill="#a78bfa"/>
     <path d="M770 265V349" stroke="#a78bfa" stroke-width="2" opacity=".8"/>
-    <rect x="675" y="349" width="190" height="180" rx="18" fill="#22213e" stroke="#a78bfa" stroke-opacity=".48"/>
+    <rect x="675" y="349" width="190" height="180" rx="18" fill="url(#award-card)" stroke="#a78bfa" stroke-opacity=".48"/>
     <text x="770" y="381" text-anchor="middle" fill="#a78bfa" font-size="19" font-weight="700">2024.03</text>
     <text x="770" y="412" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">Taizhou competitions</text>
     <text x="770" y="437" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600" textLength="178" lengthAdjust="spacingAndGlyphs">Math, Physics, Informatics:</text>
@@ -43,7 +44,7 @@
     <circle cx="980" cy="250" r="13" fill="#101728" stroke="#a78bfa" stroke-width="3"/>
     <circle cx="980" cy="250" r="5" fill="#a78bfa"/>
     <path d="M980 265V349" stroke="#a78bfa" stroke-width="2" opacity=".8"/>
-    <rect x="885" y="349" width="190" height="180" rx="18" fill="#22213e" stroke="#a78bfa" stroke-opacity=".48"/>
+    <rect x="885" y="349" width="190" height="180" rx="18" fill="url(#award-card)" stroke="#a78bfa" stroke-opacity=".48"/>
     <text x="980" y="381" text-anchor="middle" fill="#a78bfa" font-size="19" font-weight="700">2024.09</text>
     <text x="980" y="421" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">National High School</text>
     <text x="980" y="446" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">Physics Competition</text>
@@ -52,7 +53,7 @@
     <circle cx="1190" cy="250" r="13" fill="#101728" stroke="#a78bfa" stroke-width="3"/>
     <circle cx="1190" cy="250" r="5" fill="#a78bfa"/>
     <path d="M1190 265V349" stroke="#a78bfa" stroke-width="2" opacity=".8"/>
-    <rect x="1095" y="349" width="190" height="180" rx="18" fill="#22213e" stroke="#a78bfa" stroke-opacity=".48"/>
+    <rect x="1095" y="349" width="190" height="180" rx="18" fill="url(#award-card)" stroke="#a78bfa" stroke-opacity=".48"/>
     <text x="1190" y="381" text-anchor="middle" fill="#a78bfa" font-size="19" font-weight="700">2025.11</text>
     <text x="1190" y="421" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">National College</text>
     <text x="1190" y="446" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">Math Competition</text>
@@ -61,7 +62,7 @@
     <circle cx="1400" cy="250" r="13" fill="#101728" stroke="#a78bfa" stroke-width="3"/>
     <circle cx="1400" cy="250" r="5" fill="#a78bfa"/>
     <path d="M1400 265V349" stroke="#a78bfa" stroke-width="2" opacity=".8"/>
-    <rect x="1305" y="349" width="190" height="180" rx="18" fill="#22213e" stroke="#a78bfa" stroke-opacity=".48"/>
+    <rect x="1305" y="349" width="190" height="180" rx="18" fill="url(#award-card)" stroke="#a78bfa" stroke-opacity=".48"/>
     <text x="1400" y="381" text-anchor="middle" fill="#a78bfa" font-size="19" font-weight="700">2026.10</text>
     <text x="1400" y="412" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">CAET “AI+Education”</text>
     <text x="1400" y="437" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">Innovative Application</text>
@@ -71,7 +72,7 @@
     <circle cx="1600" cy="250" r="13" fill="#101728" stroke="#a78bfa" stroke-width="3"/>
     <circle cx="1600" cy="250" r="5" fill="#a78bfa"/>
     <path d="M1600 265V349" stroke="#a78bfa" stroke-width="2" opacity=".8"/>
-    <rect x="1505" y="349" width="190" height="180" rx="18" fill="#22213e" stroke="#a78bfa" stroke-opacity=".48"/>
+    <rect x="1505" y="349" width="190" height="180" rx="18" fill="url(#award-card)" stroke="#a78bfa" stroke-opacity=".48"/>
     <text x="1600" y="381" text-anchor="middle" fill="#a78bfa" font-size="19" font-weight="700">2026.11</text>
     <text x="1600" y="412" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600" textLength="178" lengthAdjust="spacingAndGlyphs">China Telecom Xingchen Cup</text>
     <text x="1600" y="437" text-anchor="middle" fill="#f3f6ff" font-size="15" font-weight="600">College AI Operator</text>
