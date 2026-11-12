@@ -21,6 +21,7 @@ THEMES = {
 }
 ACCENTS = {
     "codex": (("#5de4c7", "#a78bfa"), ("#167c74", "#7555b9")),
+    "snap-solve": (("#5de4c7", "#a78bfa"), ("#167c74", "#7555b9")),
     "qqspeed": (("#5de4c7", "#59d4e7"), ("#167c74", "#147e96")),
     "markdown": (("#a78bfa", "#59d4e7"), ("#7555b9", "#147e96")),
     "shit-code": (("#f2bc65", "#a78bfa"), ("#a45e19", "#7555b9")),
@@ -261,7 +262,26 @@ def scene_qqspeed(p, a, b):
     return "\n".join(parts)
 
 
+def scene_snap_solve(p, a, b):
+    return "\n".join([
+        text(72, 121, "CAPTURE / TRANSCRIBE / SOLVE", p["muted"], 10, 700, spacing=1),
+        rect(72, 138, 204, 129, p["sub"], stroke=p["stroke"]),
+        text(91, 160, "SCREEN SELECTION", p["muted"], 9, 700),
+        '<path d="M100 184v-9h15 M248 184v-9h-15 M100 224v9h15 M248 224v9h-15" fill="none" stroke="' + a + '" stroke-width="3" stroke-linecap="round"/>',
+        text(174, 212, "x² + y² = ?", p["text"], 16, 700, anchor="middle"),
+        text(296, 211, "→", a, 23, 800, anchor="middle"),
+        rect(317, 138, 211, 129, p["sub"], stroke=p["stroke"]),
+        text(336, 160, "MARKDOWN / ANSWER", p["muted"], 9, 700),
+        rect(336, 176, 79, 6, b, rx=3),
+        bars(336, 194, [165, 148, 127], p["stroke"], gap=16, height=5),
+        rect(336, 242, 74, 13, a, rx=6, opacity=".2"),
+        text(373, 252, "COPY", a, 9, 700, anchor="middle"),
+        text(72, 294, "SCREENSHOT  /  MARKDOWN  /  AI", p["muted"], 10, 700, spacing=1),
+    ])
+
+
 SCENES = {
+    "snap-solve": ("Snap Solve", "A screen selection converted into Markdown and an answer.", "SNAP SOLVE", scene_snap_solve),
     "qqspeed": ("QQ Speed Garage", "Tracks, race events, scores and local records.", "QQ SPEED GARAGE", scene_qqspeed),
     "codex": ("Codex Quota Rings", "Quota rings and status cards for five-hour and seven-day windows.", "CODEX QUOTA RINGS", scene_codex),
     "markdown": ("Markdown Preview and Compiler", "A source editor beside rendered Markdown and a PDF export badge.", "MARKDOWN / PDF", scene_markdown),

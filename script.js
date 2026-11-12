@@ -67,6 +67,7 @@
       salary: 'Teacher attendance and salary tool: validated records and payroll export',
       'hello-codex': 'Hello! Codex: five-hour quota, daily active hours, and manual send controls',
       qqspeed: 'QQ Speed Garage: track library, race results and event management',
+      'snap-solve': 'Snap Solve: screenshot selection transcribed into Markdown and an answer',
       guides: 'Beginner computing guides for Markdown, Git, WSL, and more',
       documents: 'Documents: illustrated archive of presentations, posters, and research notes',
       skills: 'Icons for the programming languages and development tools listed below'
@@ -83,6 +84,7 @@
       salary: '教师出勤与工资统计程序：考勤校验表与工资导出卡片',
       'hello-codex': 'Hello! Codex：五小时额度、每日启用时段与手动发送界面',
       qqspeed: '极速仓库：QQ 飞车地图图鉴、赛事计分与战绩管理',
+      'snap-solve': 'Snap Solve：截图选区转写与 Markdown 答案',
       guides: '计算机入门讲义：Markdown、Git 和 WSL',
       documents: 'Documents：演示文档、海报和研究资料的档案界面',
       skills: '下方所列编程语言和开发工具的图标'
