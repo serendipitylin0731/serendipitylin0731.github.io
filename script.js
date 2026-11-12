@@ -19,7 +19,7 @@
   function assetPath(key) {
     const english = currentLang() === 'en' ? '-en' : '';
     const light = currentTheme() === 'light' ? '-light' : '';
-    if (key === 'hero') return `assets/hero${english}${light}.svg`;
+    if (key === 'hero') return `assets/hero${matchMedia('(max-width: 680px)').matches ? '-mobile' : ''}${english}${light}.svg`;
     if (key === 'timeline') return `assets/timeline-medals-subtle${english}-${currentTheme()}.svg?v=202611`;
     if (key === 'skills') return `assets/skills-${currentTheme()}.svg`;
     if (key === 'divider' || key === 'endline') return `assets/${key}-${currentTheme()}.svg`;
@@ -431,11 +431,10 @@
   function setupProjectViews() {
     const section = document.getElementById('projects');
     const categories = [...section.querySelectorAll(':scope > .project-category')];
-    const summary = section.querySelector(':scope > .subheading-row');
     const current = section.querySelector(':scope > .current-projects');
     const resources = section.querySelector(':scope > .documents-section');
     const skills = section.querySelector(':scope > #skills');
-    if (categories.length !== 2 || !summary || !current || !resources || !skills) return;
+    if (categories.length !== 2 || !current || !resources || !skills) return;
 
     const views = [
       { id: 'current', zh: '近期项目', en: 'Current', panel: current },
@@ -448,7 +447,6 @@
     tabs.className = 'project-tabs';
     tabs.setAttribute('role', 'tablist');
     section.querySelector(':scope > .section-heading').after(tabs);
-    summary.classList.add('project-section-summary');
 
     let selected = 0;
     const buttons = views.map((view, index) => {
@@ -476,7 +474,6 @@
         buttons[i].setAttribute('aria-selected', i === selected ? 'true' : 'false');
         buttons[i].tabIndex = i === selected ? 0 : -1;
       });
-      summary.hidden = !['extensions', 'software'].includes(views[selected].id);
       if (changed) document.dispatchEvent(new CustomEvent('deck:layoutchange', { detail: { reset: true } }));
       if (focus) buttons[selected].focus({ preventScroll: true });
     }
@@ -568,6 +565,7 @@
     const theme = saved || (systemLight.matches ? 'light' : 'dark');
     if (root.dataset.theme !== theme) { root.dataset.theme = theme; updateMeta(); redrawAmbient(); }
   }
+  matchMedia('(max-width: 680px)').addEventListener('change', updateAssets);
   mobileTheme.addEventListener('change', syncAutomaticTheme);
   systemLight.addEventListener('change', () => { if (mobileTheme.matches) syncAutomaticTheme(); });
   document.getElementById('year').textContent = new Date().getFullYear();

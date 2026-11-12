@@ -641,3 +641,33 @@ html[data-theme="light"] .beyond-card-games{--beyond-accent:var(--mint)}
 }
 
 @media (max-width:680px), (hover:none) and (pointer:coarse){.theme-button{display:none}}
+
+/* Keep category numbers visible alongside the other project sections. */
+.deck-ready #projects .project-category-heading .eyebrow{display:block}
+@media(min-width:681px){
+ .deck-ready .story-page-scroll{left:var(--deck-rail-space)}
+ .page-project-header,.page-beyond-header{left:var(--deck-rail-space);width:min(1120px,calc(100% - 2 * var(--deck-rail-space) - 64px))}
+}
+
+@media(max-width:680px){
+ .hero-frame img,.hero-frame object{aspect-ratio:1;min-height:0;object-fit:contain}
+}
+/* Improve small dark-theme timeline text while retaining its original layout. */
+@media(max-width:680px){
+ html[data-theme="dark"].deck-ready .timeline-frame object,
+ html[data-theme="dark"].deck-ready .timeline-frame img{min-width:1100px}
+}
+@media(min-width:1000px) and (max-width:1350px){
+ .deck-ready #about .intro-copy{font-size:.95rem;line-height:1.6}
+ .deck-ready #about .intro-copy .lead{font-size:1.45rem;line-height:1.35;margin-bottom:14px}
+ .deck-ready #about .intro-copy p{margin-bottom:12px}
+ .project-skills{padding:18px}
+ .project-skills>.section-heading{margin-bottom:8px}
+ .project-skills .skills-icons>img{width:min(100%,490px)}
+ .project-skills .skill-logo{width:38px;height:38px}
+ .project-skills .skill-category{padding:9px 12px}
+}
+@media(min-width:1000px) and (max-width:1350px){
+ html[lang="en"].deck-ready #about .intro-copy{font-size:.91rem;line-height:1.55}
+ html[lang="en"].deck-ready #about .intro-copy .lead{font-size:1.4rem;line-height:1.35;margin-bottom:14px}
+}
