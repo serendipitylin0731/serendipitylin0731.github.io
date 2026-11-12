@@ -637,7 +637,6 @@ html[data-theme="light"] .beyond-card-games{--beyond-accent:var(--mint)}
 .deck-ready .beyond-pair .beyond-list li>strong{margin-bottom:4px;line-height:1.45}
 @media(max-width:680px){
  .project-skills{padding:20px}
- .deck-ready .timeline-frame img,.deck-ready .timeline-frame object{min-width:1400px}
  .deck-ready .beyond-pair .beyond-list li{padding:9px 0}
 }
 

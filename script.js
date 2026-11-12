@@ -20,7 +20,7 @@
     const english = currentLang() === 'en' ? '-en' : '';
     const light = currentTheme() === 'light' ? '-light' : '';
     if (key === 'hero') return `assets/hero${english}${light}.svg`;
-    if (key === 'timeline') return `assets/timeline-medals-subtle${english}-${currentTheme()}.svg?v=202611b`;
+    if (key === 'timeline') return `assets/timeline-medals-subtle${english}-${currentTheme()}.svg?v=202611`;
     if (key === 'skills') return `assets/skills-${currentTheme()}.svg`;
     if (key === 'divider' || key === 'endline') return `assets/${key}-${currentTheme()}.svg`;
     return `assets/projects/${key}-visual-${currentTheme()}.svg`;

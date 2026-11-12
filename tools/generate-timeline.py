@@ -24,7 +24,7 @@ EN_DESC = 'Education spans: Wenling Chengdong Primary School, 2013.09–2019.06;
 def render(lang, theme):
     light = theme == 'light'
     en = lang == 'en'
-    c = dict(bg1='#f6f9fc', bg2='#eef0fa', grid='#536480', border='#d1dce9', green='#006c5e', purple='#56399d', text='#1d2b43', muted='#50617b', line='#a6b4cb', card='#eeeafa') if light else dict(bg1='#101728', bg2='#1b1b33', grid='#ffffff', border='#465574', green='#5de4c7', purple='#a78bfa', text='#f3f6ff', muted='#b6c2d9', line='#4a5874', card='#22213e')
+    c = dict(bg1='#f6f9fc', bg2='#eef0fa', grid='#536480', border='#d1dce9', green='#188a7a', purple='#745ac7', text='#1d2b43', muted='#50617b', line='#a6b4cb', card='#eeeafa') if light else dict(bg1='#101728', bg2='#1b1b33', grid='#ffffff', border='#465574', green='#5de4c7', purple='#a78bfa', text='#f3f6ff', muted='#b6c2d9', line='#4a5874', card='#22213e')
     title = 'Education and competition awards timeline' if en else '学习经历与竞赛获奖时间轴'
     desc = EN_DESC if en else ZH_DESC
     items = [f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 565">
