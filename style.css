@@ -493,3 +493,133 @@ html[data-theme="light"] .beyond-card-games{--beyond-accent:var(--mint)}
  .deck-ready .resource-media{position:relative}
  .deck-ready .resource-media img{position:absolute;inset:0;width:100%;height:100%}
 }
+
+/* Reserve a separate desktop gutter for the page navigation. */
+@media(min-width:681px){
+ .deck-ready #main{--deck-rail-space:clamp(132px,11vw,160px)}
+ .deck-ready .story-page-scroll{right:var(--deck-rail-space)}
+ .deck-ready .story-page-content>.wrap{width:min(1120px,calc(100% - 64px))}
+ .deck-ready .story-page-content>#about{width:min(1200px,calc(100% - 64px))}
+ .deck-ready .story-page-content>#journey{width:min(1320px,calc(100% - 64px))}
+ .page-project-header,.page-beyond-header{right:var(--deck-rail-space);width:min(1120px,calc(100% - var(--deck-rail-space) - 64px))}
+}
+.project-tabs{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:680px){.page-project-header .project-tabs{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.carousel-dots{display:flex;justify-content:center;align-items:center;gap:4px;padding:12px 0 2px;break-inside:avoid}
+.carousel-dot{display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;background:transparent;cursor:pointer}
+.carousel-dot:before{content:"";width:7px;height:7px;border-radius:8px;background:var(--faint);transition:width .35s,background .35s,box-shadow .35s}
+.carousel-dot:hover:before,.carousel-dot:focus-visible:before{background:var(--mint)}
+.carousel-dot[aria-current="true"]:before{width:22px;background:var(--mint);box-shadow:0 0 12px rgba(93,228,199,.4)}
+.project-skills{padding:12px 0 30px}
+.project-skills>.section-heading{margin-bottom:16px}
+.beyond-pair[hidden]{display:none!important}
+@media(min-width:900px) and (min-height:700px){
+ .deck-ready .beyond-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px;break-inside:avoid}
+ .deck-ready .beyond-pair .beyond-visual{height:clamp(46px,7vh,70px)}
+ .deck-ready .beyond-pair .beyond-content{padding:10px 2px 0}
+ .deck-ready .beyond-pair .beyond-title-row{margin-bottom:6px}
+ .deck-ready .beyond-pair .beyond-list li{padding:6px 0}
+ .deck-ready .beyond-pair .beyond-list li>strong{margin-bottom:2px}
+ .deck-ready .beyond-pair .beyond-list p{font-size:.79rem;line-height:1.5}
+}
+/* Rotate the outgoing page away and bring the next preview forward. */
+@keyframes cube-enter-next{from{opacity:.25;transform:translateX(24%) translateZ(-180px) rotateY(-30deg) scale(.84)}to{opacity:1;transform:none}}
+@keyframes cube-enter-previous{from{opacity:.25;transform:translateX(-24%) translateZ(-180px) rotateY(30deg) scale(.84)}to{opacity:1;transform:none}}
+@keyframes cube-exit-next{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-25%) translateZ(-200px) rotateY(32deg) scale(.82)}}
+@keyframes cube-exit-previous{from{opacity:1;transform:none}to{opacity:0;transform:translateX(25%) translateZ(-200px) rotateY(-32deg) scale(.82)}}
+
+/* Keep compact screens readable without dividing a project across screens. */
+
+
+
+@media(min-width:681px){
+ .deck-ready .contact-methods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .deck-ready .contact-methods li{margin:0}
+ .deck-ready .contact-section{padding-block:clamp(24px,4vh,42px) 20px}
+ .deck-ready .site-footer{padding-bottom:10px}
+ .project-skills .skills-icons{padding:10px;margin-bottom:10px;gap:7px}
+ .project-skills .skills-icons>img{width:min(100%,620px)}
+ .project-skills .skill-logo{width:48px;height:48px}
+ .project-skills .skill-category{padding:13px 16px}
+ .project-skills .skill-category p{line-height:1.5}
+}
+
+
+
+
+.project-stage.is-turning[data-direction="next"] .project-preview-next{animation:preview-enter-next .85s cubic-bezier(.22,1,.36,1) both}
+.project-stage.is-turning[data-direction="previous"] .project-preview-previous{animation:preview-enter-previous .85s cubic-bezier(.22,1,.36,1) both}
+@keyframes preview-enter-next{from{opacity:.1;transform:translateX(30%) rotateY(-55deg) scale(.78)}to{opacity:.68;transform:rotateY(-34deg) scale(.94)}}
+@keyframes preview-enter-previous{from{opacity:.1;transform:translateX(-30%) rotateY(55deg) scale(.78)}to{opacity:.68;transform:rotateY(34deg) scale(.94)}}
+@media(prefers-reduced-motion:reduce){.project-stage.is-turning .project-preview{animation:none!important}}
+@media(min-width:1000px){
+ html[lang="en"].deck-ready #about .intro-copy{font-size:.98rem;line-height:1.65}
+ html[lang="en"].deck-ready #about .intro-copy p{margin-bottom:14px}
+ html[lang="en"].deck-ready #about .intro-copy .lead{font-size:1.55rem;line-height:1.35;margin-bottom:20px}
+ .carousel-cube .project-body p{font-size:.83rem;line-height:1.5}
+ .documents-section .resource-content p{font-size:.8rem;line-height:1.5}
+}
+@media(min-width:1000px) and (min-height:800px){
+ .carousel-cube.carousel-single .project-art{height:clamp(280px,calc(100dvh - 450px),350px)}
+}
+@media(min-width:1000px) and (min-height:720px) and (max-height:799px){
+ .carousel-cube.carousel-single .project-art{height:clamp(260px,calc(100dvh - 430px),330px)}
+}
+
+
+
+
+
+
+
+/* On phones, themes slide sideways and each theme scrolls vertically. */
+@media(max-width:680px){
+ .deck-ready .story-page-scroll{right:0;overflow-x:hidden;overflow-y:auto;touch-action:pan-y;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
+ .deck-ready .story-page-content{height:auto;min-height:100%;column-width:auto;column-count:auto;column-fill:balance;padding-bottom:78px}
+ .deck-ready .story-page-content>#journey{break-before:auto}
+ .story-page{transform:translate3d(7%,0,0) scale(.985)}
+ .story-page.is-before,.story-page.is-exiting-up{transform:translate3d(-7%,0,0) scale(.985)}
+ .story-page.is-exiting-down{transform:translate3d(7%,0,0) scale(.985)}
+ .story-page.is-active{transform:translate3d(0,0,0) scale(1)}
+ .deck-ready .story-page-content>.wrap{width:calc(100% - 32px)}
+ .deck-ready #projects{padding:12px 0 25px}
+ .page-project-header{padding:8px 0}
+ .page-project-header .project-tab-label{font-size:.65rem}
+ .project-skills{padding:14px 0 24px}
+ .project-skills .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .project-skills .skill-category{padding:14px}
+ .project-skills .skill-category p{font-size:.78rem;line-height:1.6}
+ .carousel-cube .project-body p{font-size:.86rem;line-height:1.65}
+ .carousel-cube.carousel-single .project-art{float:none;width:auto;height:clamp(110px,24vh,180px);margin:0;border-left:0;border-bottom:1px solid var(--line-soft)}
+ .carousel-dots{padding:10px 0 0}
+ .deck-ready .story-page-content>#about{padding:26px 0 30px}
+ .deck-ready #about .about-grid{display:block}
+ .deck-ready #about .about-aside{margin-top:18px}
+ .deck-ready #about .intro-copy{font-size:.92rem;line-height:1.7}
+ .deck-ready #about .intro-copy .lead{font-size:1.25rem;line-height:1.45}
+ .deck-ready .contact-section{padding:28px 0 24px}
+ .deck-ready .contact-panel{padding:22px}
+ .deck-ready .contact-methods{display:grid;grid-template-columns:1fr;gap:10px}
+ .deck-ready .contact-methods li{margin:0}
+ .deck-ready .site-footer{padding-bottom:20px}
+ .page-beyond-header{padding:8px 0}
+ .deck-ready #beyond{padding:12px 0 24px}
+ .deck-ready .beyond-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .deck-ready .beyond-pair .beyond-visual{height:65px}
+ .deck-ready .beyond-pair .beyond-content{padding:12px 0 0}
+ .deck-ready .beyond-pair .beyond-title-row{gap:6px;margin-bottom:10px}
+ .deck-ready .beyond-pair .beyond-mark{width:27px;height:27px;font-size:.65rem}
+ .deck-ready .beyond-pair h3{font-size:1rem}
+ .deck-ready .beyond-pair .beyond-list li{padding:10px 0}
+ .deck-ready .beyond-pair .beyond-list li>strong{font-size:.8rem;gap:5px}
+ .deck-ready .beyond-pair .beyond-list p{font-size:.76rem;line-height:1.55}
+ .deck-ready .resource-card{display:block}
+ .deck-ready .resource-media{position:relative;height:clamp(120px,24vh,190px);min-height:0;border-right:0;border-bottom:1px solid var(--line-soft)}
+ .deck-ready .resource-media img{position:static;width:100%;height:100%;object-fit:cover}
+ .deck-ready .resource-content{padding:16px}
+ .documents-section .resource-content p{font-size:.82rem;line-height:1.6}
+}
+@media(max-width:680px){
+ .deck-ready .story-page-scroll{bottom:64px}
+ .deck-ready .story-page-content{padding-bottom:20px}
+}

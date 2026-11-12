@@ -21,6 +21,7 @@ THEMES = {
 }
 ACCENTS = {
     "codex": (("#5de4c7", "#a78bfa"), ("#167c74", "#7555b9")),
+    "qqspeed": (("#5de4c7", "#59d4e7"), ("#167c74", "#147e96")),
     "markdown": (("#a78bfa", "#59d4e7"), ("#7555b9", "#147e96")),
     "shit-code": (("#f2bc65", "#a78bfa"), ("#a45e19", "#7555b9")),
     "3820": (("#5de4c7", "#59d4e7"), ("#167c74", "#147e96")),
@@ -241,7 +242,27 @@ def scene_hello_codex(p, a, b):
     return "\n".join(parts)
 
 
+def scene_qqspeed(p, a, b):
+    parts = [
+        text(72, 122, "TRACK LIBRARY / GARAGE", p["muted"], 10, 700, spacing=1),
+        rect(70, 140, 235, 125, p["sub"], stroke=p["stroke"]),
+        '<path d="M93 229C130 183 177 181 210 205S258 228 284 166" fill="none" stroke="' + p["soft"] + '" stroke-width="20" stroke-linecap="round"/>',
+        '<path d="M93 229C130 183 177 181 210 205S258 228 284 166" fill="none" stroke="' + a + '" stroke-width="4" stroke-linecap="round" stroke-dasharray="11 9"/>',
+        '<circle cx="93" cy="229" r="6" fill="' + a + '"/><circle cx="284" cy="166" r="6" fill="' + b + '"/>',
+        rect(326, 140, 204, 54, p["sub"], stroke=p["stroke"]),
+        text(344, 162, "EVENT SCOREBOARD", p["muted"], 9, 700, spacing=1),
+        text(344, 181, "01  /  128", a, 16, 800),
+        rect(326, 207, 204, 58, p["sub"], stroke=p["stroke"]),
+        text(344, 228, "RACE ARCHIVE", p["muted"], 9, 700, spacing=1),
+        rect(344, 239, 145, 7, p["soft"], rx=3),
+        rect(344, 239, 91, 7, b, rx=3),
+        text(72, 292, "TRACKS  /  CARS  /  EVENTS", p["muted"], 10, 700, spacing=1),
+    ]
+    return "\n".join(parts)
+
+
 SCENES = {
+    "qqspeed": ("QQ Speed Garage", "Tracks, race events, scores and local records.", "QQ SPEED GARAGE", scene_qqspeed),
     "codex": ("Codex Quota Rings", "Quota rings and status cards for five-hour and seven-day windows.", "CODEX QUOTA RINGS", scene_codex),
     "markdown": ("Markdown Preview and Compiler", "A source editor beside rendered Markdown and a PDF export badge.", "MARKDOWN / PDF", scene_markdown),
     "shit-code": ("Shit Code Detector", "A 0–9 code style score beside traceable issue categories.", "SHIT CODE DETECTOR", scene_shit_code),

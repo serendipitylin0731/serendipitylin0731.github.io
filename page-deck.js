@@ -99,13 +99,14 @@
   main.append(sweep, rail, reader, announcement);
 
   const english = () => root.lang === 'en';
+  const mobileLayout = () => matchMedia('(max-width: 680px)').matches;
   const nameOf = page => labels[page.id][english() ? 1 : 0];
   const hashTarget = () => {
     let hash = location.hash.slice(1);
     try { hash = decodeURIComponent(hash); } catch (error) { /* Ignore malformed fragments. */ }
     return hash;
   };
-  const indexForTarget = target => pages.findIndex(page => page.sections.some(section => section.id === target));
+  const indexForTarget = target => pages.findIndex(page => page.sections.some(section => section.id === target || (target === 'skills' && section.id === 'projects')));
   const indexFromHash = () => {
     const index = indexForTarget(hashTarget());
     return index < 0 ? 0 : index;
@@ -139,6 +140,8 @@
     const en = english();
     const page = pages[current];
     rail.setAttribute('aria-label', en ? 'Page navigation' : '页面导航');
+    previous.textContent = mobileLayout() ? '←' : '↑';
+    next.textContent = mobileLayout() ? '→' : '↓';
     previous.setAttribute('aria-label', en ? 'Previous section' : '上一部分');
     next.setAttribute('aria-label', en ? 'Next section' : '下一部分');
     previous.disabled = current === 0;
@@ -154,14 +157,20 @@
     });
     const journey = page.sections.find(section => section.id === 'journey');
     const journeyStart = journey ? columnForSection(page, 'journey') : 0;
-    const activeId = journey && page.readIndex >= journeyStart ? 'journey' : page.id;
+    const viewport = page.scroller.getBoundingClientRect();
+    const journeyTop = journey ? journey.getBoundingClientRect().top : Infinity;
+    const atEnd = page.scroller.scrollTop + page.scroller.clientHeight >= page.scroller.scrollHeight - 2;
+    const journeyActive = journey && (mobileLayout()
+      ? journeyTop <= viewport.top + 90 || (atEnd && journeyTop < viewport.bottom)
+      : page.readIndex >= journeyStart);
+    const activeId = journeyActive ? 'journey' : page.id;
     page.activeSection = activeId;
     page.sectionOffset = activeId === 'journey' ? page.readIndex - journeyStart : page.readIndex;
     document.querySelectorAll('.main-nav a[href^="#"]').forEach(link => {
       if (link.getAttribute('href') === `#${activeId}`) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     });
-    reader.hidden = page.readCount <= 1;
+    reader.hidden = mobileLayout() || page.readCount <= 1;
     readerLabel.textContent = en ? 'READ' : '内容';
     readerPosition.textContent = `${String(page.readIndex + 1).padStart(2, '0')} / ${String(page.readCount).padStart(2, '0')}`;
     readerPrevious.setAttribute('aria-label', en ? 'Previous screen in this section' : '本部分上一屏');
@@ -185,6 +194,12 @@
     const width = page.scroller.clientWidth;
     if (!width) return;
     page.scroller.style.setProperty('--deck-page-width', `${width}px`);
+    if (mobileLayout()) {
+      page.readCount = 1;
+      page.readIndex = 0;
+      if (reset) page.scroller.scrollTo({ left: 0, top: 0, behavior: 'auto' });
+      return;
+    }
     page.readCount = Math.max(1, Math.ceil((page.scroller.scrollWidth - 2) / width));
     page.readIndex = reset ? 0 : Math.min(page.readIndex, page.readCount - 1);
     page.scroller.scrollTo({ left: page.readIndex * width, top: 0, behavior: 'auto' });
@@ -206,7 +221,7 @@
       refreshReset = false;
       refreshAnchor = null;
       refreshPages(reset);
-      if (!reset && saved && saved.page === pages[current]) {
+      if (!mobileLayout() && !reset && saved && saved.page === pages[current]) {
         readPage(saved.page, columnForSection(saved.page, saved.section) + saved.offset, false, false);
       }
     });
@@ -214,6 +229,12 @@
 
   function readPage(page, index, smooth = true, announce = true) {
     clearTimeout(page.readTimer);
+    if (mobileLayout()) {
+      page.readIndex = 0;
+      page.scroller.scrollTo({ left: 0, top: 0, behavior: smooth && !motionPreference.matches ? 'smooth' : 'auto' });
+      if (page === pages[current]) updateLabels(announce);
+      return;
+    }
     page.readIndex = Math.max(0, Math.min(index, page.readCount - 1));
     page.readTarget = smooth && !motionPreference.matches ? page.readIndex : null;
     page.scroller.scrollTo({ left: page.readIndex * page.scroller.clientWidth, top: 0,
@@ -224,6 +245,16 @@
       if (page === pages[current]) updateLabels();
     }, 600);
     if (page === pages[current]) updateLabels(announce);
+  }
+
+  function scrollToMobileSection(page, target, smooth = false) {
+    if (!mobileLayout()) return false;
+    const section = page.sections.find(item => item.id === target);
+    const top = section && section.id !== page.id
+      ? page.scroller.scrollTop + section.getBoundingClientRect().top - page.scroller.getBoundingClientRect().top
+      : 0;
+    page.scroller.scrollTo({ left: 0, top: Math.max(0, top), behavior: smooth && !motionPreference.matches ? 'smooth' : 'auto' });
+    return true;
   }
 
   function writeHash(id, mode) {
@@ -237,10 +268,12 @@
   function showPage(index, options = {}) {
     if (index < 0 || index >= pages.length) return;
     const destination = pages[index];
+    if (options.target === 'skills') document.getElementById('project-tab-skills')?.click();
     if (index === current) {
       measurePage(destination);
-      if (options.target) readPage(destination, columnForSection(destination, options.target), true, false);
-      else if (options.reset) readPage(destination, 0, false, false);
+      if (options.target) {
+        if (!scrollToMobileSection(destination, options.target, true)) readPage(destination, columnForSection(destination, options.target), true, false);
+      } else if (options.reset) readPage(destination, 0, false, false);
       writeHash(options.target || destination.id, options.history || 'none');
       if (options.focus) destination.scroller.focus({ preventScroll: true });
       updateLabels();
@@ -264,6 +297,7 @@
     const readingIndex = options.target ? columnForSection(destination, options.target)
       : options.fromEnd && direction < 0 ? destination.readCount - 1 : 0;
     readPage(destination, readingIndex, false, false);
+    if (options.target) scrollToMobileSection(destination, options.target);
     writeHash(options.target || destination.id, options.history || 'replace');
     updateLabels(true);
     if (focusWasInside || options.focus) destination.scroller.focus({ preventScroll: true });
@@ -287,6 +321,7 @@
   }
 
   function handleWheel(event) {
+    if (mobileLayout()) return;
     if (event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY) || !event.deltaY) return;
     initialAnchorPending = false;
     event.preventDefault();
@@ -310,7 +345,10 @@
     initialAnchorPending = false;
     const point = event.touches[0];
     const timeline = object && object.closest('.timeline-frame');
-    touch = { x: point.clientX, y: point.clientY, object, timeline, left: timeline ? timeline.scrollLeft : 0 };
+    const source = object || event.target;
+    const locked = Boolean(source && source.closest && source.closest('.project-carousel, .timeline-frame, .project-tabs, .beyond-tabs, .main-nav'));
+    touch = { x: point.clientX, y: point.clientY, object, timeline, locked,
+      pageTop: pages[current].scroller.scrollTop, left: timeline ? timeline.scrollLeft : 0 };
   }
 
   function moveEmbeddedTouch(event) {
@@ -318,8 +356,10 @@
     const dx = event.touches[0].clientX - touch.x;
     const dy = event.touches[0].clientY - touch.y;
     if (Math.max(Math.abs(dx), Math.abs(dy)) < 8) return;
-    if (Math.abs(dy) > Math.abs(dx)) event.preventDefault();
-    else if (touch.timeline) {
+    if (Math.abs(dy) > Math.abs(dx)) {
+      event.preventDefault();
+      if (mobileLayout()) pages[current].scroller.scrollTop = touch.pageTop - dy;
+    } else if (touch.timeline) {
       event.preventDefault();
       touch.timeline.scrollLeft = touch.left - dx;
     }
@@ -329,8 +369,11 @@
     if (!touch || !event.changedTouches.length) return;
     const dx = event.changedTouches[0].clientX - touch.x;
     const dy = event.changedTouches[0].clientY - touch.y;
+    const locked = touch.locked;
     touch = null;
-    if (!moving && Math.abs(dy) > 75 && Math.abs(dy) > Math.abs(dx) * 1.35) advance(dy < 0 ? 1 : -1);
+    if (mobileLayout()) {
+      if (!locked && !moving && Math.abs(dx) > 75 && Math.abs(dx) > Math.abs(dy) * 1.35) showPage(current + (dx < 0 ? 1 : -1), { history: 'replace' });
+    } else if (!moving && Math.abs(dy) > 75 && Math.abs(dy) > Math.abs(dx) * 1.35) advance(dy < 0 ? 1 : -1);
   }
 
   function bindEmbeddedDocument(object) {
@@ -338,7 +381,12 @@
     try { embedded = object.contentDocument; } catch (error) { return; }
     if (!embedded || !embedded.documentElement || embedded.documentElement.dataset.deckBound === 'true') return;
     embedded.documentElement.dataset.deckBound = 'true';
-    embedded.addEventListener('wheel', handleWheel, { passive: false });
+    embedded.addEventListener('wheel', event => {
+      if (mobileLayout() && Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+        event.preventDefault();
+        pages[current].scroller.scrollBy({ top: event.deltaY, behavior: 'auto' });
+      } else handleWheel(event);
+    }, { passive: false });
     embedded.addEventListener('touchstart', event => startTouch(event, object), { passive: true });
     embedded.addEventListener('touchmove', moveEmbeddedTouch, { passive: false });
     embedded.addEventListener('touchend', endTouch, { passive: true });
@@ -349,6 +397,10 @@
     page.panel.classList.toggle('is-active', index === current);
     setAvailable(page, index === current);
     page.scroller.addEventListener('scroll', () => {
+      if (mobileLayout()) {
+        if (index === current) updateLabels();
+        return;
+      }
       if (page.scroller.scrollTop) page.scroller.scrollTop = 0;
       const width = page.scroller.clientWidth;
       if (!width || page.readTarget !== null) return;
@@ -356,7 +408,7 @@
       if (index === current) updateLabels();
     }, { passive: true });
     page.scroller.addEventListener('focusin', event => {
-      if (event.target === page.scroller) return;
+      if (mobileLayout() || event.target === page.scroller) return;
       const target = event.target.closest('.timeline-frame') || event.target;
       requestAnimationFrame(() => requestAnimationFrame(() => {
         if (index !== current || !page.scroller.contains(document.activeElement)) return;
@@ -387,7 +439,7 @@
     if (!initialAnchorPending || indexForTarget(initialAnchor) !== current) return;
     const page = pages[current];
     measurePage(page);
-    readPage(page, columnForSection(page, initialAnchor), false, false);
+    if (!scrollToMobileSection(page, initialAnchor)) readPage(page, columnForSection(page, initialAnchor), false, false);
   };
   if (initialAnchorPending) {
     requestAnimationFrame(settleInitialAnchor);
@@ -444,6 +496,7 @@
     const target = event.target;
     if (target && target.closest && target.closest('input, textarea, select, [contenteditable="true"]')) return;
     const isControl = target && target.closest && target.closest('button, a, summary');
+    if (mobileLayout() && ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' '].includes(event.key)) return;
     let direction = 0;
     if (event.key === 'PageDown' || (event.key === ' ' && !event.shiftKey && !isControl)) direction = 1;
     else if (event.key === 'PageUp' || (event.key === ' ' && event.shiftKey && !isControl)) direction = -1;

@@ -50,9 +50,7 @@
       const category = en ? carousel.dataset.labelEn : carousel.dataset.labelZh;
       carousel.setAttribute('aria-label', category);
       carousel.querySelector('.project-viewport').setAttribute('aria-label', en ? `${category.replace(' carousel', '')} list` : `${category.replace('轮播', '')}列表`);
-      const controls = carousel.deckControls || { previous: carousel.querySelector('.project-prev'), next: carousel.querySelector('.project-next') };
-      controls.previous.setAttribute('aria-label', en ? 'Previous project' : '上一个项目');
-      controls.next.setAttribute('aria-label', en ? 'Next project' : '下一个项目');
+
     });
     document.querySelector('meta[name="theme-color"]').content = currentTheme() === 'dark' ? '#0b1020' : '#f6f9fc';
     updateAssets();
@@ -68,6 +66,7 @@
       ta: 'Zhiye TA Agent: textbook library and answers with page references',
       salary: 'Teacher attendance and salary tool: validated records and payroll export',
       'hello-codex': 'Hello! Codex: five-hour quota, daily active hours, and manual send controls',
+      qqspeed: 'QQ Speed Garage: track library, race results and event management',
       guides: 'Beginner computing guides for Markdown, Git, WSL, and more',
       documents: 'Documents: illustrated archive of presentations, posters, and research notes',
       skills: 'Icons for the programming languages and development tools listed below'
@@ -83,6 +82,7 @@
       ta: '知页 TA Agent：教材书库与带页码来源的问答',
       salary: '教师出勤与工资统计程序：考勤校验表与工资导出卡片',
       'hello-codex': 'Hello! Codex：五小时额度、每日启用时段与手动发送界面',
+      qqspeed: '极速仓库：QQ 飞车地图图鉴、赛事计分与战绩管理',
       guides: '计算机入门讲义：Markdown、Git 和 WSL',
       documents: 'Documents：演示文档、海报和研究资料的档案界面',
       skills: '下方所列编程语言和开发工具的图标'
@@ -182,11 +182,26 @@
     }
     function resize() {
       const ratio = Math.min(devicePixelRatio || 1, 2);
+      const oldWidth = width;
+      const oldHeight = height;
       width = innerWidth;
       height = innerHeight;
-      canvas.width = Math.round(width * ratio);
-      canvas.height = Math.round(height * ratio);
-      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      if (dots.length && oldWidth && oldHeight) {
+        const scaleX = width / oldWidth;
+        const scaleY = height / oldHeight;
+        dots.forEach(dot => {
+          dot.x *= scaleX; dot.homeX *= scaleX;
+          dot.y *= scaleY; dot.homeY *= scaleY;
+        });
+      }
+      const pixelWidth = Math.round(width * ratio);
+      const pixelHeight = Math.round(height * ratio);
+      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+      if (dots.length) { draw(); return; }
       const count = Math.min(72, Math.max(30, Math.round(width * height / 23000)));
       const columns = Math.ceil(Math.sqrt(count * width / height));
       const rows = Math.ceil(count / columns);
@@ -255,7 +270,7 @@
       resize();
       animate();
     }
-    addEventListener('resize', restart);
+    addEventListener('resize', resize);
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && frame) { cancelAnimationFrame(frame); frame = 0; }
       else if (!document.hidden && !frame) animate();
@@ -268,11 +283,9 @@
     const viewport = carousel.querySelector('.project-viewport');
     const cards = [...carousel.querySelector('.project-track').children];
     const bar = carousel.querySelector('.carousel-bar');
-    const previous = bar.querySelector('.project-prev');
-    const next = bar.querySelector('.project-next');
-    const position = bar.querySelector('.carousel-position');
+
     if (cards.length < 2) return;
-    carousel.deckControls = { bar, previous, next };
+    carousel.deckControls = { bar };
     carousel.classList.add('carousel-ready', 'carousel-single', 'carousel-cube');
     const stage = document.createElement('div');
     stage.className = 'project-stage';
@@ -288,6 +301,18 @@
     };
     const left = makePreview('previous');
     const right = makePreview('next');
+    const dots = document.createElement('div');
+    dots.className = 'carousel-dots';
+    dots.setAttribute('role', 'group');
+    carousel.append(dots);
+    const dotButtons = cards.map((card, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'carousel-dot';
+      button.addEventListener('click', () => { lastAdvance = Date.now(); show(index); });
+      dots.append(button);
+      return button;
+    });
     let current = 0;
     let lastAdvance = Date.now();
     let wasActive = false;
@@ -334,7 +359,14 @@
         card.inert = i !== current;
         card.setAttribute('aria-hidden', String(i !== current));
       });
-      position.textContent = `${String(current + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+      dots.setAttribute('aria-label', currentLang() === 'en' ? 'Choose a project' : '选择项目');
+      dotButtons.forEach((button, i) => {
+        const title = cards[i].querySelector('h4');
+        const name = (title.querySelector(`[data-lang="${currentLang()}"]`) || title).textContent.trim();
+        button.setAttribute('aria-label', currentLang() === 'en' ? `Show project ${i + 1}: ${name}` : `查看第 ${i + 1} 个项目：${name}`);
+        if (i === current) button.setAttribute('aria-current', 'true');
+        else button.removeAttribute('aria-current');
+      });
       setPreview(left, (current + cards.length - 1) % cards.length, 'previous');
       setPreview(right, (current + 1) % cards.length, 'next');
       if (notify) {
@@ -349,8 +381,6 @@
       lastAdvance = Date.now();
       show(current + direction);
     }
-    previous.addEventListener('click', () => change(-1));
-    next.addEventListener('click', () => change(1));
     left.addEventListener('click', () => change(-1));
     right.addEventListener('click', () => change(1));
     viewport.addEventListener('keydown', event => {
@@ -392,7 +422,7 @@
       const focused = document.activeElement;
       const keyboardReading = focused && focused.matches(':focus-visible') &&
         (carousel.contains(focused) || bar.contains(focused));
-      if (keyboardReading || (scroller && scroller.scrollLeft > 2) || Date.now() - lastAdvance < 5000) return;
+      if (keyboardReading || (scroller && (scroller.scrollLeft > 2 || scroller.scrollTop > 8)) || Date.now() - lastAdvance < 5000) return;
       lastAdvance = Date.now();
       show(current + 1);
     }, 1000);
@@ -404,13 +434,15 @@
     const summary = section.querySelector(':scope > .subheading-row');
     const current = section.querySelector(':scope > .current-projects');
     const resources = section.querySelector(':scope > .documents-section');
-    if (categories.length !== 2 || !summary || !current || !resources) return;
+    const skills = section.querySelector(':scope > #skills');
+    if (categories.length !== 2 || !summary || !current || !resources || !skills) return;
 
     const views = [
+      { id: 'current', zh: '近期项目', en: 'Current', panel: current },
       { id: 'extensions', zh: 'VS Code 插件', en: 'Extensions', panel: categories[0], bar: categories[0].querySelector('.carousel-bar') },
       { id: 'software', zh: '软件', en: 'Software', panel: categories[1], bar: categories[1].querySelector('.carousel-bar') },
-      { id: 'current', zh: '近期项目', en: 'Current', panel: current },
-      { id: 'resources', zh: '资料分享', en: 'Resources', panel: resources }
+      { id: 'resources', zh: '资料分享', en: 'Resources', panel: resources },
+      { id: 'skills', zh: '技术与工具', en: 'Tools', panel: skills }
     ];
     const tabs = document.createElement('div');
     tabs.className = 'project-tabs';
@@ -425,9 +457,9 @@
       button.className = 'project-tab';
       button.id = `project-tab-${view.id}`;
       button.setAttribute('role', 'tab');
-      button.setAttribute('aria-controls', `project-view-${view.id}`);
+      button.setAttribute('aria-controls', view.id === 'skills' ? 'skills' : `project-view-${view.id}`);
       button.innerHTML = `<span class="project-tab-number" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span><span class="project-tab-label"><span data-lang="zh">${view.zh}</span><span data-lang="en">${view.en}</span></span>`;
-      view.panel.id = `project-view-${view.id}`;
+      if (view.id !== 'skills') view.panel.id = `project-view-${view.id}`;
       view.panel.classList.add('project-view');
       view.panel.setAttribute('role', 'tabpanel');
       view.panel.setAttribute('aria-labelledby', button.id);
@@ -444,7 +476,7 @@
         buttons[i].setAttribute('aria-selected', i === selected ? 'true' : 'false');
         buttons[i].tabIndex = i === selected ? 0 : -1;
       });
-      summary.hidden = selected > 1;
+      summary.hidden = !['extensions', 'software'].includes(views[selected].id);
       if (changed) document.dispatchEvent(new CustomEvent('deck:layoutchange', { detail: { reset: true } }));
       if (focus) buttons[selected].focus({ preventScroll: true });
     }
@@ -462,13 +494,13 @@
     const labelTabs = () => tabs.setAttribute('aria-label', currentLang() === 'en' ? 'Project categories' : '项目分类');
     new MutationObserver(labelTabs).observe(root, { attributes: true, attributeFilter: ['lang'] });
     labelTabs();
-    activate(0);
+    activate(location.hash === '#skills' ? views.findIndex(view => view.id === 'skills') : 0);
   }
   function setupBeyondViews() {
     const section = document.getElementById('beyond');
-    const cards = [...section.querySelectorAll('.beyond-card')];
-    const labels = [['游戏', 'Games'], ['文艺', 'Arts'], ['运动', 'Sports']];
-    if (cards.length !== labels.length) return;
+    const cards = [section.querySelector('.beyond-card-games'), section.querySelector('.beyond-pair')];
+    const labels = [['游戏', 'Games'], ['文艺与运动', 'Arts & sports']];
+    if (cards.length !== labels.length || cards.some(card => !card)) return;
     const tabs = document.createElement('div');
     tabs.className = 'beyond-tabs';
     tabs.setAttribute('role', 'tablist');
