@@ -19,7 +19,7 @@
   function assetPath(key) {
     const english = currentLang() === 'en' ? '-en' : '';
     const light = currentTheme() === 'light' ? '-light' : '';
-    if (key === 'hero') return `assets/hero${matchMedia('(max-width: 680px)').matches ? '-mobile' : ''}${english}${light}.svg`;
+    if (key === 'hero') return `assets/hero${matchMedia('(max-width: 680px)').matches ? '-mobile' : ''}${english}${light}.svg?v=202611d`;
     if (key === 'timeline') return `assets/timeline-medals-subtle${english}-${currentTheme()}.svg?v=202611c`;
     if (key === 'skills') return `assets/skills-${currentTheme()}.svg`;
     if (key === 'divider' || key === 'endline') return `assets/${key}-${currentTheme()}.svg`;
