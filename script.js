@@ -20,7 +20,7 @@
     const english = currentLang() === 'en' ? '-en' : '';
     const light = currentTheme() === 'light' ? '-light' : '';
     if (key === 'hero') return `assets/hero${english}${light}.svg`;
-    if (key === 'timeline') return `assets/timeline-medals-subtle${english}-${currentTheme()}.svg?v=202611`;
+    if (key === 'timeline') return `assets/timeline-medals-subtle${english}-${currentTheme()}.svg?v=202611b`;
     if (key === 'skills') return `assets/skills-${currentTheme()}.svg`;
     if (key === 'divider' || key === 'endline') return `assets/${key}-${currentTheme()}.svg`;
     return `assets/projects/${key}-visual-${currentTheme()}.svg`;
@@ -560,6 +560,16 @@
     try { localStorage.setItem('theme', currentTheme()); } catch (e) {}
     updateMeta(); redrawAmbient();
   });
+  const mobileTheme = matchMedia('(max-width: 680px), (hover: none) and (pointer: coarse)');
+  const systemLight = matchMedia('(prefers-color-scheme: light)');
+  function syncAutomaticTheme() {
+    let saved = null;
+    if (!mobileTheme.matches) { try { saved = localStorage.getItem('theme'); } catch (e) {} }
+    const theme = saved || (systemLight.matches ? 'light' : 'dark');
+    if (root.dataset.theme !== theme) { root.dataset.theme = theme; updateMeta(); redrawAmbient(); }
+  }
+  mobileTheme.addEventListener('change', syncAutomaticTheme);
+  systemLight.addEventListener('change', () => { if (mobileTheme.matches) syncAutomaticTheme(); });
   document.getElementById('year').textContent = new Date().getFullYear();
   const redrawAmbient = setupAmbientBackground();
   updateMeta(); restartTyping(); document.querySelectorAll('.project-carousel').forEach(setupProjectCarousel); setupProjectViews(); setupBeyondViews();
