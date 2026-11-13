@@ -546,6 +546,41 @@
     labelTabs();
     activate(0);
   }
+  function setupRecommendations() {
+    const section = document.getElementById('hero-recommendations');
+    const container = section.querySelector('.recommendation-links');
+    const choices = [
+      { zh: '关于我', en: 'About me', href: '#about' },
+      { zh: '学习与获奖', en: 'Education & awards', href: '#journey' },
+      { zh: '近期项目', en: 'Current projects', href: '#projects', tab: 'project-tab-current' },
+      { zh: 'VS Code 插件', en: 'VS Code extensions', href: '#projects', tab: 'project-tab-extensions' },
+      { zh: '软件项目', en: 'Software projects', href: '#projects', tab: 'project-tab-software' },
+      { zh: '资料分享', en: 'Shared resources', href: '#projects', tab: 'project-tab-resources' },
+      { zh: '技术与工具', en: 'Languages & tools', href: '#skills' },
+      { zh: '游戏', en: 'Games', href: '#beyond', tab: 'beyond-tab-0' },
+      { zh: '文艺与运动', en: 'Arts & sports', href: '#beyond', tab: 'beyond-tab-1' },
+      { zh: '联系我', en: 'Get in touch', href: '#contact' }
+    ];
+    let previous = [];
+    function render() {
+      const pool = choices.filter(choice => !previous.includes(choice));
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      previous = pool.slice(0, 3);
+      container.replaceChildren(...previous.map(choice => {
+        const link = document.createElement('a');
+        link.href = choice.href;
+        link.innerHTML = `<span data-lang="zh">${choice.zh}</span><span data-lang="en">${choice.en}</span><span aria-hidden="true"> ↗</span>`;
+        if (choice.tab) link.addEventListener('click', () => document.getElementById(choice.tab)?.click());
+        return link;
+      }));
+    }
+    section.querySelector('.recommendation-shuffle').addEventListener('click', render);
+    section.hidden = false;
+    render();
+  }
   langButton.addEventListener('click', () => {
     root.lang = currentLang() === 'en' ? 'zh-CN' : 'en';
     try { localStorage.setItem('lang', currentLang()); } catch (e) {}
@@ -572,5 +607,5 @@
   systemLight.addEventListener('change', () => { if (mobileTheme.matches) syncAutomaticTheme(); });
   document.getElementById('year').textContent = new Date().getFullYear();
   const redrawAmbient = setupAmbientBackground();
-  updateMeta(); restartTyping(); document.querySelectorAll('.project-carousel').forEach(setupProjectCarousel); setupProjectViews(); setupBeyondViews();
+  updateMeta(); restartTyping(); document.querySelectorAll('.project-carousel').forEach(setupProjectCarousel); setupProjectViews(); setupBeyondViews(); setupRecommendations();
 })();
