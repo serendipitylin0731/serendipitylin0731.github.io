@@ -563,16 +563,24 @@
     ];
     let previous = [];
     function render() {
-      const pool = choices.filter(choice => !previous.includes(choice));
-      for (let i = pool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [pool[i], pool[j]] = [pool[j], pool[i]];
+      const projectChoices = choices.slice(2, 7);
+      const personalChoices = [...choices.slice(0, 2), ...choices.slice(7)];
+      function pick(group, count) {
+        const pool = group.filter(choice => !previous.includes(choice));
+        for (let i = pool.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        return pool.slice(0, count);
       }
-      previous = pool.slice(0, 3);
+      previous = [...pick(projectChoices, 2), ...pick(personalChoices, 1)];
       container.replaceChildren(...previous.map(choice => {
         const link = document.createElement('a');
         link.href = choice.href;
-        link.innerHTML = `<span data-lang="zh">${choice.zh}</span><span data-lang="en">${choice.en}</span><span aria-hidden="true"> ↗</span>`;
+        const isProject = projectChoices.includes(choice);
+        link.className = 'recommendation-card';
+        link.dataset.group = isProject ? 'work' : 'life';
+        link.innerHTML = `<span class="recommendation-kind" aria-hidden="true">${isProject ? '✳ / WORK' : '✦ / LIFE'}</span><span class="recommendation-name"><span data-lang="zh">${choice.zh}</span><span data-lang="en">${choice.en}</span></span><span class="recommendation-arrow" aria-hidden="true">↗</span>`;
         if (choice.tab) link.addEventListener('click', () => document.getElementById(choice.tab)?.click());
         return link;
       }));
